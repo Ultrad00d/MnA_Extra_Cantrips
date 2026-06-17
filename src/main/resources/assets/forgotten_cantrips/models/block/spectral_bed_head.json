@@ -1,5 +1,6 @@
 {
 	"texture_size": [48, 48],
+    "render_type": "minecraft:translucent",
 	"textures": {
 		"0": "forgotten_cantrips:entity/spectral_bed",
 		"particle": "minecraft:block/amethyst_block"

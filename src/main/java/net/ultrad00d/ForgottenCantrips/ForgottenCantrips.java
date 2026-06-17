@@ -1,9 +1,16 @@
 package net.ultrad00d.ForgottenCantrips;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -11,6 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.ultrad00d.ForgottenCantrips.block.SpectralBedBlock;
 import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.CantripRegistry;
 import org.slf4j.Logger;
@@ -53,6 +61,18 @@ public class ForgottenCantrips {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
 
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerSetSpawn(PlayerSetSpawnEvent event) {
+        Level level = event.getEntity().level();
+        BlockPos pos = event.getNewSpawn();
+
+        if (pos != null) {
+            if (level.getBlockState(pos).getBlock() instanceof SpectralBedBlock) {
+                event.setCanceled(true);
+            }
         }
     }
 }
