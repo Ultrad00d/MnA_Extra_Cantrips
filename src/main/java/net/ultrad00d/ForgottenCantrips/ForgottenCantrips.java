@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.CantripRegistry;
 import org.slf4j.Logger;
 
@@ -22,6 +23,8 @@ public class ForgottenCantrips {
 
     public ForgottenCantrips() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        BlockRegistry.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
