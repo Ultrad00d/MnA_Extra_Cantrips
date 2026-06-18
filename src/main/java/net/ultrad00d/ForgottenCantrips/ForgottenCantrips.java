@@ -66,13 +66,6 @@ public class ForgottenCantrips {
 
     @SubscribeEvent
     public static void onPlayerSetSpawn(PlayerSetSpawnEvent event) {
-        Level level = event.getEntity().level();
-        BlockPos pos = event.getNewSpawn();
 
-        if (pos != null) {
-            if (level.getBlockState(pos).getBlock() instanceof SpectralBedBlock) {
-                event.setCanceled(true);
-            }
-        }
     }
 }
