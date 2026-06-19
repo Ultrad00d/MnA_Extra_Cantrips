@@ -73,10 +73,68 @@ public class CantripRegistry {
             }
         }
     }
-
+    
     public static void placeBed(Player player, ICantrip cantrip, InteractionHand hand) {
-        player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_bed.desc"));
+        double range;
+        try {
+            range = player.getAttributeValue(ForgeMod.BLOCK_REACH.get());
+        } catch (Throwable var15) {
+            range = 4.5F;
+        }
+
+        if (!player.level().dimensionType().bedWorks()) {
+            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_bed.baddimension"));
+            return;
+        }
+
+        HitResult rayHit = player.pick(range, 0.0F, false);
+
+        if (rayHit.distanceTo(player) > range) {
+            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_bed.toofar"));
+            return;
+        }
+
+        BlockPos targetBlock = ((BlockHitResult) rayHit).getBlockPos();
+
+        BlockPos aboveTarget = targetBlock.above();
+        BlockPos aboveTargetAndInPlayerFacingDir = aboveTarget.relative(player.getDirection(),1);
+
+        if (!(player.level().getBlockState(targetBlock).isSolid())) {
+            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_bed.badtarget"));
+            return;
+        }
+
+        if (!((player.level().getBlockState(aboveTarget).isAir()) && (player.level().getBlockState(aboveTargetAndInPlayerFacingDir).isAir()))) {
+            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_bed.nospace"));
+            return;
+        }
+
+
+        BedBlock b1 = new SpectralBedBlock();
+        BlockState bedState = b1
+                .defaultBlockState()
+                .setValue(BedBlock.FACING, player.getDirection()) // choose direction
+                .setValue(BedBlock.PART, HEAD);
+
+        BlockState footState = bedState.setValue(BedBlock.PART, FOOT);
+
+        //head
+        player.level().setBlock(aboveTargetAndInPlayerFacingDir, bedState, 3);
+
+        // foot
+        player.level().setBlock(aboveTarget, footState, 3);
+
+
+        /*
+        //block entity is in head
+        BlockEntity bedBlockEntity = new SpectralBedBlockEntity(aboveTargetAndInPlayerFacingDir,bedState);
+
+        player.level().setBlockEntity(bedBlockEntity);
+
+        return;
+        */
     }
+    
     public static void summonBoat(Player player, ICantrip cantrip, InteractionHand hand) {
         player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_boat.desc"));
     }
