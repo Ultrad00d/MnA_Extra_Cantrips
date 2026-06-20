@@ -13,6 +13,7 @@ Lightning spell [US-004](docs/user-stories.md)
 Spectral bed Block with respective functionality [US-003](docs/user-stories.md)
 
 ### Changed
+Proper Lightning spell (US-004) icon was added
 
 ### Deprecated
 
