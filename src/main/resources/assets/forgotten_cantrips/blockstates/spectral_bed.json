@@ -1,10 +1,12 @@
 {
   "variants": {
-    "part=foot": {
-      "model": "forgotten_cantrips:block/spectral_bed_foot"
-    },
-    "part=head": {
-      "model": "forgotten_cantrips:block/spectral_bed_head"
-    }
+    "facing=north,part=foot": { "model": "forgotten_cantrips:block/spectral_bed_foot" },
+    "facing=east,part=foot":  { "model": "forgotten_cantrips:block/spectral_bed_foot", "y": 90 },
+    "facing=south,part=foot": { "model": "forgotten_cantrips:block/spectral_bed_foot", "y": 180 },
+    "facing=west,part=foot":  { "model": "forgotten_cantrips:block/spectral_bed_foot", "y": 270 },
+    "facing=north,part=head": { "model": "forgotten_cantrips:block/spectral_bed_head" },
+    "facing=east,part=head":  { "model": "forgotten_cantrips:block/spectral_bed_head", "y": 90 },
+    "facing=south,part=head": { "model": "forgotten_cantrips:block/spectral_bed_head", "y": 180 },
+    "facing=west,part=head":  { "model": "forgotten_cantrips:block/spectral_bed_head", "y": 270 }
   }
 }

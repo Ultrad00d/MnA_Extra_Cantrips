@@ -1,6 +1,12 @@
 package net.ultrad00d.ForgottenCantrips.block;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.jetbrains.annotations.NotNull;
+
 import com.mojang.datafixers.util.Either;
+
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,7 +23,10 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,10 +37,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBedBlockEntity;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-import java.util.Optional;
 
 public class SpectralBedBlock extends BedBlock {
     public SpectralBedBlock() {

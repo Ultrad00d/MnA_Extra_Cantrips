@@ -8,6 +8,7 @@
   "cantrip.forgotten_cantrips.spectral_bed.toofar": "Can't place a spectral bed that far away!",
   "cantrip.forgotten_cantrips.spectral_bed.nospace": "Can't fit a spectral bed there!",
   "cantrip.forgotten_cantrips.spectral_bed.badtarget": "Can't place a spectral bed on there!",
+  "cantrip.forgotten_cantrips.spectral_bed.daytime": "Spectral beds can only be placed at night!",
   "cantrip.forgotten_cantrips.spectral_boat": "Spectral Boat",
   "cantrip.forgotten_cantrips.spectral_boat.desc": "A placeholder cantrip for a future spectral boat effect."
 }
