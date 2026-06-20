@@ -14,6 +14,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
+import net.ultrad00d.ForgottenCantrips.block.SpectralBedBlock;
+// Imports for placeBed()
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BedPart; 
 
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
@@ -110,13 +117,13 @@ public class CantripRegistry {
         }
 
 
-        BedBlock b1 = new SpectralBedBlock();
+        BedBlock b1 = (BedBlock) BlockRegistry.SPECTRAL_BED.get(); // new SpectralBedBlock();
         BlockState bedState = b1
                 .defaultBlockState()
                 .setValue(BedBlock.FACING, player.getDirection()) // choose direction
-                .setValue(BedBlock.PART, HEAD);
+                .setValue(BedBlock.PART, BedPart.HEAD);
 
-        BlockState footState = bedState.setValue(BedBlock.PART, FOOT);
+        BlockState footState = bedState.setValue(BedBlock.PART, BedPart.FOOT);
 
         //head
         player.level().setBlock(aboveTargetAndInPlayerFacingDir, bedState, 3);
