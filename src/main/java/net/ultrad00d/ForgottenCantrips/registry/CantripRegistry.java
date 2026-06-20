@@ -2,8 +2,10 @@ package net.ultrad00d.ForgottenCantrips.registry;
 
 import com.mna.api.cantrips.ICantrip;
 import com.mna.api.tools.RLoc;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -12,17 +14,15 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BedPart;
+import net.ultrad00d.ForgottenCantrips.entity.SpectralBedBlockEntity;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.ultrad00d.ForgottenCantrips.block.SpectralBedBlock;
-// Imports for placeBed()
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.level.block.BedBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BedPart; 
-
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 public class CantripRegistry {
     public static void register() {
@@ -116,30 +116,28 @@ public class CantripRegistry {
             return;
         }
 
+        long dayTime = player.level().getDayTime() % 24000L;
+        boolean isDaytime = dayTime < 13000L;
+        if (isDaytime) {
+            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_bed.daytime"));
+            return;
+        }
 
-        BedBlock b1 = (BedBlock) BlockRegistry.SPECTRAL_BED.get(); // new SpectralBedBlock();
+        BedBlock b1 = (BedBlock) BlockRegistry.SPECTRAL_BED.get();
         BlockState bedState = b1
                 .defaultBlockState()
-                .setValue(BedBlock.FACING, player.getDirection()) // choose direction
+                .setValue(BedBlock.FACING, player.getDirection())
                 .setValue(BedBlock.PART, BedPart.HEAD);
 
         BlockState footState = bedState.setValue(BedBlock.PART, BedPart.FOOT);
 
-        //head
         player.level().setBlock(aboveTargetAndInPlayerFacingDir, bedState, 3);
-
-        // foot
         player.level().setBlock(aboveTarget, footState, 3);
 
-
-        /*
-        //block entity is in head
-        BlockEntity bedBlockEntity = new SpectralBedBlockEntity(aboveTargetAndInPlayerFacingDir,bedState);
-
+        BlockEntity bedBlockEntity = new SpectralBedBlockEntity(aboveTargetAndInPlayerFacingDir, bedState);
         player.level().setBlockEntity(bedBlockEntity);
 
-        return;
-        */
+        net.ultrad00d.ForgottenCantrips.ForgottenCantrips.trackBed(aboveTargetAndInPlayerFacingDir);
     }
     
     public static void summonBoat(Player player, ICantrip cantrip, InteractionHand hand) {
