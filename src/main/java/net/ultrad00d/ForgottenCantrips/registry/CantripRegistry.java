@@ -4,6 +4,7 @@ import com.mna.api.cantrips.ICantrip;
 import com.mna.api.tools.RLoc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -21,6 +22,17 @@ public class CantripRegistry {
     public static void register() {
         com.mna.cantrips.CantripRegistry registry = com.mna.cantrips.CantripRegistry.INSTANCE;
 
+        // Allowed shapes:
+        // mna:manaweave_patterns/square                       mna:manaweave_patterns/knot
+        // mna:manaweave_patterns/triangle                     mna:manaweave_patterns/circle
+        // mna:manaweave_patterns/split_triangle               mna:manaweave_patterns/slash
+        // mna:manaweave_patterns/bolt                         mna:manaweave_patterns/knot2
+        // mna:manaweave_patterns/hourglass                    mna:manaweave_patterns/knot3
+        // mna:manaweave_patterns/inverted_split_triangle      mna:manaweave_patterns/star
+        // mna:manaweave_patterns/backslash                    mna:manaweave_patterns/diamond
+        // mna:manaweave_patterns/infinity                     mna:manaweave_patterns/knot4
+        // mna:manaweave_patterns/inverted_triangle
+
         // Lightning Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath("forgotten_cantrips", "lightning"),
@@ -28,8 +40,8 @@ public class CantripRegistry {
                 1,
                 CantripRegistry::lightning,
                 ItemStack.EMPTY,
-                RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
-        );
+                RLoc.create("manaweave_patterns/hourglass"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
+        ).setRequiredAdvancement(fromNamespaceAndPath("forgotten_cantrips", "lightning_spell"));
         // Spectral Bed Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath("forgotten_cantrips", "spectral_bed"),

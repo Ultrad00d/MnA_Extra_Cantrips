@@ -1,0 +1,44 @@
+{
+  "display": {
+    "title": {
+      "text": "Unknown Cantrip"
+    },
+    "description": {
+      "translate": "advancement.forgotten_cantrips.cantrip_1.where_to_find"
+    },
+    "icon": {
+      "item": "minecraft:lightning_rod"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "item1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "forgotten_cantrips:ancient_scroll"
+            ]
+          }
+        ]
+      }
+    },
+    "item2": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:diamond"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "parent": "forgotten_cantrips:root"
+}

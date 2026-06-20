@@ -5,5 +5,8 @@
   "cantrip.forgotten_cantrips.spectral_bed": "Spectral Bed",
   "cantrip.forgotten_cantrips.spectral_bed.desc": "A placeholder cantrip for a future spectral bed effect.",
   "cantrip.forgotten_cantrips.spectral_boat": "Spectral Boat",
-  "cantrip.forgotten_cantrips.spectral_boat.desc": "A placeholder cantrip for a future spectral boat effect."
+  "cantrip.forgotten_cantrips.spectral_boat.desc": "A placeholder cantrip for a future spectral boat effect.",
+
+  "advancement.forgotten_cantrips.cantrip_1.where_to_find": "Find pieces of forgotten knowledge in {location for lightning spell}.",
+  "advancement.forgotten_cantrips.cantrip_1.description": "A shocking discovery."
 }
