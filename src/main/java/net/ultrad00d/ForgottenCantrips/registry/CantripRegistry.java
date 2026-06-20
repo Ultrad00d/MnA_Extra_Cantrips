@@ -2,8 +2,10 @@ package net.ultrad00d.ForgottenCantrips.registry;
 
 import com.mna.api.cantrips.ICantrip;
 import com.mna.api.tools.RLoc;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -14,8 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+import net.ultrad00d.ForgottenCantrips.entity.SpectralBoat;
 
 public class CantripRegistry {
     public static void register() {
@@ -77,7 +78,29 @@ public class CantripRegistry {
     public static void placeBed(Player player, ICantrip cantrip, InteractionHand hand) {
         player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_bed.desc"));
     }
-    public static void summonBoat(Player player, ICantrip cantrip, InteractionHand hand) {
-        player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_boat.desc"));
+    public static void summonBoat(Player player, ICantrip cantrip, InteractionHand hand)
+    {
+        double range;
+        try
+        {
+            range = player.getAttributeValue(ForgeMod.BLOCK_REACH.get());
+        } 
+        catch (Throwable var14)
+        {
+            return;
+        }
+
+        Level level = player.level();
+        Vec3 target = player.pick(range, 0.0F, true).getLocation();
+
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel)
+        {
+            SpectralBoat boat = EntityRegistry.SPECTRAL_BOAT.get().create(serverLevel);
+            if (boat != null)
+            {
+                boat.moveTo(target.x, target.y, target.z, player.getYRot(), 0.0F);
+                serverLevel.addFreshEntity(boat);
+            }
+        }
     }
 }

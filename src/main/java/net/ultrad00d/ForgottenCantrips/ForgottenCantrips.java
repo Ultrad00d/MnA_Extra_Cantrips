@@ -1,6 +1,7 @@
 package net.ultrad00d.ForgottenCantrips;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -11,7 +12,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralBoatRenderer;
 import net.ultrad00d.ForgottenCantrips.registry.CantripRegistry;
+import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -23,6 +26,7 @@ public class ForgottenCantrips {
     public ForgottenCantrips() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        EntityRegistry.ENTITY_TYPES.register(modEventBus);
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -49,7 +53,10 @@ public class ForgottenCantrips {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            event.enqueueWork(() -> EntityRenderers.register(
+                    EntityRegistry.SPECTRAL_BOAT.get(),
+                    SpectralBoatRenderer::new
+            ));
         }
     }
 }
