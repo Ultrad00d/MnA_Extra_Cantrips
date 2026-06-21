@@ -1,1 +1,1 @@
-
+AI was used for making a transcript of the interview. It also helped with the ground design of several cantrip icons (stylistic-wise, the icons themselves were made manually in Paint.NET with the usage of a graphical board).
