@@ -9,5 +9,6 @@
   "cantrip.forgotten_cantrips.spectral_bed.badtarget": "Can't place a spectral bed on there!",
   "cantrip.forgotten_cantrips.spectral_bed.badtime": "In this dimension, spectral beds can only be placed at night or during thunderstorms!",
   "cantrip.forgotten_cantrips.spectral_boat": "Spectral Boat",
-  "cantrip.forgotten_cantrips.spectral_boat.desc": "A placeholder cantrip for a future spectral boat effect."
+  "cantrip.forgotten_cantrips.spectral_boat.desc": "Summons a spectral boat at the targeted point.",
+  "entity.forgotten_cantrips.spectral_boat": "Spectral Boat"
 }
