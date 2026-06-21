@@ -146,8 +146,6 @@ public class CantripRegistry {
 
         BlockEntity bedBlockEntity = new SpectralBedBlockEntity(headBlockPos, bedState);
         player.level().setBlockEntity(bedBlockEntity);
-
-        net.ultrad00d.ForgottenCantrips.ForgottenCantrips.trackBed(headBlockPos);
     }
     public static void summonBoat(Player player, ICantrip cantrip, InteractionHand hand)
     {
