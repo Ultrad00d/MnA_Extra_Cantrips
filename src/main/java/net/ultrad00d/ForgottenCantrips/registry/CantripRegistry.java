@@ -24,6 +24,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
+import net.ultrad00d.ForgottenCantrips.entity.SpectralBoat;
 
 public class CantripRegistry {
     public static void register() {
@@ -148,8 +149,29 @@ public class CantripRegistry {
 
         net.ultrad00d.ForgottenCantrips.ForgottenCantrips.trackBed(headBlockPos);
     }
-    
-    public static void summonBoat(Player player, ICantrip cantrip, InteractionHand hand) {
-        player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_boat.desc"));
+    public static void summonBoat(Player player, ICantrip cantrip, InteractionHand hand)
+    {
+        double range;
+        try
+        {
+            range = player.getAttributeValue(ForgeMod.BLOCK_REACH.get());
+        } 
+        catch (Throwable var14)
+        {
+            return;
+        }
+
+        Level level = player.level();
+        Vec3 target = player.pick(range, 0.0F, true).getLocation();
+
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel)
+        {
+            SpectralBoat boat = EntityRegistry.SPECTRAL_BOAT.get().create(serverLevel);
+            if (boat != null)
+            {
+                boat.moveTo(target.x, target.y, target.z, player.getYRot(), 0.0F);
+                serverLevel.addFreshEntity(boat);
+            }
+        }
     }
 }
