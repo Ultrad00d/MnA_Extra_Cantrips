@@ -1,0 +1,46 @@
+{
+	"texture_size": [48, 48],
+    "render_type": "minecraft:translucent",
+	"textures": {
+		"0": "forgotten_cantrips:entity/spectral_bed",
+		"particle": "minecraft:block/amethyst_block"
+	},
+	"elements": [
+		{
+			"from": [14, 0, 0],
+			"to": [16, 3, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [14, 0, -8]},
+			"faces": {
+				"north": {"uv": [10, 3.66667, 10.66667, 2.66667], "texture": "#0"},
+				"east": {"uv": [10, 2.66667, 10.66667, 3.66667], "texture": "#0"},
+				"south": {"uv": [10, 3.66667, 10.66667, 2.66667], "texture": "#0"},
+				"west": {"uv": [10, 3.66667, 10.66667, 2.66667], "texture": "#0"},
+				"down": {"uv": [10, 2, 10.66667, 2.66667], "texture": "#0"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [2, 3, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, -8]},
+			"faces": {
+				"north": {"uv": [10, 3.66667, 10.66667, 2.66667], "texture": "#0"},
+				"east": {"uv": [10, 2.66667, 10.66667, 3.66667], "texture": "#0"},
+				"south": {"uv": [10, 3.66667, 10.66667, 2.66667], "texture": "#0"},
+				"west": {"uv": [10, 3.66667, 10.66667, 2.66667], "texture": "#0"},
+				"down": {"uv": [10, 2, 10.66667, 2.66667], "texture": "#0"}
+			}
+		},
+		{
+			"from": [0, 3, 0],
+			"to": [16, 9, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 3, 24]},
+			"faces": {
+				"north": {"uv": [5.33333, 0, 10.66667, 2], "texture": "#0"},
+				"east": {"uv": [7.33333, 2, 9.33333, 7], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [0, 2, 2, 7], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [2, 7, 7.33333, 2], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [10.66667, 0, 16, 5.33333], "rotation": 180, "texture": "#0"}
+			}
+		}
+	]
+}
