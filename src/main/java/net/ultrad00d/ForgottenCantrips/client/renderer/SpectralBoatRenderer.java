@@ -1,8 +1,11 @@
 package net.ultrad00d.ForgottenCantrips.client.renderer;
 
+import org.joml.Quaternionf;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -15,11 +18,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBoat;
-import org.joml.Quaternionf;
 
 public class SpectralBoatRenderer extends EntityRenderer<SpectralBoat>
 {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/entity/boat/spectral_boat.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/entity/spectral_boat.png");
 
     private final BoatModel model;
 
