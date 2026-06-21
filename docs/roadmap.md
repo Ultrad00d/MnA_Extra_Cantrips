@@ -16,7 +16,8 @@ We have 3 cantrips for the MVP: Spectral Bed [US-003](https://github.com/Ultrad0
 Planned items (user stories+PBIs etc.):
 
 ### Spectral Bed [US-003](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/22)
-[[Design]: Bed model](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/) #33
+
+[[Design]: Bed model](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/33)
 
 [[Technical]: Spectral bed disappearance](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/37)
 
@@ -42,4 +43,22 @@ Planned items (user stories+PBIs etc.):
 
 ### Lightning spell [US-004](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/23)
 
+[[Design]: Icon for lightning cantrip](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/43)
+
 ### Spectral Boat [US-006](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/25)
+
+[[Technical]: Spectral Boat entity](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/58)
+
+[[Technical]: Spectral Boat Cantrip logic](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/59)
+
+[[Technical]: Spectral Boat movement](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/60)
+
+[[Technical]: Spectral Boat Chest](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/61)
+
+[[Technical]: Spectral Boat chest Link](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/63)
+
+[[Technical]: Spectral Boat Behavior](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/64)
+
+[[Design]: Spectral Boat cantrip Icon](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/65)
+
+[[Design]: Spectral Boat Texture](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/66)
