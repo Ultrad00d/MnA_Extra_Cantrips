@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "part=foot": {
+      "model": "forgotten_cantrips:block/spectral_bed_foot"
+    },
+    "part=head": {
+      "model": "forgotten_cantrips:block/spectral_bed_head"
+    }
+  }
+}

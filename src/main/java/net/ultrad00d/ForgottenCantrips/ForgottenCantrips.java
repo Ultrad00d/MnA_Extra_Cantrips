@@ -2,9 +2,16 @@ package net.ultrad00d.ForgottenCantrips;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,6 +20,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralBoatRenderer;
+import net.ultrad00d.ForgottenCantrips.block.SpectralBedBlock;
+import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.CantripRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 import org.slf4j.Logger;
@@ -27,6 +36,8 @@ public class ForgottenCantrips {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
+        BlockRegistry.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -58,5 +69,10 @@ public class ForgottenCantrips {
                     SpectralBoatRenderer::new
             ));
         }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerSetSpawn(PlayerSetSpawnEvent event) {
+
     }
 }
