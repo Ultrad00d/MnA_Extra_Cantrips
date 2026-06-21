@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-Lightning spell [US-004](docs/user-stories.md)
+Spectral Boat spell [US-006](docs/user-stories.md)
 
 ### Changed
 
