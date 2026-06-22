@@ -48,3 +48,13 @@ Planned items (user stories+PBIs etc.):
 ### Spectral Boat [US-006](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/25)
 
 [[Design]: Spectral Boat Texture](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/66)
+
+[[Design]: Spectral Boat Cantrip Icon](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/65)
+
+[[Technical]: Spectral Boat Entity](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/58)
+
+[[Technical]: Spectral Boat Cantrip Logic](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/59)
+
+[[Technical]: Spectral Boat Movement](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/60)
+
+[[Technical]: Spectral Boat Behavior](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/64)
