@@ -48,6 +48,14 @@ Issue templates: [Bug report](/.github/ISSUE_TEMPLATE/bug-report.md), [Course ta
 
 ---
 
+An overview of contributions is as follows:
+
+![Contributions](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/doc-fixes/reports/week3/images/Contributions.png)
+
+Each team member has contributed to very many different issues and PRs due to PBIs being broken down into many sub-issues.
+
+---
+
 Screenshots:
 
 ![Delivered MVP v1](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/doc-fixes/reports/week3/images/Delivered%20MVP%20v1.png)
