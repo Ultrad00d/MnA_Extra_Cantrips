@@ -1,11 +1,11 @@
-name: "Build"
+name: "Release Build"
 on:
   push:
-    branches: ["**"]
-  workflow_dispatch:
+    tags:
+      - "*"
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -23,8 +23,10 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Upload an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: "MnA_extra_cantrips"
-          path: "build/libs/"
+      - name: Create a release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create ${{ github.ref_name }} build/libs/forgotten_cantrips.jar \
+            --title "MnA extra cantrips ${{ github.ref_name }}" \
+            --draft --generate-notes
