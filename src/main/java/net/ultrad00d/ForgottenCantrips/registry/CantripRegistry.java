@@ -2,9 +2,12 @@ package net.ultrad00d.ForgottenCantrips.registry;
 
 import com.mna.api.cantrips.ICantrip;
 import com.mna.api.tools.RLoc;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -16,32 +19,34 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
+import java.util.Objects;
+
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 public class CantripRegistry {
     public static void register() {
         com.mna.cantrips.CantripRegistry registry = com.mna.cantrips.CantripRegistry.INSTANCE;
 
-        // Allowed shapes:
-        // mna:manaweave_patterns/square                       mna:manaweave_patterns/knot
-        // mna:manaweave_patterns/triangle                     mna:manaweave_patterns/circle
-        // mna:manaweave_patterns/split_triangle               mna:manaweave_patterns/slash
-        // mna:manaweave_patterns/bolt                         mna:manaweave_patterns/knot2
-        // mna:manaweave_patterns/hourglass                    mna:manaweave_patterns/knot3
-        // mna:manaweave_patterns/inverted_split_triangle      mna:manaweave_patterns/star
-        // mna:manaweave_patterns/backslash                    mna:manaweave_patterns/diamond
-        // mna:manaweave_patterns/infinity                     mna:manaweave_patterns/knot4
-        // mna:manaweave_patterns/inverted_triangle
+        // Allowed shapes: [tier] "namespace:path"
+        // [1] mna:manaweave_patterns/square                       [2] mna:manaweave_patterns/knot
+        // [1] mna:manaweave_patterns/triangle                     [1] mna:manaweave_patterns/circle
+        // [3] mna:manaweave_patterns/split_triangle               [1] mna:manaweave_patterns/slash
+        // [3] mna:manaweave_patterns/bolt                         [2] mna:manaweave_patterns/knot2
+        // [4] mna:manaweave_patterns/hourglass                    [2] mna:manaweave_patterns/knot3
+        // [5] mna:manaweave_patterns/inverted_split_triangle      [4] mna:manaweave_patterns/star
+        // [1] mna:manaweave_patterns/backslash                    [2] mna:manaweave_patterns/diamond
+        // [5] mna:manaweave_patterns/infinity                     [2] mna:manaweave_patterns/knot4
+        // [3] mna:manaweave_patterns/inverted_triangle
 
         // Lightning Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath("forgotten_cantrips", "lightning"),
                 fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/lightning.png"),
-                1,
+                3,
                 CantripRegistry::lightning,
                 ItemStack.EMPTY,
-                RLoc.create("manaweave_patterns/hourglass"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
-        ).setRequiredAdvancement(fromNamespaceAndPath("forgotten_cantrips", "lightning_spell"));
+                RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
+        ).setRequiredAdvancement(fromNamespaceAndPath("forgotten_cantrips", "uc1/part_3"));
         // Spectral Bed Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath("forgotten_cantrips", "spectral_bed"),
@@ -50,7 +55,7 @@ public class CantripRegistry {
                 CantripRegistry::placeBed,
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
-        );
+        ).setRequiredAdvancement(fromNamespaceAndPath("forgotten_cantrips", "uc2/part_3"));
         // Spectral Boat Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath("forgotten_cantrips", "spectral_boat"),
@@ -59,10 +64,37 @@ public class CantripRegistry {
                 CantripRegistry::summonBoat,
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
-        );
+        ).setRequiredAdvancement(fromNamespaceAndPath("forgotten_cantrips", "uc3/part_3"));
+    }
+
+    public static boolean advancementCheck(Player player, ICantrip cantrip) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            MinecraftServer server = serverPlayer.getServer();
+            if (server == null) return false;
+
+            Advancement advancement = server.getAdvancements().getAdvancement(Objects.requireNonNull(cantrip.getRequiredAdvancement()));
+            if (advancement == null) return false;
+
+            AdvancementProgress progress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
+            return progress.isDone();
+        }
+        return false;
+    }
+
+    public static boolean allowedToCast(Player player, ICantrip cantrip) {
+        if (!advancementCheck(player, cantrip)) {
+            player.sendSystemMessage(
+                    Component.translatable("cantrip.forgotten_cantrips.locked.pre")
+                            .append(Component.translatable("cantrip.forgotten_cantrips." + cantrip.getId().getPath()))
+                            .append(Component.translatable("cantrip.forgotten_cantrips.locked.post")));
+            return false;
+        }
+        return true;
     }
 
     public static void lightning(Player player, ICantrip cantrip, InteractionHand hand) {
+        if (!allowedToCast(player, cantrip)) return;
+
         double range;
         try {
             range = player.getAttributeValue(ForgeMod.BLOCK_REACH.get());
@@ -87,9 +119,13 @@ public class CantripRegistry {
     }
 
     public static void placeBed(Player player, ICantrip cantrip, InteractionHand hand) {
+        if (!allowedToCast(player, cantrip)) return;
+
         player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_bed.desc"));
     }
     public static void summonBoat(Player player, ICantrip cantrip, InteractionHand hand) {
+        if (!allowedToCast(player, cantrip)) return;
+
         player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_boat.desc"));
     }
 }
