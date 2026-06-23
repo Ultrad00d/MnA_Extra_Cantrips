@@ -1,4 +1,6 @@
 {
+  "cantrip.forgotten_cantrips.locked.pre": "This may be the symbols needed for the ",
+  "cantrip.forgotten_cantrips.locked.post": " cantrip, however I still have to learn it first...",
   "cantrip.forgotten_cantrips.lightning": "Lightning",
   "cantrip.forgotten_cantrips.lightning.desc": "A placeholder cantrip for a future lightning effect.",
   "cantrip.forgotten_cantrips.lightning.obstructed": "Can't summon lightning here!",
@@ -7,6 +9,24 @@
   "cantrip.forgotten_cantrips.spectral_boat": "Spectral Boat",
   "cantrip.forgotten_cantrips.spectral_boat.desc": "A placeholder cantrip for a future spectral boat effect.",
 
-  "advancement.forgotten_cantrips.cantrip_1.where_to_find": "Find pieces of forgotten knowledge in {location for lightning spell}.",
-  "advancement.forgotten_cantrips.cantrip_1.description": "A shocking discovery."
+  "advancement.forgotten_cantrips.unknown_cantrip_1.where_to_find": "Find pieces of forgotten knowledge in ___.",
+  "advancement.forgotten_cantrips.unknown_cantrip_1.part_1": "The Ancient scroll I've found says that this cantrip might start with this...\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
+  "advancement.forgotten_cantrips.unknown_cantrip_1.part_2": "This Ancient scroll suggests that this cantrip's middle symbol is something like -...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
+  "advancement.forgotten_cantrips.unknown_cantrip_1.part_3": "And there I found the last symbol! It definitely was this:\n\n  ▉\n   ▉\n▉▉▉▉▉▉▉\n ▉\n  ▉",
+  "advancement.forgotten_cantrips.unknown_cantrip_1.name": "Lightning Cantrip",
+  "advancement.forgotten_cantrips.unknown_cantrip_1.description": "A shocking discovery.",
+
+  "advancement.forgotten_cantrips.unknown_cantrip_2.where_to_find": "Find pieces of forgotten knowledge in ___.",
+  "advancement.forgotten_cantrips.unknown_cantrip_2.part_1": "The Ancient scroll I've found says that this cantrip might start with this...\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
+  "advancement.forgotten_cantrips.unknown_cantrip_2.part_2": "This Ancient scroll suggests that this cantrip's middle symbol is something like -...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
+  "advancement.forgotten_cantrips.unknown_cantrip_2.part_3": "And there I found the last symbol! It definitely was this:\n\n  ▉\n   ▉\n▉▉▉▉▉▉▉\n ▉\n  ▉",
+  "advancement.forgotten_cantrips.unknown_cantrip_2.name": "Spectral Bed Cantrip",
+  "advancement.forgotten_cantrips.unknown_cantrip_2.description": "A shocking discovery.",
+
+  "advancement.forgotten_cantrips.unknown_cantrip_3.where_to_find": "Find pieces of forgotten knowledge in ___.",
+  "advancement.forgotten_cantrips.unknown_cantrip_3.part_1": "The Ancient scroll I've found says that this cantrip might start with this...\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
+  "advancement.forgotten_cantrips.unknown_cantrip_3.part_2": "This Ancient scroll suggests that this cantrip's middle symbol is something like -...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
+  "advancement.forgotten_cantrips.unknown_cantrip_3.part_3": "And there I found the last symbol! It definitely was this:\n\n  ▉\n   ▉\n▉▉▉▉▉▉▉\n ▉\n  ▉",
+  "advancement.forgotten_cantrips.unknown_cantrip_3.name": "Spectral Boat Cantrip",
+  "advancement.forgotten_cantrips.unknown_cantrip_3.description": "A shocking discovery."
 }
