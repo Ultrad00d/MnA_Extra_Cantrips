@@ -10,12 +10,17 @@ import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
@@ -54,6 +59,15 @@ public class CantripRegistry {
                 fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/spectral_boat.png"),
                 1,
                 CantripRegistry::summonBoat,
+                ItemStack.EMPTY,
+                RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+        );
+        // Force Consume Cantrip
+        registry.registerCantrip(
+                fromNamespaceAndPath("forgotten_cantrips", "force_consume"),
+                fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/force_consume.png"),
+                1,
+                CantripRegistry::consume,
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
         );
@@ -169,6 +183,48 @@ public class CantripRegistry {
             {
                 boat.moveTo(target.x, target.y, target.z, player.getYRot(), 0.0F);
                 serverLevel.addFreshEntity(boat);
+            }
+        }
+    }
+    public static void consume(Player player, ICantrip cantrip, InteractionHand hand) {
+        InteractionHand _other_hand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
+        ItemStack otherHand = player.getItemInHand(_other_hand);
+
+        if (otherHand.isEmpty()) {
+            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.force_consume.no_item"));
+            return;
+        }
+    
+        applyEffect(player, otherHand);
+
+        // if (!player.isCreative()) {
+        otherHand.shrink(1);
+        if (otherHand.isEmpty()) {
+            player.setItemInHand(_other_hand, ItemStack.EMPTY);
+        }
+        // }
+    }
+
+    private static void applyEffect(Player player, ItemStack stack) {
+        Item item = stack.getItem();
+
+        if (item == Blocks.MELON.asItem()) {
+            applyFoodProperties(player, Items.MELON_SLICE.getDefaultInstance().getFoodProperties(player), 9);
+            return;
+        }
+
+        FoodProperties food = item.getFoodProperties(stack, player);
+        if (food != null) {
+            applyFoodProperties(player, food, 1);
+        }
+    }
+    private static void applyFoodProperties(Player player, FoodProperties food, int modifier) {
+        if (food != null) {
+            player.getFoodData().eat(food.getNutrition() * modifier, food.getSaturationModifier() * modifier);
+            for (var pair : food.getEffects()) {
+                if (player.getRandom().nextFloat() < pair.getSecond()) {
+                    player.addEffect(new MobEffectInstance(pair.getFirst()));
+                }
             }
         }
     }
