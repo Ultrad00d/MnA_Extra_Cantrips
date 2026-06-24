@@ -6,6 +6,10 @@
 
 [MVP v0 Report](reports/week2/mvp-v0-report.md)
 
+[Week 3 Project Delivery Index](reports/week3/README.md)
+
+
+
 **Setup:**
 
 Using IntelliJ IDEA:
