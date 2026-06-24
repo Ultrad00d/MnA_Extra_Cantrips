@@ -9,6 +9,9 @@ assignees: ''
 ## PBI Type
 <!-- Technical / Infrastructure / Design / Testing / Documentation / Research -->
 
+## Weight
+Story points:
+
 ## Description
 
 ## Acceptance Criteria
