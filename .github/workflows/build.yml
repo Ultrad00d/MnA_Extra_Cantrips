@@ -28,3 +28,12 @@ jobs:
         with:
           name: "MnA_extra_cantrips"
           path: "build/libs/"
+
+      # Temporary to test the release build
+      - name: Create a release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create ${{ github.ref_name }} build/libs/*.jar \
+            --title "MnA extra cantrips ${{ github.ref_name }}" \
+            --draft --generate-notes
