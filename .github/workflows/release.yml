@@ -27,6 +27,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create ${{ github.ref_name }} build/libs/forgotten_cantrips.jar \
+          gh release create ${{ github.ref_name }} build/libs/*.jar \
             --title "MnA extra cantrips ${{ github.ref_name }}" \
             --draft --generate-notes
