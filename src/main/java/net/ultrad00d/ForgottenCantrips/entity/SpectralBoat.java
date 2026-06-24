@@ -8,48 +8,59 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
-public class SpectralBoat extends ChestBoat {
+public class SpectralBoat extends ChestBoat
+{
     private static final int EMPTY_LIFETIME_TICKS = 30 * 20;
     private static final String EMPTY_TICKS_TAG = "EmptyTicks";
 
     private int emptyTicks;
 
-    public SpectralBoat(EntityType<? extends Boat> entityType, Level level) {
+    public SpectralBoat(EntityType<? extends Boat> entityType, Level level)
+    {
         super(entityType, level);
         setVariant(Type.OAK);
     }
 
     @Override
-    public void tick() {
+    public void tick()
+    {
         super.tick();
 
-        if (level().isClientSide()) {
+        if (level().isClientSide())
+        {
             return;
         }
 
-        if (getPassengers().isEmpty()) {
-            if (++emptyTicks >= EMPTY_LIFETIME_TICKS) {
+        if (getPassengers().isEmpty())
+        {
+            if (++emptyTicks >= EMPTY_LIFETIME_TICKS)
+            {
                 discard();
             }
-        } else {
+        }
+        else
+        {
             emptyTicks = 0;
         }
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag tag) {
+    protected void addAdditionalSaveData(CompoundTag tag)
+    {
         super.addAdditionalSaveData(tag);
         tag.putInt(EMPTY_TICKS_TAG, emptyTicks);
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag tag) {
+    protected void readAdditionalSaveData(CompoundTag tag)
+    {
         super.readAdditionalSaveData(tag);
         emptyTicks = tag.getInt(EMPTY_TICKS_TAG);
     }
 
     @Override
-    public Item getDropItem() {
+    public Item getDropItem()
+    {
         return Items.AIR;
     }
 }
