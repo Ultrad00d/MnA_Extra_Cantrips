@@ -8,12 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-Spectral Boat spell [US-006](docs/user-stories.md)
-
-Spectral bed Block with respective functionality [US-003](docs/user-stories.md)
+Spectral boat chest [US-006](docs/user-stories.md)
 
 ### Changed
-Proper Lightning spell (US-004) icon was added
+Spectral Boat texture [US-006](docs/user-stories.md)
 
 ### Deprecated
 
