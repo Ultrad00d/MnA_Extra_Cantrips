@@ -234,27 +234,22 @@ public class CantripRegistry {
         // (Mandatory) Chorus Fruit - apply nutrition of fruit and teleport the player randomly
         // (Mandatory) Potions - apply effects of the potion to the player
         // (Mandatory) Milk Bucket - remove all effects from the player and remove the bucket
-        // (Mandatory) Piston - make player longer by 1 block
+        // (Mandatory) Piston - make player's step longer to 1 block
         // (Mandatory) Music Discs - play the music disc for the player, throw after playing
         // (Mandatory) Glowing Ink Sac, Glowing Dust, Spectral Arrow - apply glowing effect to the player for 30 seconds
-        // (Mandatory) Glowstone, Sea lantern, Shroomlight - light up the area around the player for 3 minutes
+        // (Mandatory) Glowstone, Sea Lantern, Shroomlight - light up the area around the player for 3 minutes
         // (Mandatory) Totem of Undying - apply the "Undying" effect to the player for 3 minutes, and prevent death once
         // (Mandatory) Heart of the Sea - apply the "Conduit Power" effect to the player for 15 minutes
-        // (Optional) Seeds, Sugar Cane - apply nutrition as if the player ate the third of the corresponding food item (e.g., wheat seeds -> 1/3 bread)
+        // (Mandatory) Redstone Torch, Torch, Soul Torch - light up the area around the player for 30 seconds
+        // (Mandatory) Bottle o' Enchanting - add experience to the player
+        // (Mandatory) Shulker Shell - apply the "Levitation" effect to the player for 10 seconds
+        // (Mandatory) Rabbit's Foot - apply the "Jump Boost" effect to the player for 30 seconds
         // (Optional) Flint and Steel, Fire Charge - set the player on fire for 5 seconds
-        // (Optional) Redstone Torch, Torch, Soul Torch - light up the area around the player for 30 seconds
-        // (Optional) Turtle Shell - apply the "Water Breathing" effect to the player for 5 minutes; apply "Slowness" (I) and "Resistance" (III) effects for 30 seconds
         // (Optional) Gunpowder, TNT, End Crystal - create an explosion at the player's location (without destroying blocks)
-        // (Optional) Bottle o' Enchanting - add experience to the player
-        // (Optional) Netherite Ingot, Netherite Scrap, Netherite Block, Ancient Debris - apply the "Resistance" and "Fire Resistance" effects to the player for 3 minutes
-        // (Optional) Any Pickaxe - apply the "Haste" effect to the player for 30 seconds to 3 minutes (regarding the material of the pickaxe)
-        // (Optional) Shulker Shell - apply the "Levitation" effect to the player for 10 seconds
-        // (Optional) Slime Block, Honey Block - apply the "Slowness" effect for 5 seconds and "Slow Falling" effect for 15 seconds
-        // (Optional) Ender Chest - open the ender chest for the player
-        // (Optional) Rabbit's Foot - apply the "Jump Boost" effect to the player for 30 seconds
+        
 
         // (Technically implemented) Water Bucket, Water Bottle - remove the liquid container
-        // (Mandatory) Soups, Stews - apply corresponding nutrition (and effects) and remove the bowl
+        // (Technically implemented) Soups, Stews - apply corresponding nutrition (and effects) and remove the bowl
         // (Technically implemented) Honey Bottle - apply nutrition and remove the bottle
         // Regular food items - apply nutrition based on the food properties of the item
         FoodProperties food = item.getFoodProperties(stack, player);
