@@ -230,20 +230,25 @@ public class CantripRegistry {
             return;
         }
 
+        // (Mandatory) Bottle o' Enchanting - add experience to the player
+        if (item == Items.EXPERIENCE_BOTTLE) {
+            player.giveExperiencePoints(player.getRandom().nextInt(16) + 6);
+            return;
+        }
+
         // Some of the items might be implemented further: 
-        // (Mandatory) Chorus Fruit - apply nutrition of fruit and teleport the player randomly
+        // (Mandatory) Totem of Undying - apply the "Undying" effect to the player for 3 minutes, and prevent death once
         // (Mandatory) Potions - apply effects of the potion to the player
         // (Mandatory) Milk Bucket - remove all effects from the player and remove the bucket
-        // (Mandatory) Piston - make player's step longer to 1 block
-        // (Mandatory) Music Discs - play the music disc for the player, throw after playing
         // (Mandatory) Glowing Ink Sac, Glowing Dust, Spectral Arrow - apply glowing effect to the player for 30 seconds
-        // (Mandatory) Glowstone, Sea Lantern, Shroomlight - light up the area around the player for 3 minutes
-        // (Mandatory) Totem of Undying - apply the "Undying" effect to the player for 3 minutes, and prevent death once
-        // (Mandatory) Heart of the Sea - apply the "Conduit Power" effect to the player for 15 minutes
-        // (Mandatory) Redstone Torch, Torch, Soul Torch - light up the area around the player for 30 seconds
-        // (Mandatory) Bottle o' Enchanting - add experience to the player
         // (Mandatory) Shulker Shell - apply the "Levitation" effect to the player for 10 seconds
         // (Mandatory) Rabbit's Foot - apply the "Jump Boost" effect to the player for 30 seconds
+        // (Mandatory) Heart of the Sea - apply the "Conduit Power" effect to the player for 15 minutes
+        // (Mandatory) Glowstone, Sea Lantern, Shroomlight - light up the area around the player for 3 minutes
+        // (Mandatory) Redstone Torch, Torch, Soul Torch - light up the area around the player for 30 seconds
+        // (Mandatory) Chorus Fruit - apply nutrition of fruit and teleport the player randomly
+        // (Mandatory) Piston - make player's step longer to 1 block
+        // (Mandatory) Music Discs - play the music disc for the player, throw after playing
         // (Optional) Flint and Steel, Fire Charge - set the player on fire for 5 seconds
         // (Optional) Gunpowder, TNT, End Crystal - create an explosion at the player's location (without destroying blocks)
         
