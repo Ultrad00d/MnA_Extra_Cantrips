@@ -280,9 +280,13 @@ public class CantripRegistry {
             player.addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, 18000, 0));
             return true;
         }
+        // Glowing Ink Sac, Glowing Dust, Spectral Arrow - apply glowing effect to the player for 30 seconds
+        if (item == Items.GLOW_INK_SAC || item == Items.GLOWSTONE_DUST || item == Items.SPECTRAL_ARROW) {
+            player.addEffect(new MobEffectInstance(MobEffects.GLOWING, 600, 0));
+            return true;
+        }
 
         // Some of the items might be implemented further: 
-        // (Mandatory) Glowing Ink Sac, Glowing Dust, Spectral Arrow - apply glowing effect to the player for 30 seconds
         // (Mandatory) Glowstone, Sea Lantern, Shroomlight - light up the area around the player for 3 minutes
         // (Mandatory) Redstone Torch, Torch, Soul Torch - light up the area around the player for 30 seconds
         // (Mandatory) Piston - make player's step longer to 1 block
