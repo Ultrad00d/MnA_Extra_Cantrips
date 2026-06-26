@@ -10,5 +10,13 @@
   "cantrip.forgotten_cantrips.spectral_bed.badtime": "In this dimension, spectral beds can only be placed at night or during thunderstorms!",
   "cantrip.forgotten_cantrips.spectral_boat": "Spectral Boat",
   "cantrip.forgotten_cantrips.spectral_boat.desc": "Summons a spectral boat at the targeted point.",
-  "entity.forgotten_cantrips.spectral_boat": "Spectral Boat"
+  "entity.forgotten_cantrips.spectral_boat": "Spectral Boat",
+  "cantrip.forgotten_cantrips.force_consume": "Force Consume",
+  "cantrip.forgotten_cantrips.force_consume.noitem": "No item to consume in the other hand",
+  "cantrip.forgotten_cantrips.force_consume.baditem": "Can't eat the item in the other hand",
+  "effect.forgotten_cantrips.undying": "Undying",
+  "item.minecraft.potion.effect.undying": "Potion of Undying",
+  "item.minecraft.splash_potion.effect.undying": "Splash Potion of Undying",
+  "item.minecraft.lingering_potion.effect.undying": "Lingering Potion of Undying",
+  "item.minecraft.tipped_arrow.effect.undying": "Arrow of Undying"
 }
