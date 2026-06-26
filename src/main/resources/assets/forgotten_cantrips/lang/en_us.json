@@ -18,5 +18,10 @@
   "item.minecraft.potion.effect.undying": "Potion of Undying",
   "item.minecraft.splash_potion.effect.undying": "Splash Potion of Undying",
   "item.minecraft.lingering_potion.effect.undying": "Lingering Potion of Undying",
-  "item.minecraft.tipped_arrow.effect.undying": "Arrow of Undying"
+  "item.minecraft.tipped_arrow.effect.undying": "Arrow of Undying",
+  "effect.forgotten_cantrips.illumination": "Illumination",
+  "item.minecraft.potion.effect.illumination": "Potion of Illumination",
+  "item.minecraft.splash_potion.effect.illumination": "Splash Potion of Illumination",
+  "item.minecraft.lingering_potion.effect.illumination": "Lingering Potion of Illumination",
+  "item.minecraft.tipped_arrow.effect.illumination": "Arrow of Illumination"
 }

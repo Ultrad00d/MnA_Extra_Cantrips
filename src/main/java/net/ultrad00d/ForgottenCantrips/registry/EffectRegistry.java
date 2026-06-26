@@ -15,6 +15,9 @@ public class EffectRegistry {
     public static final RegistryObject<MobEffect> UNDYING = MOB_EFFECTS.register("undying",
             UndyingEffect::new);
 
+    public static final RegistryObject<MobEffect> ILLUMINATION = MOB_EFFECTS.register("illumination",
+            UndyingEffect::new);
+
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);
     }
