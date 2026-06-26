@@ -19,10 +19,10 @@ public class PotionRegistry {
         () -> new Potion("undying", new MobEffectInstance(EffectRegistry.UNDYING.get(), 4800)));
 
     public static final RegistryObject<Potion> ILLUMINATION = POTIONS.register("illumination",
-        () -> new Potion(new MobEffectInstance(EffectRegistry.UNDYING.get(), 1800)));
+        () -> new Potion(new MobEffectInstance(EffectRegistry.ILLUMINATION.get(), 1800)));
 
     public static final RegistryObject<Potion> ILLUMINATION_LONG = POTIONS.register("illumination_long",
-        () -> new Potion("undying", new MobEffectInstance(EffectRegistry.UNDYING.get(), 4800)));
+        () -> new Potion("illumination", new MobEffectInstance(EffectRegistry.ILLUMINATION.get(), 4800)));
 
 
     public static void register(IEventBus eventBus) {
