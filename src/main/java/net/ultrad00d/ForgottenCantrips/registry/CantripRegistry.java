@@ -285,10 +285,18 @@ public class CantripRegistry {
             player.addEffect(new MobEffectInstance(MobEffects.GLOWING, 600, 0));
             return true;
         }
+        // Glowstone, Sea Lantern, Shroomlight, Redstone Lamp - light up the area around the player for 3 minutes
+        if (item == Items.GLOWSTONE || item == Items.SEA_LANTERN || item == Items.SHROOMLIGHT || item == Items.REDSTONE_LAMP) {
+            player.addEffect(new MobEffectInstance(EffectRegistry.ILLUMINATION.get(), 3600, 0));
+            return true;
+        }
+        // Redstone Torch, Torch, Soul Torch - light up the area around the player for 30 seconds
+        if (item == Items.TORCH || item == Items.REDSTONE_TORCH || item == Items.SOUL_TORCH) {
+            player.addEffect(new MobEffectInstance(EffectRegistry.ILLUMINATION.get(), 600, 0));
+            return true;
+        }
 
         // Some of the items might be implemented further: 
-        // (Mandatory) Glowstone, Sea Lantern, Shroomlight - light up the area around the player for 3 minutes
-        // (Mandatory) Redstone Torch, Torch, Soul Torch - light up the area around the player for 30 seconds
         // (Mandatory) Piston - make player's step longer to 1 block
         // (Mandatory) Music Discs - play the music disc for the player, throw after playing
         // (Optional) Dragon's Breath - apply the "Levitation" effect to the player for 10 seconds
