@@ -18,6 +18,8 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.PotionItem;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Blocks;
@@ -236,10 +238,25 @@ public class CantripRegistry {
             return;
         }
 
-        // Some of the items might be implemented further: 
         // (Mandatory) Totem of Undying - apply the "Undying" effect to the player for 3 minutes, and prevent death once
+        if (item == Items.TOTEM_OF_UNDYING) {
+            player.addEffect(new MobEffectInstance(EffectRegistry.UNDYING.get(), 3600, 0));
+            return;
+        }
+
         // (Mandatory) Potions - apply effects of the potion to the player
+        if (item instanceof PotionItem potionItem) {
+            potionItem.finishUsingItem(stack, player.level(), player);
+            return;
+        }
+
         // (Mandatory) Milk Bucket - remove all effects from the player and remove the bucket
+        if (item == Items.MILK_BUCKET) {
+            player.removeAllEffects();
+            return;
+        }
+
+        // Some of the items might be implemented further: 
         // (Mandatory) Glowing Ink Sac, Glowing Dust, Spectral Arrow - apply glowing effect to the player for 30 seconds
         // (Mandatory) Shulker Shell - apply the "Levitation" effect to the player for 10 seconds
         // (Mandatory) Rabbit's Foot - apply the "Jump Boost" effect to the player for 30 seconds
