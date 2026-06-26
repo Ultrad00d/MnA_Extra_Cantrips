@@ -15,6 +15,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.animal.Fox;
@@ -239,6 +240,11 @@ public class CantripRegistry {
             applyFoodProperties(player, Items.PUMPKIN_PIE.getDefaultInstance().getFoodProperties(player), 1);
             return true;
         }
+        // Hay Bale - apply nutrition as if the player ate 3 breads (1 hay bale = 9 wheats = 3 breads)
+        if (item == Blocks.HAY_BLOCK.asItem()) {
+            applyFoodProperties(player, Items.BREAD.getDefaultInstance().getFoodProperties(player), 3);
+            return true;
+        }
         // Bottle o' Enchanting - add experience to the player
         if (item == Items.EXPERIENCE_BOTTLE) {
             player.giveExperiencePoints(player.getRandom().nextInt(16) + 6);
@@ -259,16 +265,29 @@ public class CantripRegistry {
             player.removeAllEffects();
             return true;
         }
+        // Shulker Shell - apply the "Levitation" effect to the player for 10 seconds
+        if (item == Items.SHULKER_SHELL) {
+            player.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 200, 0));
+            return true;
+        }
+        // Rabbit's Foot - apply the "Jump Boost" effect to the player for 30 seconds
+        if (item == Items.RABBIT_FOOT) {
+            player.addEffect(new MobEffectInstance(MobEffects.JUMP, 600, 0));
+            return true;
+        }
+        // Heart of the Sea - apply the "Conduit Power" effect to the player for 15 minutes
+        if (item == Items.HEART_OF_THE_SEA) {
+            player.addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, 18000, 0));
+            return true;
+        }
 
         // Some of the items might be implemented further: 
         // (Mandatory) Glowing Ink Sac, Glowing Dust, Spectral Arrow - apply glowing effect to the player for 30 seconds
-        // (Mandatory) Shulker Shell - apply the "Levitation" effect to the player for 10 seconds
-        // (Mandatory) Rabbit's Foot - apply the "Jump Boost" effect to the player for 30 seconds
-        // (Mandatory) Heart of the Sea - apply the "Conduit Power" effect to the player for 15 minutes
         // (Mandatory) Glowstone, Sea Lantern, Shroomlight - light up the area around the player for 3 minutes
         // (Mandatory) Redstone Torch, Torch, Soul Torch - light up the area around the player for 30 seconds
         // (Mandatory) Piston - make player's step longer to 1 block
         // (Mandatory) Music Discs - play the music disc for the player, throw after playing
+        // (Optional) Dragon's Breath - apply the "Levitation" effect to the player for 10 seconds
         // (Optional) Flint and Steel, Fire Charge - set the player on fire for 5 seconds
         // (Optional) Gunpowder, TNT, End Crystal - create an explosion at the player's location (without destroying blocks)
         
