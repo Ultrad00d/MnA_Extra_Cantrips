@@ -231,26 +231,22 @@ public class CantripRegistry {
             applyFoodProperties(player, Items.PUMPKIN_PIE.getDefaultInstance().getFoodProperties(player), 1);
             return;
         }
-
-        // (Mandatory) Bottle o' Enchanting - add experience to the player
+        // Bottle o' Enchanting - add experience to the player
         if (item == Items.EXPERIENCE_BOTTLE) {
             player.giveExperiencePoints(player.getRandom().nextInt(16) + 6);
             return;
         }
-
-        // (Mandatory) Totem of Undying - apply the "Undying" effect to the player for 3 minutes, and prevent death once
+        // Totem of Undying - apply the "Undying" effect to the player for 3 minutes, and prevent death once
         if (item == Items.TOTEM_OF_UNDYING) {
             player.addEffect(new MobEffectInstance(EffectRegistry.UNDYING.get(), 3600, 0));
             return;
         }
-
-        // (Mandatory) Potions - apply effects of the potion to the player
+        // Potions - apply effects of the potion to the player
         if (item instanceof PotionItem potionItem) {
             potionItem.finishUsingItem(stack, player.level(), player);
             return;
         }
-
-        // (Mandatory) Milk Bucket - remove all effects from the player and remove the bucket
+        // Milk Bucket - remove all effects from the player and remove the bucket
         if (item == Items.MILK_BUCKET) {
             player.removeAllEffects();
             return;
