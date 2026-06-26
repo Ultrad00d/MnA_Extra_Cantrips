@@ -18,6 +18,13 @@ public class PotionRegistry {
     public static final RegistryObject<Potion> UNDYING_LONG = POTIONS.register("undying_long",
         () -> new Potion("undying", new MobEffectInstance(EffectRegistry.UNDYING.get(), 4800)));
 
+    public static final RegistryObject<Potion> ILLUMINATION = POTIONS.register("illumination",
+        () -> new Potion(new MobEffectInstance(EffectRegistry.ILLUMINATION.get(), 1800)));
+
+    public static final RegistryObject<Potion> ILLUMINATION_LONG = POTIONS.register("illumination_long",
+        () -> new Potion("illumination", new MobEffectInstance(EffectRegistry.ILLUMINATION.get(), 4800)));
+
+
     public static void register(IEventBus eventBus) {
         POTIONS.register(eventBus);
     }

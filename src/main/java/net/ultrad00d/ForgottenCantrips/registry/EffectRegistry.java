@@ -6,6 +6,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
+import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
 import net.ultrad00d.ForgottenCantrips.effect.UndyingEffect;
 
 public class EffectRegistry {
@@ -14,6 +15,9 @@ public class EffectRegistry {
 
     public static final RegistryObject<MobEffect> UNDYING = MOB_EFFECTS.register("undying",
             UndyingEffect::new);
+
+    public static final RegistryObject<MobEffect> ILLUMINATION = MOB_EFFECTS.register("illumination",
+            IlluminationEffect::new);
 
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);

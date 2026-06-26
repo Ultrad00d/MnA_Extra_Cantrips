@@ -1,7 +1,11 @@
 package net.ultrad00d.ForgottenCantrips;
 
+import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.context.CommandContext;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph.Effect;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -14,22 +18,35 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.LightBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ConfigTracker;
+import net.minecraftforge.fml.config.IConfigEvent;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralBoatRenderer;
+import net.ultrad00d.ForgottenCantrips.config.IlluminationConfig;
 import net.ultrad00d.ForgottenCantrips.block.SpectralBedBlock;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBedBlockEntity;
 import net.ultrad00d.ForgottenCantrips.registry.BlockEntityRegistry;
@@ -38,6 +55,20 @@ import net.ultrad00d.ForgottenCantrips.registry.CantripRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.PotionRegistry;
+
+import com.electronwill.nightconfig.core.CommentedConfig;
+import com.electronwill.nightconfig.core.file.FileConfig;
+import com.electronwill.nightconfig.toml.TomlFormat;
+import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.network.chat.Component;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Map;
+import java.util.List;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -45,9 +76,14 @@ import org.slf4j.Logger;
 public class ForgottenCantrips {
     public static final String MOD_ID = "forgotten_cantrips"; // lowercase, no spaces, numbers, _ and -
     public static final Logger LOGGER = LogUtils.getLogger();
+    
+    private static final Map<UUID, BlockPos> PREVIOUS_POSITION = new HashMap<>();
+    private static final Map<UUID, Set<BlockPos>> ILLUMINATION_LIGHTS = new HashMap<>();
 
     public ForgottenCantrips() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, IlluminationConfig.SPEC);
 
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
         BlockRegistry.register(modEventBus);
@@ -59,6 +95,7 @@ public class ForgottenCantrips {
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
+
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -120,5 +157,115 @@ public class ForgottenCantrips {
             );
             sp.connection.send(packet);
         }
+    }
+
+    @SubscribeEvent
+    public void onLivingTick(LivingTickEvent event) {
+        if (!(event.getEntity() instanceof Player player)) return;
+        var level = player.level();
+        if (level.isClientSide) return;
+
+        var effect = player.getEffect(EffectRegistry.ILLUMINATION.get());
+        if (effect == null) {
+            var removed = ILLUMINATION_LIGHTS.remove(player.getUUID());
+            if (removed != null)
+                for (BlockPos pos : removed)
+                    if (level.getBlockState(pos).is(Blocks.LIGHT))
+                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+            return;
+        }
+
+        if (player.tickCount % IlluminationConfig.TICK_PERIOD.get() != 0) return;
+
+        int radius = Math.min(switch (effect.getAmplifier()) {
+            case 0 -> 2;
+            case 1 -> 3;
+            default -> 4;
+        } + IlluminationConfig.RADIUS_EXT.get(), IlluminationConfig.MAX_RADIUS.get());
+
+        var center = player.blockPosition();
+        if (center.equals(PREVIOUS_POSITION.get(player.getUUID()))) return;
+        var current = new HashSet<BlockPos>();
+
+        for (int x = -radius; x <= radius; x++)
+            for (int z = -radius; z <= radius; z++) {
+                if (x * x + z * z > radius * radius) continue;
+                for (int y = -1; y <= 1; y++) {
+                    var pos = center.offset(x, y, z);
+                    if (level.getBlockState(pos).isAir())
+                        current.add(pos.immutable());
+                }
+            }
+
+
+        var previous = ILLUMINATION_LIGHTS.getOrDefault(player.getUUID(), Set.of());
+
+        for (BlockPos pos : previous)
+            if (!current.contains(pos))
+                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+
+        for (BlockPos pos : current)
+            if (!previous.contains(pos))
+                level.setBlock(pos, Blocks.LIGHT.defaultBlockState().setValue(LightBlock.LEVEL, 15), 3);
+
+        ILLUMINATION_LIGHTS.put(player.getUUID(), current);
+        PREVIOUS_POSITION.put(player.getUUID(), center);
+    }
+
+    @SubscribeEvent
+    public void onPlayerLogout(PlayerLoggedOutEvent event) {
+        var removed = ILLUMINATION_LIGHTS.remove(event.getEntity().getUUID());
+        if (removed != null) {
+            var level = event.getEntity().level();
+            for (BlockPos pos : removed)
+                if (level.getBlockState(pos).is(Blocks.LIGHT))
+                    level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        }
+    }
+
+    @SubscribeEvent
+    public void onRegisterCommands(RegisterCommandsEvent event) {
+        var dispatcher = event.getDispatcher();
+
+        dispatcher.register(
+            Commands.literal("forgotten_cantrips").then(Commands.literal("illumination")
+                .then(Commands.literal("max_radius")
+                    .then(Commands.argument("value", IntegerArgumentType.integer(2, 8))
+                        .executes(ctx -> setConfigValue(ctx, "Illumination.max_radius", IntegerArgumentType.getInteger(ctx, "value")))
+                    )
+                )
+                .then(Commands.literal("tick_period")
+                    .then(Commands.argument("value", IntegerArgumentType.integer(1, 20))
+                        .executes(ctx -> setConfigValue(ctx, "Illumination.tick_period", IntegerArgumentType.getInteger(ctx, "value")))
+                    )
+                )
+                .then(Commands.literal("radius_ext")
+                    .then(Commands.argument("value", IntegerArgumentType.integer(0, 2))
+                        .executes(ctx -> setConfigValue(ctx, "Illumination.radius_ext", IntegerArgumentType.getInteger(ctx, "value")))
+                    )
+                )
+            )
+        );
+    }
+    private static int setConfigValue(CommandContext<CommandSourceStack> ctx, String key, int value) {
+        ForgeConfigSpec.ConfigValue<Integer> configValue = switch (key) {
+            case "Illumination.max_radius" -> IlluminationConfig.MAX_RADIUS;
+            case "Illumination.tick_period" -> IlluminationConfig.TICK_PERIOD;
+            case "Illumination.radius_ext" -> IlluminationConfig.RADIUS_EXT;
+            default -> null;
+        };
+
+        if (configValue == null) {
+            ctx.getSource().sendFailure(Component.literal("Unknown config key: " + key));
+            return 0;
+        }
+
+        configValue.set(value);
+
+        var modConfig = ConfigTracker.INSTANCE.fileMap().get(MOD_ID + "-common.toml");
+        if (modConfig != null) modConfig.save();
+
+        ctx.getSource().sendSuccess(() -> Component.literal("Set " + key + " to " + value), true);
+        return 1;
     }
 }
