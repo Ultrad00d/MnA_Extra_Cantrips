@@ -191,7 +191,7 @@ public class CantripRegistry {
         ItemStack otherHand = player.getItemInHand(_other_hand);
 
         if (otherHand.isEmpty()) {
-            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.force_consume.no_item"));
+            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.force_consume.noitem"));
             return;
         }
     
