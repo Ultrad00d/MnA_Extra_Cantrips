@@ -103,7 +103,7 @@ public class ForgottenCantrips {
 
         event.setCanceled(true);
         entity.removeEffect(EffectRegistry.UNDYING.get());
-        entity.setHealth(1.5F);
+        entity.setHealth(1.0F);
         entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
         entity.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 200, 2));
         entity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 800, 0));
