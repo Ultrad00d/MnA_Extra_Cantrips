@@ -88,25 +88,30 @@ public class SpectralDonkey extends AbstractChestedHorse {
     }
 
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (player == getOwner()) {
+        //if (player == getOwner()) {
             if (!player.isSecondaryUseActive()) {
                 this.doPlayerRide(player);
                 return InteractionResult.SUCCESS;
             }
 
             if (!this.level().isClientSide) {
-                player.getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(cap -> {
-                    NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
-                            (id, playerInv, p) -> new SharedInventoryMenu(id, playerInv, cap.getInventory()),
-                            Component.translatable("container.forgotten_cantrips.spectral_chest")
-                    ));
-                });
+                this.openSpectralChest(player);
                 return InteractionResult.CONSUME;
             }
             return InteractionResult.SUCCESS;
-        } else {
-            return InteractionResult.FAIL;
-        }
+        //} else {
+        //    player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_donkey.notowner"));
+        //    return InteractionResult.FAIL;
+        //}
+    }
+
+    public void openSpectralChest(Player player) {
+        player.getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(cap -> {
+            NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
+                    (id, playerInv, p) -> new SharedInventoryMenu(id, playerInv, cap.getInventory()),
+                    Component.translatable("container.forgotten_cantrips.spectral_chest")
+            ));
+        });
     }
 
     public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
