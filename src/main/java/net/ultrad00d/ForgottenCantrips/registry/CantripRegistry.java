@@ -5,7 +5,10 @@ import com.mna.api.tools.RLoc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;
+
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -42,6 +45,7 @@ import net.ultrad00d.ForgottenCantrips.entity.SpectralBedBlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;
 import net.minecraftforge.common.ForgeMod;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBoat;
 
@@ -305,13 +309,22 @@ public class CantripRegistry {
         }
 
         // Music Discs - play the music disc for the player, throw after playing
-        if (item instanceof RecordItem) {
+        if (item instanceof RecordItem record) {
             Level level = player.level();
             if (!level.isClientSide) {
-                int itemId = Item.getId(item);
-                BlockPos pos = player.blockPosition();
-                level.levelEvent(null, LevelEvent.SOUND_PLAY_JUKEBOX_SONG, pos, itemId);
-                ForgottenCantrips.startJukebox(player.getUUID(), itemId, pos);
+                var sound = record.getSound();
+                var seed = player.getRandom().nextLong();
+                var packet = new ClientboundSoundEntityPacket(
+                    Holder.direct(sound),
+                    SoundSource.RECORDS,
+                    player,
+                    1.0F, 1.0F,
+                    player.getRandom().nextLong()
+                );
+                // Broadcast to all players tracking this player
+                ((ServerLevel) level).getChunkSource().chunkMap.broadcast(player, packet);
+                // Also send to the consuming player
+                if (player instanceof ServerPlayer sp) sp.connection.send(packet);
             }
             return true;
         }

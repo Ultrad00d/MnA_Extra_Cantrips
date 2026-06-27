@@ -15,6 +15,9 @@ import net.minecraft.network.protocol.game.ClientboundEntityEventPacket;
 import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -81,9 +84,26 @@ public class ForgottenCantrips {
     private static final Map<UUID, BlockPos> PREVIOUS_POSITION = new HashMap<>();
     private static final Map<UUID, Set<BlockPos>> ILLUMINATION_LIGHTS = new HashMap<>();
 
-    private record JukeboxState(int itemId, BlockPos lastPos) {}
+    record JukeboxState(int itemId, long startGameTime) {}
     private static final Map<UUID, JukeboxState> JUKEBOX_PLAYERS = new HashMap<>();
-
+    private static final Map<Integer, Long> DISC_DURATIONS = Map.ofEntries(
+        Map.entry(Item.getId(Items.MUSIC_DISC_13), 3700L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_CAT), 3700L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_BLOCKS), 6900L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_CHIRP), 3700L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_FAR), 3480L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_MALL), 3940L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_MELLOHI), 1920L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_STAL), 3000L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_STRAD), 3760L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_WARD), 5020L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_11), 1420L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_WAIT), 4760L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_PIGSTEP), 2960L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_OTHERSIDE), 3900L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_5), 3500L),
+        Map.entry(Item.getId(Items.MUSIC_DISC_RELIC), 4360L)
+    );
 
     public ForgottenCantrips() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -102,11 +122,11 @@ public class ForgottenCantrips {
         modEventBus.addListener(this::addCreative);
 
     }
-    
-    public static void startJukebox(UUID uuid, int itemId, BlockPos pos) {
-        JUKEBOX_PLAYERS.put(uuid, new JukeboxState(itemId, pos));
-    }
 
+    public static void startJukebox(UUID uuid, int itemId, long startGameTime) {
+        JUKEBOX_PLAYERS.put(uuid, new JukeboxState(itemId, startGameTime));
+    }
+    
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(CantripRegistry::register);
     }
@@ -224,20 +244,21 @@ public class ForgottenCantrips {
         ILLUMINATION_LIGHTS.put(player.getUUID(), current);
         PREVIOUS_POSITION.put(player.getUUID(), center);
     }
-    public void jukeboxTick(LivingTickEvent event) {
+    private static void jukeboxTick(LivingTickEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
+        var level = player.level();
+
         var juke = JUKEBOX_PLAYERS.get(player.getUUID());
         if (juke == null) return;
-        var level = player.level();
-        BlockPos p = player.blockPosition();
 
-        //if (player.tickCount % 10 != 0) return;
+        long elapsed = level.getGameTime() - juke.startGameTime();
+        long duration = DISC_DURATIONS.getOrDefault(juke.itemId(), 3700L) + 60; 
+        if (elapsed < duration) return;
 
-        if (p.distSqr(juke.lastPos()) > 144) {
-            level.levelEvent(null, LevelEvent.SOUND_STOP_JUKEBOX_SONG, juke.lastPos(), 0);
-            level.levelEvent(null, LevelEvent.SOUND_PLAY_JUKEBOX_SONG, p, juke.itemId());
-            JUKEBOX_PLAYERS.put(player.getUUID(), new JukeboxState(juke.itemId(), p));
-        }
+        // Track ended — drop the disc
+        ItemStack disc = new ItemStack(Item.byId(juke.itemId()));
+        player.drop(disc, false);
+        JUKEBOX_PLAYERS.remove(player.getUUID());
     }
 
     @SubscribeEvent
@@ -249,8 +270,7 @@ public class ForgottenCantrips {
                 if (level.getBlockState(pos).is(Blocks.LIGHT))
                     level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         }
-        var juke = JUKEBOX_PLAYERS.remove(event.getEntity().getUUID());
-        if (juke != null) event.getEntity().level().levelEvent(null, LevelEvent.SOUND_STOP_JUKEBOX_SONG, juke.lastPos(), 0);
+        JUKEBOX_PLAYERS.remove(event.getEntity().getUUID());
     }
 
     @SubscribeEvent
