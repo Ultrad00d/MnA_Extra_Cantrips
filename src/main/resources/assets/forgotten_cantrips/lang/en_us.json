@@ -23,5 +23,10 @@
   "item.minecraft.potion.effect.illumination": "Potion of Illumination",
   "item.minecraft.splash_potion.effect.illumination": "Splash Potion of Illumination",
   "item.minecraft.lingering_potion.effect.illumination": "Lingering Potion of Illumination",
-  "item.minecraft.tipped_arrow.effect.illumination": "Arrow of Illumination"
+  "item.minecraft.tipped_arrow.effect.illumination": "Arrow of Illumination",
+  "effect.forgotten_cantrips.aether_stride": "Aether Stride",
+  "item.minecraft.potion.effect.aether_stride": "Potion of Aether Stride",
+  "item.minecraft.splash_potion.effect.aether_stride": "Splash Potion of Aether Stride",
+  "item.minecraft.lingering_potion.effect.aether_stride": "Lingering Potion of Aether Stride",
+  "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride"
 }
