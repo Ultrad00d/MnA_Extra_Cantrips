@@ -8,6 +8,8 @@
 
 [Week 3 Project Delivery Index](reports/week3/README.md)
 
+[Week 4 Project Delivery Index](reports/week4/README.md)
+
 
 
 **Setup:**
