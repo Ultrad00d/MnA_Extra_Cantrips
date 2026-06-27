@@ -74,7 +74,7 @@ Link to [Branch protection for the protected default branch](https://github.com/
 
 ## Reflection
 
-(Retrospective)[retrospective.md] and (reflection)[reflection.md] on Sprint 2.
+[Retrospective](retrospective.md) and [reflection](reflection.md) on Sprint 2.
 
 Summary of current product status: (TBA)
 
