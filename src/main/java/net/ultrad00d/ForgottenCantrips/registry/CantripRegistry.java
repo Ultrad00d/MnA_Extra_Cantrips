@@ -27,14 +27,17 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.SuspiciousStewItem;
 import net.minecraft.world.item.ChorusFruitItem;
+import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBedBlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -301,9 +304,20 @@ public class CantripRegistry {
             return true;
         }
 
+        // Music Discs - play the music disc for the player, throw after playing
+        if (item instanceof RecordItem) {
+            Level level = player.level();
+            if (!level.isClientSide) {
+                int itemId = Item.getId(item);
+                BlockPos pos = player.blockPosition();
+                level.levelEvent(null, LevelEvent.SOUND_PLAY_JUKEBOX_SONG, pos, itemId);
+                ForgottenCantrips.startJukebox(player.getUUID(), itemId, pos);
+            }
+            return true;
+        }
+
         // Some of the items might be implemented further:
         // (Mandatory) Piston - make player's step longer to 1 block
-        // (Mandatory) Music Discs - play the music disc for the player, throw after playing
         // (Optional) Dragon's Breath - apply the "Levitation" effect to the player for 10 seconds
         // (Optional) Flint and Steel, Fire Charge - set the player on fire for 5 seconds
         // (Optional) Gunpowder, TNT, End Crystal - create an explosion at the player's location (without destroying blocks)

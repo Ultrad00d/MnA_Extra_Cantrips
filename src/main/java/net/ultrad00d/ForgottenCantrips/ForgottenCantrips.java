@@ -20,6 +20,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.LightBlock;
@@ -80,6 +81,10 @@ public class ForgottenCantrips {
     private static final Map<UUID, BlockPos> PREVIOUS_POSITION = new HashMap<>();
     private static final Map<UUID, Set<BlockPos>> ILLUMINATION_LIGHTS = new HashMap<>();
 
+    private record JukeboxState(int itemId, BlockPos lastPos) {}
+    private static final Map<UUID, JukeboxState> JUKEBOX_PLAYERS = new HashMap<>();
+
+
     public ForgottenCantrips() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -96,6 +101,10 @@ public class ForgottenCantrips {
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
 
+    }
+    
+    public static void startJukebox(UUID uuid, int itemId, BlockPos pos) {
+        JUKEBOX_PLAYERS.put(uuid, new JukeboxState(itemId, pos));
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -161,6 +170,10 @@ public class ForgottenCantrips {
 
     @SubscribeEvent
     public void onLivingTick(LivingTickEvent event) {
+        illuminationTick(event);
+        jukeboxTick(event);
+    }
+    public void illuminationTick(LivingTickEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
         var level = player.level();
         if (level.isClientSide) return;
@@ -211,6 +224,21 @@ public class ForgottenCantrips {
         ILLUMINATION_LIGHTS.put(player.getUUID(), current);
         PREVIOUS_POSITION.put(player.getUUID(), center);
     }
+    public void jukeboxTick(LivingTickEvent event) {
+        if (!(event.getEntity() instanceof Player player)) return;
+        var juke = JUKEBOX_PLAYERS.get(player.getUUID());
+        if (juke == null) return;
+        var level = player.level();
+        BlockPos p = player.blockPosition();
+
+        //if (player.tickCount % 10 != 0) return;
+
+        if (p.distSqr(juke.lastPos()) > 144) {
+            level.levelEvent(null, LevelEvent.SOUND_STOP_JUKEBOX_SONG, juke.lastPos(), 0);
+            level.levelEvent(null, LevelEvent.SOUND_PLAY_JUKEBOX_SONG, p, juke.itemId());
+            JUKEBOX_PLAYERS.put(player.getUUID(), new JukeboxState(juke.itemId(), p));
+        }
+    }
 
     @SubscribeEvent
     public void onPlayerLogout(PlayerLoggedOutEvent event) {
@@ -221,6 +249,8 @@ public class ForgottenCantrips {
                 if (level.getBlockState(pos).is(Blocks.LIGHT))
                     level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         }
+        var juke = JUKEBOX_PLAYERS.remove(event.getEntity().getUUID());
+        if (juke != null) event.getEntity().level().levelEvent(null, LevelEvent.SOUND_STOP_JUKEBOX_SONG, juke.lastPos(), 0);
     }
 
     @SubscribeEvent
