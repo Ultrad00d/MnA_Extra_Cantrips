@@ -5,7 +5,10 @@ import com.mna.api.tools.RLoc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;
+
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,18 +30,22 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.SuspiciousStewItem;
 import net.minecraft.world.item.ChorusFruitItem;
+import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBedBlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;
 import net.minecraftforge.common.ForgeMod;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBoat;
 
@@ -206,7 +213,12 @@ public class CantripRegistry {
             return;
         }
     
-        applyEffect(player, otherHand);
+        boolean effectApplied = applyEffect(player, otherHand);
+
+        if (!effectApplied) {
+            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.force_consume.baditem"));
+            return;
+        }
 
         // if (!player.isCreative()) {
         otherHand.shrink(1);
@@ -285,12 +297,45 @@ public class CantripRegistry {
             player.addEffect(new MobEffectInstance(MobEffects.GLOWING, 600, 0));
             return true;
         }
+        // Glowstone, Sea Lantern, Shroomlight, Redstone Lamp - light up the area around the player for 3 minutes
+        if (item == Items.GLOWSTONE || item == Items.SEA_LANTERN || item == Items.SHROOMLIGHT || item == Items.REDSTONE_LAMP) {
+            player.addEffect(new MobEffectInstance(EffectRegistry.ILLUMINATION.get(), 3600, 0));
+            return true;
+        }
+        // Redstone Torch, Torch, Soul Torch - light up the area around the player for 30 seconds
+        if (item == Items.TORCH || item == Items.REDSTONE_TORCH || item == Items.SOUL_TORCH) {
+            player.addEffect(new MobEffectInstance(EffectRegistry.ILLUMINATION.get(), 600, 0));
+            return true;
+        }
 
-        // Some of the items might be implemented further: 
-        // (Mandatory) Glowstone, Sea Lantern, Shroomlight - light up the area around the player for 3 minutes
-        // (Mandatory) Redstone Torch, Torch, Soul Torch - light up the area around the player for 30 seconds
-        // (Mandatory) Piston - make player's step longer to 1 block
-        // (Mandatory) Music Discs - play the music disc for the player, throw after playing
+        // Piston - make player's step longer to 1 block for 2 minutes
+        if (item == Items.PISTON || item == Items.STICKY_PISTON) {
+            player.addEffect(new MobEffectInstance(EffectRegistry.AETHER_STRIDE.get(), 2400, 0));
+            return true;
+        }
+
+        // Music Discs - play the music disc for the player, throw after playing
+        if (item instanceof RecordItem record) {
+            Level level = player.level();
+            if (!level.isClientSide) {
+                var sound = record.getSound();
+                var seed = player.getRandom().nextLong();
+                var packet = new ClientboundSoundEntityPacket(
+                    Holder.direct(sound),
+                    SoundSource.RECORDS,
+                    player,
+                    1.0F, 1.0F,
+                    player.getRandom().nextLong()
+                );
+                // Broadcast to all players tracking this player
+                ((ServerLevel) level).getChunkSource().chunkMap.broadcast(player, packet);
+                // Also send to the consuming player
+                if (player instanceof ServerPlayer sp) sp.connection.send(packet);
+            }
+            return true;
+        }
+
+        // Some of the items might be implemented further:
         // (Optional) Dragon's Breath - apply the "Levitation" effect to the player for 10 seconds
         // (Optional) Flint and Steel, Fire Charge - set the player on fire for 5 seconds
         // (Optional) Gunpowder, TNT, End Crystal - create an explosion at the player's location (without destroying blocks)
