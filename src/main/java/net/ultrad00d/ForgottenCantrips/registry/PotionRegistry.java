@@ -24,6 +24,12 @@ public class PotionRegistry {
     public static final RegistryObject<Potion> ILLUMINATION_LONG = POTIONS.register("illumination_long",
         () -> new Potion("illumination", new MobEffectInstance(EffectRegistry.ILLUMINATION.get(), 4800)));
 
+    public static final RegistryObject<Potion> AETHER_STRIDE = POTIONS.register("aether_stride",
+        () -> new Potion(new MobEffectInstance(EffectRegistry.AETHER_STRIDE.get(), 1800)));
+
+    public static final RegistryObject<Potion> AETHER_STRIDE_LONG = POTIONS.register("aether_stride_long",
+        () -> new Potion("aether_stride", new MobEffectInstance(EffectRegistry.AETHER_STRIDE.get(), 4800)));
+
 
     public static void register(IEventBus eventBus) {
         POTIONS.register(eventBus);
