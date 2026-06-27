@@ -78,20 +78,24 @@ public class SpectralBoat extends ChestBoat implements OwnableEntity {
     }
 
     public InteractionResult interact(Player player, InteractionHand pHand) {
-        if (player.isSecondaryUseActive() && player.getUUID().equals(this.getOwnerUUID())) {
+        if (player.isSecondaryUseActive()) {
             if (!this.level().isClientSide) {
-                player.getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(cap -> {
-                    NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
-                            (id, playerInv, p) -> new SharedInventoryMenu(id, playerInv, cap.getInventory()),
-                            Component.translatable("container.forgotten_cantrips.spectral_chest")
-                    ));
-                });
+                this.openSpectralChest(player);
                 return InteractionResult.CONSUME;
             }
             return InteractionResult.SUCCESS;
         } else {
             return super.interact(player, pHand);
         }
+    }
+
+    public void openSpectralChest(Player player) {
+        player.getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(cap -> {
+            NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
+                    (id, playerInv, p) -> new SharedInventoryMenu(id, playerInv, cap.getInventory()),
+                    Component.translatable("container.forgotten_cantrips.spectral_chest")
+            ));
+        });
     }
 
     @Override
