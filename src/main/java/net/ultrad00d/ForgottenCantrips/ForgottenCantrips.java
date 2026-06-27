@@ -13,8 +13,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundEntityEventPacket;
 import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket;
+import net.minecraft.network.protocol.game.ClientboundStopSoundPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -22,8 +24,11 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.LevelEvent;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.LightBlock;
@@ -35,6 +40,9 @@ import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -84,8 +92,12 @@ public class ForgottenCantrips {
     private static final Map<UUID, BlockPos> PREVIOUS_POSITION = new HashMap<>();
     private static final Map<UUID, Set<BlockPos>> ILLUMINATION_LIGHTS = new HashMap<>();
 
-    record JukeboxState(int itemId, long startGameTime) {}
-    private static final Map<UUID, JukeboxState> JUKEBOX_PLAYERS = new HashMap<>();
+    private static final String DISC_ROOT = "forgotten_cantrips_disc";
+    private static final String DISC_ITEM = DISC_ROOT + "_item";
+    private static final String DISC_START = DISC_ROOT + "_start";
+    private static final String DISC_DURATION = DISC_ROOT + "_duration";
+    private static final String DISC_PLAYING = DISC_ROOT + "_playing";
+
     private static final Map<Integer, Long> DISC_DURATIONS = Map.ofEntries(
         Map.entry(Item.getId(Items.MUSIC_DISC_13), 3700L),
         Map.entry(Item.getId(Items.MUSIC_DISC_CAT), 3700L),
@@ -123,9 +135,6 @@ public class ForgottenCantrips {
 
     }
 
-    public static void startJukebox(UUID uuid, int itemId, long startGameTime) {
-        JUKEBOX_PLAYERS.put(uuid, new JukeboxState(itemId, startGameTime));
-    }
     
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(CantripRegistry::register);
@@ -244,33 +253,114 @@ public class ForgottenCantrips {
         ILLUMINATION_LIGHTS.put(player.getUUID(), current);
         PREVIOUS_POSITION.put(player.getUUID(), center);
     }
-    private static void jukeboxTick(LivingTickEvent event) {
+    public static ItemStack getStoredDisc(Player player) {
+        CompoundTag data = player.getPersistentData();
+        if (!data.contains(DISC_ITEM)) return ItemStack.EMPTY;
+        return ItemStack.of(data.getCompound(DISC_ITEM));
+    }
+
+    public static long getDiscDuration(int itemId) {
+        return DISC_DURATIONS.getOrDefault(itemId, 3700L) + 60;
+    }
+
+    public static void setStoredDisc(Player player, ItemStack disc, long startTime, long duration) {
+        CompoundTag data = player.getPersistentData();
+        data.put(DISC_ITEM, disc.copyWithCount(1).save(new CompoundTag()));
+        data.putLong(DISC_START, startTime);
+        data.putLong(DISC_DURATION, duration);
+        data.putBoolean(DISC_PLAYING, true);
+    }
+
+    private static void clearStoredDisc(Player player) {
+        CompoundTag data = player.getPersistentData();
+        data.remove(DISC_ITEM);
+        data.remove(DISC_START);
+        data.remove(DISC_DURATION);
+        data.remove(DISC_PLAYING);
+    }
+
+    private static void setDiscPlaying(Player player, boolean playing) {
+        player.getPersistentData().putBoolean(DISC_PLAYING, playing);
+    }
+
+    public static void stopDiscSound(Player player) {
+        if (!(player instanceof ServerPlayer sp)) return;
+        var packet = new ClientboundStopSoundPacket((ResourceLocation) null, SoundSource.RECORDS);
+        var level = sp.serverLevel();
+        level.getChunkSource().chunkMap.broadcast(sp, packet);
+        sp.connection.send(packet);
+    }
+
+    private void jukeboxTick(LivingTickEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
-        var level = player.level();
+        Level level = player.level();
+        if (level.isClientSide) return;
 
-        var juke = JUKEBOX_PLAYERS.get(player.getUUID());
-        if (juke == null) return;
+        CompoundTag data = player.getPersistentData();
+        if (!data.contains(DISC_ITEM)) return;
+        if (!data.getBoolean(DISC_PLAYING)) return;
 
-        long elapsed = level.getGameTime() - juke.startGameTime();
-        long duration = DISC_DURATIONS.getOrDefault(juke.itemId(), 3700L) + 60; 
-        if (elapsed < duration) return;
+        long start = data.getLong(DISC_START);
+        long duration = data.getLong(DISC_DURATION);
+        long elapsed = level.getGameTime() - start;
+        if (elapsed < duration + 10) return;
 
-        // Track ended — drop the disc
-        ItemStack disc = new ItemStack(Item.byId(juke.itemId()));
-        player.drop(disc, false);
-        JUKEBOX_PLAYERS.remove(player.getUUID());
+        stopDiscSound(player);
+        ItemStack disc = getStoredDisc(player);
+        if (!disc.isEmpty()) {
+            player.drop(disc, false);
+        }
+        clearStoredDisc(player);
     }
 
     @SubscribeEvent
     public void onPlayerLogout(PlayerLoggedOutEvent event) {
-        var removed = ILLUMINATION_LIGHTS.remove(event.getEntity().getUUID());
+        var player = event.getEntity();
+        var removed = ILLUMINATION_LIGHTS.remove(player.getUUID());
         if (removed != null) {
-            var level = event.getEntity().level();
+            var level = player.level();
             for (BlockPos pos : removed)
                 if (level.getBlockState(pos).is(Blocks.LIGHT))
                     level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         }
-        JUKEBOX_PLAYERS.remove(event.getEntity().getUUID());
+        setDiscPlaying(player, false);
+    }
+
+    @SubscribeEvent
+    public void onPlayerLogin(PlayerLoggedInEvent event) {
+        setDiscPlaying(event.getEntity(), false);
+    }
+
+    @SubscribeEvent
+    public void onPlayerClone(PlayerEvent.Clone event) {
+        if (!event.isWasDeath()) return;
+        Player original = event.getOriginal();
+        Player player = event.getEntity();
+        CompoundTag oldData = original.getPersistentData();
+        if (!oldData.contains(DISC_ITEM)) return;
+
+        CompoundTag newData = player.getPersistentData();
+        newData.put(DISC_ITEM, oldData.getCompound(DISC_ITEM));
+        newData.putLong(DISC_START, oldData.getLong(DISC_START));
+        newData.putLong(DISC_DURATION, oldData.getLong(DISC_DURATION));
+        newData.remove(DISC_PLAYING);
+    }
+
+    @SubscribeEvent
+    public void onLivingDeath(LivingDeathEvent event) {
+        if (!(event.getEntity() instanceof Player player)) return;
+        Level level = player.level();
+        if (level.isClientSide) return;
+        stopDiscSound(player);
+        if (level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+            setDiscPlaying(player, false);
+            return;
+        }
+        ItemStack disc = getStoredDisc(player);
+        if (!disc.isEmpty()) {
+            player.drop(disc, false);
+            clearStoredDisc(player);
+        }
     }
 
     @SubscribeEvent
@@ -278,7 +368,13 @@ public class ForgottenCantrips {
         var dispatcher = event.getDispatcher();
 
         dispatcher.register(
-            Commands.literal("forgotten_cantrips").then(Commands.literal("illumination")
+            Commands.literal("forgotten_cantrips")
+                .then(Commands.literal("music_disc")
+                    .then(Commands.literal("drop")
+                        .executes(ctx -> dropMusicDisc(ctx.getSource().getPlayerOrException()))
+                    )
+                )
+                .then(Commands.literal("illumination")
                 .then(Commands.literal("max_radius")
                     .then(Commands.argument("value", IntegerArgumentType.integer(2, 8))
                         .executes(ctx -> setConfigValue(ctx, "Illumination.max_radius", IntegerArgumentType.getInteger(ctx, "value")))
@@ -316,6 +412,19 @@ public class ForgottenCantrips {
         if (modConfig != null) modConfig.save();
 
         ctx.getSource().sendSuccess(() -> Component.literal("Set " + key + " to " + value), true);
+        return 1;
+    }
+
+    private static int dropMusicDisc(Player player) {
+        ItemStack disc = getStoredDisc(player);
+        if (disc.isEmpty()) {
+            player.sendSystemMessage(Component.translatable("command.forgotten_cantrips.music_disc.drop.empty"));
+            return 0;
+        }
+        stopDiscSound(player);
+        clearStoredDisc(player);
+        player.drop(disc, false);
+        player.sendSystemMessage(Component.translatable("command.forgotten_cantrips.music_disc.drop.success"));
         return 1;
     }
 }

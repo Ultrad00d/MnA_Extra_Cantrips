@@ -7,8 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;
-
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -314,12 +312,23 @@ public class CantripRegistry {
             return true;
         }
 
-        // Music Discs - play the music disc for the player, throw after playing
+        // Music Discs - play the music disc and store in hidden slot
         if (item instanceof RecordItem record) {
             Level level = player.level();
             if (!level.isClientSide) {
+                // Stop previous disc sound and drop existing disc from hidden slot if any
+                ForgottenCantrips.stopDiscSound(player);
+                ItemStack old = ForgottenCantrips.getStoredDisc(player);
+                if (!old.isEmpty()) {
+                    player.drop(old, false);
+                }
+
+                // Store this disc in the hidden slot with timer data
+                long duration = ForgottenCantrips.getDiscDuration(Item.getId(item));
+                ForgottenCantrips.setStoredDisc(player, stack, level.getGameTime(), duration);
+
+                // Play the sound
                 var sound = record.getSound();
-                var seed = player.getRandom().nextLong();
                 var packet = new ClientboundSoundEntityPacket(
                     Holder.direct(sound),
                     SoundSource.RECORDS,
