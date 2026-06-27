@@ -1,17 +1,11 @@
 package net.ultrad00d.ForgottenCantrips;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BedBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,12 +14,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralBoatRenderer;
-import net.ultrad00d.ForgottenCantrips.block.SpectralBedBlock;
-import net.ultrad00d.ForgottenCantrips.entity.SpectralBedBlockEntity;
-import net.ultrad00d.ForgottenCantrips.registry.BlockEntityRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.CantripRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
+import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralDonkeyRenderer;
+import net.ultrad00d.ForgottenCantrips.registry.*;
+import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryScreen;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -37,9 +28,10 @@ public class ForgottenCantrips {
     public ForgottenCantrips() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        EntityRegistry.ENTITY_TYPES.register(modEventBus);
+        EntityRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
         BlockEntityRegistry.register(modEventBus);
+        MenuRegistry.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -67,16 +59,18 @@ public class ForgottenCantrips {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            event.enqueueWork(() -> EntityRenderers.register(
+            EntityRenderers.register(
                     EntityRegistry.SPECTRAL_BOAT.get(),
                     SpectralBoatRenderer::new
-            ));
+            );
+            EntityRenderers.register(
+                    EntityRegistry.SPECTRAL_DONKEY.get(),
+                    SpectralDonkeyRenderer::new
+            );
+            MenuScreens.register(
+                    MenuRegistry.SHARED_INVENTORY_MENU.get(),
+                    SharedInventoryScreen::new
+            );
         }
     }
-
-    @SubscribeEvent
-    public static void onPlayerSetSpawn(PlayerSetSpawnEvent event) {
-
-    }
-
 }
