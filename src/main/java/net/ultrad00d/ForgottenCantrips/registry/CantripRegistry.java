@@ -206,7 +206,12 @@ public class CantripRegistry {
             return;
         }
     
-        applyEffect(player, otherHand);
+        boolean effectApplied = applyEffect(player, otherHand);
+
+        if (!effectApplied) {
+            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.force_consume.baditem"));
+            return;
+        }
 
         // if (!player.isCreative()) {
         otherHand.shrink(1);
@@ -296,7 +301,7 @@ public class CantripRegistry {
             return true;
         }
 
-        // Some of the items might be implemented further: 
+        // Some of the items might be implemented further:
         // (Mandatory) Piston - make player's step longer to 1 block
         // (Mandatory) Music Discs - play the music disc for the player, throw after playing
         // (Optional) Dragon's Breath - apply the "Levitation" effect to the player for 10 seconds
