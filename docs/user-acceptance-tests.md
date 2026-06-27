@@ -10,13 +10,16 @@ Start the game with the mod installed
 ## Preconditions
 - Have Minecraft 1.20.1 installed
 - Have the Forge mod-loader 1.20.1-v47.4.20 (latest) installed
+- Have the [Mana And Artifice Mod](https://www.curseforge.com/minecraft/mc-mods/mana-and-artifice) (version 3.1.11 (latest) for 1.20.1-forge) installed, including dependencies:
+  - Have the [Geckolib](https://www.curseforge.com/minecraft/mc-mods/geckolib) Mod (version 4.2.2 or newer for 1.20.1-forge) installed
+  - Have the [Curios API](https://www.curseforge.com/minecraft/mc-mods/curios) Mod (version 5.14.1 or newer for 1.20.1-forge) installed
 
 ## Step-by-step instructions
 1. Locate the Minecraft installation folder (usually `%Appdata%\.minecraft`)
 2. Paste the forgotten_cantrips-v%version%.jar into the `mods` folder
 3. Launch the game from your desired launcher
 4. Once the game loads, navigate yourself to the Mods menu
-5. Locate the "Forgotten cantrips" mod in the list
+5. Locate the "Forgotten Cantrips" mod in the list
 
 
 ## Expected outcome
