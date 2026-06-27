@@ -1,4 +1,5 @@
 # Sprint #1:
+
 [Sprint milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/milestone/1)
 
 Start date:
@@ -58,3 +59,28 @@ Planned items (user stories+PBIs etc.):
 [[Technical]: Spectral Boat Movement](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/60)
 
 [[Technical]: Spectral Boat Behavior](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/64)
+
+---
+
+# Sprint #2:
+
+[Sprint milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/milestone/2)
+
+Start date:
+Monday, June 22nd, 2026
+
+Finish date:
+Sunday, June 28th, 2026
+
+Goal:
+Deliver a reliable increment by implementing new cantrips, establishing automated quality gates, and addressing customer feedback from the MVP.
+
+Scope rationale:
+Sprint scope was selected after reviewing [Sprint #1 retrospective](../reports/week3/retrospective.md) (unresolved risks: Loot Tables, study tech mechanic, random bugs) and customer feedback on the MVP v1. Quality and automation work is prioritized to reduce risks identified during Sprint #1.
+
+Expected outcome (brief summary):
+Implement Force Consume [US-01] and Empower [US-02] cantrips, define quality requirements with automated tests, extend CI, and address customer feedback.
+
+Planned items:
+
+[US-01](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/20), [US-02](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/21), and supporting PBIs for quality, CI, and customer feedback — see [Sprint #2 milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/milestone/2) for the full list.

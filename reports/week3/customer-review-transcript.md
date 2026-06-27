@@ -1,3 +1,24 @@
+# Customer Meeting Transcript
+
+> **Project:** Mana and Artifice Extra Cantrips<br>
+> **Date:** 2026-06-28<br>
+> **Location/Platform:** in-person<br>
+> **Recording:** Yes  -  customer consented to recording and private sharing with instructors<br>
+> **Publication:** Yes  -  customer consented to publishing the sanitized transcript in the repository
+
+## Participants
+
+| Name | Role |
+|---|---|
+| ultrad00d | Interviewer |
+| notwindstone | Note taker |
+| l1n0n | Note taker |
+| Dima280807 | Note taker |
+
+---
+
+## Transcript
+
 [0:00:00] So, well, in general, this week we managed to add.
 
 How, by the way, you encrypted it well, so I wouldn't see it, don't go in. Don't throw spoilers at me.
