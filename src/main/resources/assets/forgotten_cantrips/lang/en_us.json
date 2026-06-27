@@ -28,5 +28,7 @@
   "item.minecraft.potion.effect.aether_stride": "Potion of Aether Stride",
   "item.minecraft.splash_potion.effect.aether_stride": "Splash Potion of Aether Stride",
   "item.minecraft.lingering_potion.effect.aether_stride": "Lingering Potion of Aether Stride",
-  "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride"
+  "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride",
+  "command.forgotten_cantrips.music_disc.drop.empty": "No music disc stored",
+  "command.forgotten_cantrips.music_disc.drop.success": "Music disc dropped"
 }
