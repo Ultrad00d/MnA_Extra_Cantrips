@@ -308,6 +308,12 @@ public class CantripRegistry {
             return true;
         }
 
+        // Piston - make player's step longer to 1 block for 2 minutes
+        if (item == Items.PISTON || item == Items.STICKY_PISTON) {
+            player.addEffect(new MobEffectInstance(EffectRegistry.AETHER_STRIDE.get(), 2400, 0));
+            return true;
+        }
+
         // Music Discs - play the music disc for the player, throw after playing
         if (item instanceof RecordItem record) {
             Level level = player.level();
@@ -330,7 +336,6 @@ public class CantripRegistry {
         }
 
         // Some of the items might be implemented further:
-        // (Mandatory) Piston - make player's step longer to 1 block
         // (Optional) Dragon's Breath - apply the "Levitation" effect to the player for 10 seconds
         // (Optional) Flint and Steel, Fire Charge - set the player on fire for 5 seconds
         // (Optional) Gunpowder, TNT, End Crystal - create an explosion at the player's location (without destroying blocks)
