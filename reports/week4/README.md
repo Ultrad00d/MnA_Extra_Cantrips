@@ -10,6 +10,30 @@ Video demo link
 
 [Presentation slides](/reports/week4/presentation.pdf)
 
+## Run and build instructions (as per root [README.md](/README.md)):
+
+
+**To run this mod locally:**
+
+- Have Minecraft 1.20.1 installed
+- Have the Forge modloader 1.20.1-v47.4.20 (latest) installed
+- Have the [Mana And Artifice Mod](https://www.curseforge.com/minecraft/mc-mods/mana-and-artifice) (version 3.1.11 (latest) for 1.20.1-forge) installed, including dependencies:  
+  - Have the [Geckolib](https://www.curseforge.com/minecraft/mc-mods/geckolib) Mod (version 4.2.2 or newer for 1.20.1-forge) installed
+  - Have the [Curios API](https://www.curseforge.com/minecraft/mc-mods/curios) Mod (version 5.14.1 or newer for 1.20.1-forge) installed
+
+1. Locate your Minecraft installation folder (usually `%Appdata%\.minecraft`)
+2. Paste the forgotten_cantrips-v%version%.jar into the `mods` folder
+3. Launch the game from your desired launcher
+---
+
+**To build this mod locally:**
+
+Using IntelliJ IDEA:
+1. Clone the repository
+2. In IntelliJ, select **File | Open** -> **Project from Existing Sources**
+3. Select the directory containing the project and click **OK**
+4. To compile, run "./gradlew build"
+
 ## This Sprint
 
 Our [roadmap](/docs/roadmap.md) with plans for the current and the future sprint.
