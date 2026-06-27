@@ -10,7 +10,7 @@ public class AetherStrideEffect extends MobEffect {
         super(MobEffectCategory.BENEFICIAL, 0xBBCCFF);
         this.addAttributeModifier(ForgeMod.STEP_HEIGHT_ADDITION.get(), 
             "7c8a7b3e-1a2b-4c3d-8e5f-6a7b8c9d0e1f", 
-            0.5D, 
+            1.0D, 
             AttributeModifier.Operation.ADDITION);
 
     }
