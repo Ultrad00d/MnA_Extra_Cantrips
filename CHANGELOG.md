@@ -27,4 +27,6 @@ Spectral Boat texture [US-006](docs/user-stories.md)
 
 ### Fixed
 
+Spectral Bed now summons correctly when in a dimension where beds aren't allowed
+
 ### Security
