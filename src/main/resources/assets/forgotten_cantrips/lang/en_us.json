@@ -1,6 +1,6 @@
 {
   "cantrip.forgotten_cantrips.lightning": "Lightning",
-  "cantrip.forgotten_cantrips.lightning.desc": "A placeholder cantrip for a future lightning effect.",
+  "cantrip.forgotten_cantrips.lightning.desc": "Summons a simple lightning bolt where you're looking.",
   "cantrip.forgotten_cantrips.lightning.obstructed": "Can't summon lightning here!",
 
   "cantrip.forgotten_cantrips.spectral_bed": "Spectral Bed",
@@ -11,11 +11,12 @@
   "cantrip.forgotten_cantrips.spectral_bed.badtime": "In this dimension, spectral beds can only be placed at night or during thunderstorms!",
 
   "cantrip.forgotten_cantrips.spectral_boat": "Spectral Boat",
-  "cantrip.forgotten_cantrips.spectral_boat.desc": "Summons a spectral boat at the targeted point.",
+  "cantrip.forgotten_cantrips.spectral_boat.desc": "Summons a spectral boat at the targeted point. The boat has a chest that is shared with your Spectral Donkey's! Despawns if not interacted with for some time.",
 
   "cantrip.forgotten_cantrips.spectral_donkey": "Spectral Donkey",
-  "cantrip.forgotten_cantrips.spectral_donkey.desc": "Summons a donkey, whose inventory is shared with your Spectral Boat!",
+  "cantrip.forgotten_cantrips.spectral_donkey.desc": "Summons a spectral donkey, whose inventory is shared with your Spectral Boat's chest! Despawns if not interacted with for some time.",
   "cantrip.forgotten_cantrips.spectral_donkey.toofar": "Can't summon a spectral donkey that far away!",
+  "cantrip.forgotten_cantrips.spectral_donkey.notowner": "This donkey isn't yours!",
 
   "container.forgotten_cantrips.spectral_chest": "Spectral Chest",
 
