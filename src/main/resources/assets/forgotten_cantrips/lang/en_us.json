@@ -5,7 +5,6 @@
 
   "cantrip.forgotten_cantrips.spectral_bed": "Spectral Bed",
   "cantrip.forgotten_cantrips.spectral_bed.desc": "Summons a single-use bed that doesn't change your respawn point.",
-  "cantrip.forgotten_cantrips.spectral_bed.desc": "Summons a single-use bed where you're looking. The bed doesn't change your respawn point. In dimensions where beds are usable, the bed disappears in the morning and can only be placed at night or during thunderstorms.",
   "cantrip.forgotten_cantrips.spectral_bed.toofar": "Can't place a spectral bed that far away!",
   "cantrip.forgotten_cantrips.spectral_bed.nospace": "Can't fit a spectral bed there!",
   "cantrip.forgotten_cantrips.spectral_bed.badtarget": "Can't place a spectral bed on there!",
@@ -13,7 +12,6 @@
 
   "cantrip.forgotten_cantrips.spectral_boat": "Spectral Boat",
   "cantrip.forgotten_cantrips.spectral_boat.desc": "Summons a boat that has a spectral storage, shared with your Spectral Donkey!",
-  "cantrip.forgotten_cantrips.spectral_boat.desc": "Summons a spectral boat at the targeted point.",
 
   "cantrip.forgotten_cantrips.spectral_donkey": "Spectral Donkey",
   "cantrip.forgotten_cantrips.spectral_donkey.desc": "Summons a donkey, whose inventory is shared with your Spectral Boat!",
