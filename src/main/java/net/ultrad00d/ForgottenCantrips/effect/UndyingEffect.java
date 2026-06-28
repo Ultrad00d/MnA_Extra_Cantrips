@@ -16,7 +16,7 @@ public class UndyingEffect extends MobEffect {
     public UndyingEffect() {
         super(MobEffectCategory.BENEFICIAL, 0xFFD700);
     }
-    public static void handle(LivingDamageEvent event) {
+    public static void onLivingDamage(LivingDamageEvent event) {
         LivingEntity entity = event.getEntity();
         MobEffectInstance effect = entity.getEffect(EffectRegistry.UNDYING.get());
         if (effect == null) return;

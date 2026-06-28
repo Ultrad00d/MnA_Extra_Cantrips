@@ -138,7 +138,7 @@ public class ForgottenCantrips {
 
     @SubscribeEvent
     public void onLivingDamage(LivingDamageEvent event) {
-        UndyingEffect.handle(event);
+        UndyingEffect.onLivingDamage(event);
     }
 
     @SubscribeEvent
