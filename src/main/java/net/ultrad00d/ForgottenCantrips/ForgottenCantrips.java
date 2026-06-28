@@ -1,46 +1,50 @@
 package net.ultrad00d.ForgottenCantrips;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+
+import org.slf4j.Logger;
+
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.logging.LogUtils;
+
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.client.gui.font.glyphs.BakedGlyph.Effect;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.protocol.game.ClientboundEntityEventPacket;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket;
 import net.minecraft.network.protocol.game.ClientboundStopSoundPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.block.LevelEvent;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.LightBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent;
@@ -51,37 +55,21 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ConfigTracker;
-import net.minecraftforge.fml.config.IConfigEvent;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLPaths;
 import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralBoatRenderer;
+import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralDonkeyRenderer;
 import net.ultrad00d.ForgottenCantrips.config.IlluminationConfig;
-import net.ultrad00d.ForgottenCantrips.block.SpectralBedBlock;
-import net.ultrad00d.ForgottenCantrips.entity.SpectralBedBlockEntity;
 import net.ultrad00d.ForgottenCantrips.registry.BlockEntityRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.CantripRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
+import net.ultrad00d.ForgottenCantrips.registry.MenuRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.PotionRegistry;
-
-import com.electronwill.nightconfig.core.CommentedConfig;
-import com.electronwill.nightconfig.core.file.FileConfig;
-import com.electronwill.nightconfig.toml.TomlFormat;
-import com.mojang.brigadier.CommandDispatcher;
-import net.minecraft.network.chat.Component;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Map;
-import java.util.List;
-import java.util.UUID;
-
-import org.slf4j.Logger;
+import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryScreen;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ForgottenCantrips.MOD_ID)
@@ -127,6 +115,7 @@ public class ForgottenCantrips {
         BlockEntityRegistry.register(modEventBus);
         EffectRegistry.register(modEventBus);
         PotionRegistry.register(modEventBus);
+        MenuRegistry.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -156,10 +145,18 @@ public class ForgottenCantrips {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            event.enqueueWork(() -> EntityRenderers.register(
+            EntityRenderers.register(
                     EntityRegistry.SPECTRAL_BOAT.get(),
                     SpectralBoatRenderer::new
-            ));
+            );
+            EntityRenderers.register(
+                    EntityRegistry.SPECTRAL_DONKEY.get(),
+                    SpectralDonkeyRenderer::new
+            );
+            MenuScreens.register(
+                    MenuRegistry.SHARED_INVENTORY_MENU.get(),
+                    SharedInventoryScreen::new
+            );
         }
     }
 

@@ -16,8 +16,12 @@ Lightning cantrip [US-004](docs/user-stories.md)
 
 Spectral Boat cantrip [US-006](docs/user-stories.md)
 
+Spectral Donkey cantrip [US-005](docs/user-stories.md)
+
+Spectral Chest now opens when Shift+Right clicking the Spectral Donkey and Spectral Boat
+
 ### Changed
-Proper Lightning spell (US-004) icon was added
+Spectral Boat texture [US-006](docs/user-stories.md)
 
 ### Deprecated
 

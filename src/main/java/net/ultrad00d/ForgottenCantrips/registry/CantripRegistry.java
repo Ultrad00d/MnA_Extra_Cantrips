@@ -3,16 +3,20 @@ package net.ultrad00d.ForgottenCantrips.registry;
 import com.mna.api.cantrips.ICantrip;
 import com.mna.api.tools.RLoc;
 
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+import static net.minecraft.resources.ResourceLocation.of;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -20,6 +24,8 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.animal.Fox;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
@@ -38,8 +44,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
-import net.ultrad00d.ForgottenCantrips.entity.SpectralBedBlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -48,6 +52,9 @@ import net.minecraft.network.protocol.game.ClientboundStopSoundPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeMod;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBoat;
+import net.ultrad00d.ForgottenCantrips.entity.SpectralDonkey;
+import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
+import net.ultrad00d.ForgottenCantrips.blockentity.SpectralBedBlockEntity;
 
 public class CantripRegistry {
     public static void register() {
@@ -86,6 +93,15 @@ public class CantripRegistry {
                 fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/force_consume.png"),
                 1,
                 CantripRegistry::consume,
+                ItemStack.EMPTY,
+                RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+        );
+        // Spectral Donkey Cantrip
+        registry.registerCantrip(
+                fromNamespaceAndPath("forgotten_cantrips", "spectral_donkey"),
+                fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/spectral_donkey.png"),
+                1,
+                CantripRegistry::summonDonkey,
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
         );
@@ -200,6 +216,7 @@ public class CantripRegistry {
             if (boat != null)
             {
                 boat.moveTo(target.x, target.y, target.z, player.getYRot(), 0.0F);
+                boat.setOwnerUUID(player.getUUID());
                 serverLevel.addFreshEntity(boat);
             }
         }
@@ -431,4 +448,35 @@ public class CantripRegistry {
         }
     }
     
+
+    public static void summonDonkey(Player player, ICantrip cantrip, InteractionHand hand) {
+        HitResult hitResult = player.pick(player.getBlockReach(), 0.0F, false);
+
+//        if (hitResult.getType() != BlockHitResult.Type.BLOCK) {
+//            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_donkey.toofar"));
+//            return;
+//        }
+
+        Level level = player.level();
+        if (level instanceof ServerLevel serverLevel) {
+            Vec3 target = hitResult.getLocation();
+            SpectralDonkey spectralDonkey = EntityRegistry.SPECTRAL_DONKEY.get().create(serverLevel);
+            if (spectralDonkey != null) {
+                DifficultyInstance difficultyInstance = serverLevel.getCurrentDifficultyAt(new BlockPos((int) target.x, (int) target.y, (int) target.z));
+                spectralDonkey.finalizeSpawn(serverLevel, difficultyInstance, MobSpawnType.TRIGGERED, null, null);
+                spectralDonkey.setOwnerUUID(player.getUUID());
+                spectralDonkey.invulnerableTime = 60;
+                spectralDonkey.setAge(0);
+                spectralDonkey.tameWithName(player);
+                spectralDonkey.equipSaddle(null);
+                spectralDonkey.moveTo(target.x, target.y, target.z);
+                ItemStack offhandStack = player.getItemInHand(InteractionHand.MAIN_HAND.equals(hand) ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+                if (offhandStack.is(Items.GOLDEN_CARROT)) {
+                    spectralDonkey.setPersistent(true);
+                    offhandStack.shrink(1);
+                }
+                serverLevel.addFreshEntity(spectralDonkey);
+            }
+        }
+    }
 }
