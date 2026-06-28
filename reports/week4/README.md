@@ -45,21 +45,14 @@ We plan to implement about 3 new cantrips ([US-001: Force Consume](https://githu
 
 [Assignment 4/Sprint 2 milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/milestone/2)
 
-Sprint size in story points: (TBA)
-
 ## Delivered:
 
-Summary of delivered product changes.
+We finished Sprint 4, completing most of the planned features.
 
-Link to the deployed product, hosted artifact, package, or runnable product.
+The addon is uploaded to curseforge: https://www.curseforge.com/minecraft/mc-mods/forgotten-cantrips
 
 ## Customer feedback:
 
-Customer feedback response table with feedback points and resulting PBIs or issues.
-
-Explanation of feedback not addressed.
-
----
 
 Customer review [transcript](customer-review-transcript.md) and [summary](customer-review-summary.md)
 
@@ -73,10 +66,8 @@ Customer review [transcript](customer-review-transcript.md) and [summary](custom
 
 ## Quality model and testing:
 
-Summary of the quality model used and selected ISO/IEC 25010 sub-characteristics.
+We test for Functionality separation (Modularity), Mod startup time (Time behavior), and CI validation (Faultlessness)
 
-
-Testing status summary, including critical modules and per-module line coverage status.
 
 [Testing information](/docs/testing.md) and [user acceptance tests](/docs/user-acceptance-tests.md)
 
@@ -84,19 +75,8 @@ Our [quality requirements](/docs/quality-requirements.md) and [quality requireme
 
 Our [definition-of-done](/docs/definition-of-done.md)
 
-Links to unit tests.
+[Link to the CI pipeline](https://github.com/Ultrad00d/MnA_Extra_Cantrips/actions/workflows/build.yml)
 
-
-Links to integration tests.
-
-
-Links to automated quality requirement tests.
-
-
-Link to the CI pipeline.
-
-
-Link to the latest protected-default-branch CI run.
 
 Link to [Branch protection for the protected default branch](https://github.com/Ultrad00d/MnA_Extra_Cantrips/rules?ref=refs%2Fheads%2Fmain).
 
@@ -104,9 +84,6 @@ Link to [Branch protection for the protected default branch](https://github.com/
 
 [Retrospective](retrospective.md) and [reflection](reflection.md) on Sprint 2.
 
-Summary of current product status: (TBA)
-
-Summary of the next steps: (TBA)
 
 Contribution traceability table mapping each team member to issues, PRs/MRs, review activity, testing, quality, automation, or documentation work : (TBA)
 # Contribution traceability table
