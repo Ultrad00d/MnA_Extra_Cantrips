@@ -31,4 +31,6 @@ Spectral Donkey cantrip [US-005](docs/user-stories.md) (shared inventory opening
 
 Spectral Boat cantrip [US-006](docs/user-stories.md) (shared inventory opening)
 
+Spectral Bed now summons correctly when in a dimension where beds aren't allowed
+
 ### Security
