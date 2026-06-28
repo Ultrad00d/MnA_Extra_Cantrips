@@ -25,6 +25,8 @@ Re-designed icons for Force Concume cantrip
 ### Changed
 Spectral Boat texture [US-006](docs/user-stories.md)
 
+Re-designed three existing cantrip icons
+
 ### Deprecated
 
 ### Removed
