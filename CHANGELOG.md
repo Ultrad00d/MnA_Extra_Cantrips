@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+Force Consume cantrip [US-001](docs/user-stories.md)
+
 Spectral Bed cantrip [US-003](docs/user-stories.md)
 
 Lightning cantrip [US-004](docs/user-stories.md)
