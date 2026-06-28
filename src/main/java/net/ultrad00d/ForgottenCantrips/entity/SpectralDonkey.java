@@ -88,7 +88,7 @@ public class SpectralDonkey extends AbstractChestedHorse {
     }
 
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        //if (player == getOwner()) {
+        if (player == getOwner()) {
             if (!player.isSecondaryUseActive()) {
                 this.doPlayerRide(player);
                 return InteractionResult.SUCCESS;
@@ -99,10 +99,12 @@ public class SpectralDonkey extends AbstractChestedHorse {
                 return InteractionResult.CONSUME;
             }
             return InteractionResult.SUCCESS;
-        //} else {
-        //    player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_donkey.notowner"));
-        //    return InteractionResult.FAIL;
-        //}
+        } else {
+            if (!this.level().isClientSide()) {
+                player.displayClientMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_donkey.notowner"), true);
+            }
+            return InteractionResult.FAIL;
+        }
     }
 
     public void openSpectralChest(Player player) {
