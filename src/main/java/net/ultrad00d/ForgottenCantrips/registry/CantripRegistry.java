@@ -229,11 +229,6 @@ public class CantripRegistry {
 
         if (otherHand.isEmpty()) {
             player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.force_consume.noitem"));
-            // if (player instanceof ServerPlayer sp) {
-            //     sp.connection.send(new ClientboundStopSoundPacket(
-            //         ResourceLocation.fromNamespaceAndPath("mna", "event_manaweave_pattern_match"),
-            //         SoundSource.PLAYERS));
-            // }
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.ANVIL_LAND, player.getSoundSource(), 1.0F, 1.0F);
             return;
@@ -243,22 +238,17 @@ public class CantripRegistry {
 
         if (!effectApplied) {
             player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.force_consume.baditem"));
-            // if (player instanceof ServerPlayer sp) {
-            //     sp.connection.send(new ClientboundStopSoundPacket(
-            //         ResourceLocation.fromNamespaceAndPath("mna", "event_manaweave_pattern_match"),
-            //         SoundSource.PLAYERS));
-            // }
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.ANVIL_LAND, player.getSoundSource(), 1.0F, 1.0F);
             return;
         }
 
-        // if (!player.isCreative()) {
         otherHand.shrink(1);
         if (otherHand.isEmpty()) {
             player.setItemInHand(_other_hand, ItemStack.EMPTY);
         }
-        // }
+        player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
+                SoundEvents.GENERIC_EAT, player.getSoundSource(), 1.0F, 1.0F);
     }
 
     private static boolean applyEffect(Player player, ItemStack stack) {
