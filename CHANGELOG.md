@@ -23,6 +23,8 @@ Spectral Chest now opens when Shift+Right clicking the Spectral Donkey and Spect
 ### Changed
 Spectral Boat texture [US-006](docs/user-stories.md)
 
+Re-designed three existing cantrip icons
+
 ### Deprecated
 
 ### Removed
