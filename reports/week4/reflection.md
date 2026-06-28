@@ -1,10 +1,12 @@
 ## Learning points:
 
 - We improved our understanding about trunk-based workflow approach by merging small changes to the branch; we utilized the approach for both `main` and its subbranch `20-force-consume`.
+- We learned about CI, QR and UAT; also we got know about QRT, which were unapplicable in our case
 - We extended our knowledge about game structure: we got know how to implement effects, items, command line logic, config files, and so on.
 
 ## Validated assumptions:
 
+- [x] Because our project is uncommon in terms of software, some points are not applicable for us (such as QRT)
 - [x] Receiving a PR review on small changes is very difficult and high-costly
 - [x] The "Force Consume" cantrip will indeed provide a range of thoughts for new ideas
 
