@@ -1,4 +1,4 @@
-## QR-001: Funcionality separation
+## QR-001: Functionality separation
 
 **ISO/IEC 25010 sub-characteristic:** Modularity
 
