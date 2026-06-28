@@ -2,10 +2,11 @@ package net.ultrad00d.ForgottenCantrips;
 
 import com.mna.api.items.MACreativeTabs;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,6 +14,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralBoatRenderer;
+import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralDonkeyRenderer;
+import net.ultrad00d.ForgottenCantrips.registry.*;
+import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryScreen;
 import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.CantripRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.ItemRegistry;
@@ -27,8 +32,11 @@ public class ForgottenCantrips {
     public ForgottenCantrips() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        EntityRegistry.register(modEventBus);
         ItemRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
+        BlockEntityRegistry.register(modEventBus);
+        MenuRegistry.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -58,12 +66,18 @@ public class ForgottenCantrips {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            EntityRenderers.register(
+                    EntityRegistry.SPECTRAL_BOAT.get(),
+                    SpectralBoatRenderer::new
+            );
+            EntityRenderers.register(
+                    EntityRegistry.SPECTRAL_DONKEY.get(),
+                    SpectralDonkeyRenderer::new
+            );
+            MenuScreens.register(
+                    MenuRegistry.SHARED_INVENTORY_MENU.get(),
+                    SharedInventoryScreen::new
+            );
         }
-    }
-
-    @SubscribeEvent
-    public static void onPlayerSetSpawn(PlayerSetSpawnEvent event) {
-
     }
 }

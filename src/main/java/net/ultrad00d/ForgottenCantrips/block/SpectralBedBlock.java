@@ -1,6 +1,15 @@
 package net.ultrad00d.ForgottenCantrips.block;
 
+import java.util.List;
+import java.util.Optional;
+
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import org.jetbrains.annotations.NotNull;
+
 import com.mojang.datafixers.util.Either;
+
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,7 +26,6 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,11 +35,8 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.ultrad00d.ForgottenCantrips.entity.SpectralBedBlockEntity;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-import java.util.Optional;
+import net.ultrad00d.ForgottenCantrips.blockentity.SpectralBedBlockEntity;
+import org.jetbrains.annotations.Nullable;
 
 public class SpectralBedBlock extends BedBlock {
     public SpectralBedBlock() {
@@ -40,7 +45,7 @@ public class SpectralBedBlock extends BedBlock {
         }).sound(SoundType.AMETHYST).strength(0.2F).noOcclusion().ignitedByLava().pushReaction(PushReaction.DESTROY));
     }
 
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new SpectralBedBlockEntity(pos, state); }
+    public @NotNull BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new SpectralBedBlockEntity(pos, state); }
     public @NotNull RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
@@ -165,5 +170,23 @@ public class SpectralBedBlock extends BedBlock {
             list.get(0).stopSleeping();
             return true;
         }
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        if (pLevel.isClientSide) {
+            return null;
+        }
+        return (level, pos, pState1, pBlockEntity) -> {
+            if (level.getGameTime() % 20 == 0) {
+
+                long timeOfDay = level.getDayTime() % 24000L;
+
+                if (timeOfDay < 13000L) {
+                    level.destroyBlock(pos, false);
+                }
+            }
+        };
     }
 }
