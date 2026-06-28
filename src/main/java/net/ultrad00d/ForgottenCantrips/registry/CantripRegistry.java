@@ -259,7 +259,6 @@ public class CantripRegistry {
         // }
     }
 
-    // Shall be moved to a separate file (TBD)
     private static boolean applyEffect(Player player, ItemStack stack) {
         Item item = stack.getItem();
 
@@ -436,7 +435,6 @@ public class CantripRegistry {
         return false;
     }
 
-    // Shall be moved to a separate file (TBD)
     private static void applyFoodProperties(Player player, FoodProperties food, int modifier) {
         if (food != null) {
             player.getFoodData().eat(food.getNutrition() * modifier, food.getSaturationModifier() * modifier);
