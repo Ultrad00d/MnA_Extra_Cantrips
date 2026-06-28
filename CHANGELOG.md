@@ -20,6 +20,8 @@ Spectral Boat cantrip [US-006](docs/user-stories.md)
 
 Spectral Chest now opens when Shift+Right clicking the Spectral Donkey and Spectral Boat
 
+Re-designed icons for Force Concume cantrip
+
 ### Changed
 Spectral Boat texture [US-006](docs/user-stories.md)
 
