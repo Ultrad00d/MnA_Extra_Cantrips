@@ -101,6 +101,14 @@ Planned items:
 
 ### Empower [US-02](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/21)
 
+[[Design]: Empower cantrips' effects icons](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/130)
+
+[[Design]: Empower Cantrips icon](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/129)
+
+[[Technical]: Type restrictions for Empover Cantrips](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/128)
+
+[[Techical]: Empover cantrips logic](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/127)
+
 ### Spectral Donkey[US-05](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/24)
 
 [[Technical]: Spectral Donkey entity](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/79)
