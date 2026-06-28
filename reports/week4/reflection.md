@@ -8,6 +8,10 @@
 ## Validated assumptions:
 
 - [x] Because our project is uncommon in terms of software, some points are not applicable for us (such as QRT)
+- We extended our knowledge about game structure: we got know how to implement effects, items, command line logic, config files, and so on.
+
+## Validated assumptions:
+
 - [x] Receiving a PR review on small changes is very difficult and high-costly
 - [x] The "Force Consume" cantrip will indeed provide a range of thoughts for new ideas
 
