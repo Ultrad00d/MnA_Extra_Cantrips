@@ -49,6 +49,8 @@ We plan to implement about 3 new cantrips ([US-001: Force Consume](https://githu
 
 We finished Sprint 4, completing most of the planned features.
 
+[Semver Release v0.3](https://github.com/Ultrad00d/MnA_Extra_Cantrips/releases/tag/mvp-v2)
+
 The addon is uploaded to curseforge: https://www.curseforge.com/minecraft/mc-mods/forgotten-cantrips
 
 ## Customer feedback:
@@ -99,16 +101,12 @@ Contribution traceability table mapping each team member to issues, PRs/MRs, rev
 
 ## Screenshots:
 
-Sprint milestone
+![Sprint milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/SprintMilestone.png)
 
-Latest protected-default-branch CI run
+![Latest protected-default-branch CI run and test report](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/LatestCIRunAndTestResult.png)
 
-Branch protection or rules evidence
+![Branch protection or rules evidence](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/mainBranchProtection.png)
 
-Coverage or test report
+![SemVer release](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/semverRelease.png)
 
-Additional QA check result
-
-SemVer release
-
-Example reviewed issue-linked PR/MR
+![Example reviewed issue-linked PR/MR](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/ExampleReviewedPR.png)
