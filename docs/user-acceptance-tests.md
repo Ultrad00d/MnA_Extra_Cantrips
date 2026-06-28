@@ -1,4 +1,4 @@
-## Stable scenario ID
+# Stable scenario ID
 UAT-001
 
 ## Scenario status, such as Active, Retired, or Superseded
@@ -10,13 +10,16 @@ Start the game with the mod installed
 ## Preconditions
 - Have Minecraft 1.20.1 installed
 - Have the Forge mod-loader 1.20.1-v47.4.20 (latest) installed
+- Have the [Mana And Artifice Mod](https://www.curseforge.com/minecraft/mc-mods/mana-and-artifice) (version 3.1.11 (latest) for 1.20.1-forge) installed, including dependencies:
+  - Have the [Geckolib](https://www.curseforge.com/minecraft/mc-mods/geckolib) Mod (version 4.2.2 or newer for 1.20.1-forge) installed
+  - Have the [Curios API](https://www.curseforge.com/minecraft/mc-mods/curios) Mod (version 5.14.1 or newer for 1.20.1-forge) installed
 
 ## Step-by-step instructions
 1. Locate the Minecraft installation folder (usually `%Appdata%\.minecraft`)
 2. Paste the forgotten_cantrips-v%version%.jar into the `mods` folder
 3. Launch the game from your desired launcher
 4. Once the game loads, navigate yourself to the Mods menu
-5. Locate the "Forgotten cantrips" mod in the list
+5. Locate the "Forgotten Cantrips" mod in the list
 
 
 ## Expected outcome
@@ -31,6 +34,8 @@ You must see the Forgotten Cantrips mod in the list, signifying it has loaded co
 
 
 
+---
+---
 
 
 
@@ -38,7 +43,7 @@ You must see the Forgotten Cantrips mod in the list, signifying it has loaded co
 
 
 
-## Stable scenario ID
+# Stable scenario ID
 UAT-002
 
 ## Scenario status, such as Active, Retired, or Superseded
@@ -68,14 +73,14 @@ The world must load correctly
 
 
 
+---
+---
 
 
 
 
 
-
-
-## Stable scenario ID
+# Stable scenario ID
 UAT-003
 
 ## Scenario status, such as Active, Retired, or Superseded
@@ -106,14 +111,14 @@ Once all symbols for the cantrip are drawn, the Lightning shall strike before yo
 
 
 
+---
+---
 
 
 
 
 
-
-
-## Stable scenario ID
+# Stable scenario ID
 UAT-004
 
 ## Scenario status, such as Active, Retired, or Superseded
@@ -141,20 +146,19 @@ Once all symbols for the cantrip are drawn, Spectral Bed shall appear before you
 <!-- Assignment-specific execution results when required -->
 
 <!-- Customer comments or observed issues after execution -->
-Any spell is more accurately casted looking at the horizon level, but in order to summon a bed before the player they need to look at the ground. That is why the delay of 0.5s after the cast is a must
 
 <!-- Resulting PBIs or issues after execution -->
-#118
 
 
 
 
+---
+---
 
 
 
 
-
-## Stable scenario ID
+# Stable scenario ID
 UAT-005
 
 ## Scenario status, such as Active, Retired, or Superseded
@@ -182,13 +186,13 @@ Once the new day starts, the bed blocks shall be destroyed automatically
 
 
 
+---
+---
 
 
 
 
-
-
-## Stable scenario ID
+# Stable scenario ID
 UAT-006
 
 ## Scenario status, such as Active, Retired, or Superseded
@@ -217,22 +221,20 @@ For Step 6: Once an attempt to sleep in the Spectal bed in the dimension where b
 <!-- Assignment-specific execution results when required -->
 
 <!-- Customer comments or observed issues after execution -->
-When a Spectral Bed summoned in a dimension where beds aren't allowed it shall summon regardless of other dimensions' conditions, i.e., even in daytime. Which it fails to do (bug)
 
 <!-- Resulting PBIs or issues after execution -->
-Fixed in #116
+
+
+
+
+---
+---
 
 
 
 
 
-
-
-
-
-
-
-## Stable scenario ID
+# Stable scenario ID
 UAT-007
 
 ## Scenario status, such as Active, Retired, or Superseded
