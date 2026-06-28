@@ -39,7 +39,7 @@ Using IntelliJ IDEA:
 Our [roadmap](/docs/roadmap.md) with plans for the current and the future sprint.
 
 During this sprint we have decided to put a stronger emphasis on quality, automation, customer feedback, and evidence. 
-We plan to implement about 3 new cantrips ([US-001: Force Consume](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/20), [US-002: Empower](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/21), [US-005: Spectral Donkey](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/24)), improve on an existing cantrip ([US-006: Spectral Boat](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/25)), and make the process of learning our cantrips more interesting for the players ([US-009: Learning Forgotten cantrips](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/42)) during this sprint. This sprint is going to last from Monday, June 22nd, 2026 to Sunday, June 28th, 2026. 
+We plan to implement about 3 new cantrips ([US-001: Force Consume](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/20), [US-002: Empower](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/21), [US-005: Spectral Donkey](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/24)) and improve on an existing cantrip ([US-006: Spectral Boat](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/25)) during this sprint. This sprint is going to last from Monday, June 22nd, 2026 to Sunday, June 28th, 2026. 
 
 [Sprint Backlog](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues?q=is%3Aissue%20milestone%3ASprint-Week4)
 
@@ -52,8 +52,6 @@ Sprint size in story points: (TBA)
 Summary of delivered product changes.
 
 Link to the deployed product, hosted artifact, package, or runnable product.
-
-Link to current access or run instructions.
 
 ## Customer feedback:
 
