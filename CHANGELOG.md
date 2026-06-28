@@ -14,24 +14,6 @@ Spectral Donkey cantrip [US-005](docs/user-stories.md)
 
 Spectral Boat cantrip [US-006](docs/user-stories.md)
 
-### Changed
-
-### Deprecated
-
-N/A
-
-### Removed
-
-N/A
-
-### Fixed
-
-N/A
-
-### Security
-
-N/A
-
 ## 0.2.0 - 2026-06-21
 
 ### Added
