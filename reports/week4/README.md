@@ -101,16 +101,12 @@ Contribution traceability table mapping each team member to issues, PRs/MRs, rev
 
 ## Screenshots:
 
-Sprint milestone
+![Sprint milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/SprintMilestone.png)
 
-Latest protected-default-branch CI run
+![Latest protected-default-branch CI run and test report](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/LatestCIRunAndTestResult.png)
 
-Branch protection or rules evidence
+![Branch protection or rules evidence](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/mainBranchProtection.png)
 
-Coverage or test report
+![SemVer release](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/semverRelease.png)
 
-Additional QA check result
-
-SemVer release
-
-Example reviewed issue-linked PR/MR
+![Example reviewed issue-linked PR/MR](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/ExampleReviewedPR.png)
