@@ -49,6 +49,8 @@ We plan to implement about 3 new cantrips ([US-001: Force Consume](https://githu
 
 We finished Sprint 4, completing most of the planned features.
 
+[Semver Release v0.3](https://github.com/Ultrad00d/MnA_Extra_Cantrips/releases/tag/mvp-v2)
+
 The addon is uploaded to curseforge: https://www.curseforge.com/minecraft/mc-mods/forgotten-cantrips
 
 ## Customer feedback:
