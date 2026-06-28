@@ -67,6 +67,12 @@ Customer review [transcript](customer-review-transcript.md) and [summary](custom
 
 [UAT](/docs/user-acceptance-tests.md) results summary: (TBA)
 
+| Feedback point | Resulting PBI or issue | Status | Response |
+|---|---|---|---|
+| The customer... | [#0](...) | Done | ... |
+| The customer... | [#0](...) | Not planned for this Sprint | ... |
+
+
 ## Quality model and testing:
 
 Summary of the quality model used and selected ISO/IEC 25010 sub-characteristics.
