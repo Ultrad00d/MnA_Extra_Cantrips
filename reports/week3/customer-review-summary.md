@@ -44,13 +44,13 @@
 ### 4. Spectral Blocks Showcase
 
 * The customer reviewed the existing spectral blocks from the base mod: workbench, anvil, cobweb, ice, fence, and others.
-* **Fence behavior:** The codex description states non-living entities can pass through, but in practice undead mobs also cannot pass. The discrepancy was flagged for clarification or correction.
+* **Fence behavior:** The codex description states non-living entities can pass through.
 * **Anvil behavior:** Does not fall on its own like a vanilla anvil, but falls if summoned with no block beneath it. Not considered critical.
 * The customer recommended review these textures for potential inspiration when redesigning cantrip item models.
 
 ### 5. Cantrip Unlock System (Proof of Concept)
 
-* The customer demonstrated that the base mod's Ignite cantrip is gated behind a **Minecraft achievement** (smelting vintium iron), not purely behind tier progression. This confirmed that cantrips CAN be hidden/locked via achievements.
+* It  was shown to the customer that the base mod's Ignite cantrip is gated behind a  "Advance to tier 2" achievement from MnA, not purely behind tier progression. This confirmed that cantrips CAN be hidden/locked via achievements.
 * A proof-of-concept was shown: three tier-based achievements (root achievement, item-locating hint, and final unlock) that gate the spell's appearance in the staff menu.
 
 ### 6. Brute-Force & Information Leak Concerns

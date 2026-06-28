@@ -76,11 +76,35 @@ Goal:
 Deliver a reliable increment by implementing new cantrips, establishing automated quality gates, and addressing customer feedback from the MVP.
 
 Scope rationale:
-Sprint scope was selected after reviewing [Sprint #1 retrospective](../reports/week3/retrospective.md) (unresolved risks: Loot Tables, study tech mechanic, random bugs) and customer feedback on the MVP v1. Quality and automation work is prioritized to reduce risks identified during Sprint #1.
+Sprint scope was selected after reviewing [Sprint #1 retrospective](../reports/week3/retrospective.md) (unresolved risks: study tech mechanic, random bugs) and customer feedback on the MVP v1.
 
 Expected outcome (brief summary):
-Implement Force Consume [US-01] and Empower [US-02] cantrips, define quality requirements with automated tests, extend CI, and address customer feedback.
+Implement Force Consume [US-01], Empower [US-02], and  Spectral Donkey [US-05] cantrips, define quality requirements, extend CI, and address customer feedback.
 
 Planned items:
 
-[US-01](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/20), [US-02](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/21), and supporting PBIs for quality, CI, and customer feedback — see [Sprint #2 milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/milestone/2) for the full list.
+### Force Consume [US-01](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/20)
+
+[[Technical]: Force Consume Cantrip Logic](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/87)
+
+[[Technical]: Force Consume Cantrip Supplied Item Logic](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/88)
+
+[[Technical]: Undying Effect](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/93)
+
+[[Technical]: Force Consume Cantrip Localisation](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/97)
+
+[[Technical]: Illumination Effect](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/101)
+
+[[Technical]: Aether Stride Effect](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/104)
+
+[[Technical]: Music disc cases](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/108)
+
+### Empower [US-02](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/21)
+
+### Spectral Donkey[US-05](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/24)
+
+[[Technical]: Spectral Donkey entity](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/79)
+
+[[Technical]: Spectral Donkey chest Link](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/80)
+
+[[Technical]: Spectral Donkey behavior](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/81)
