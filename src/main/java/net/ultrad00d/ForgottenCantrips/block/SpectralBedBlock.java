@@ -180,6 +180,7 @@ public class SpectralBedBlock extends BedBlock {
         }
         return (level, pos, pState1, pBlockEntity) -> {
             if (level.getGameTime() % 20 == 0) {
+                if (!level.dimensionType().bedWorks()) return;
 
                 long timeOfDay = level.getDayTime() % 24000L;
 

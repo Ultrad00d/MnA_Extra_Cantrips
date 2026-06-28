@@ -1,6 +1,6 @@
 {
   "cantrip.forgotten_cantrips.lightning": "Lightning",
-  "cantrip.forgotten_cantrips.lightning.desc": "A placeholder cantrip for a future lightning effect.",
+  "cantrip.forgotten_cantrips.lightning.desc": "Summons a simple lightning bolt where you're looking.",
   "cantrip.forgotten_cantrips.lightning.obstructed": "Can't summon lightning here!",
 
   "cantrip.forgotten_cantrips.spectral_bed": "Spectral Bed",
@@ -10,16 +10,41 @@
   "cantrip.forgotten_cantrips.spectral_bed.badtarget": "Can't place a spectral bed on there!",
   "cantrip.forgotten_cantrips.spectral_bed.badtime": "In this dimension, spectral beds can only be placed at night or during thunderstorms!",
 
+  "cantrip.forgotten_cantrips.force_consume": "Force Consume",
+  "cantrip.forgotten_cantrips.force_consume.desc": "Consumes the item in your other hand, sometimes even if it is normally not consumable. This can be used to eat items like totem of undyings or potions and to get unpredictable effects.",
+  "cantrip.forgotten_cantrips.force_consume.noitem": "No item to consume in the other hand",
+  "cantrip.forgotten_cantrips.force_consume.baditem": "Can't eat the item in the other hand",
+
   "cantrip.forgotten_cantrips.spectral_boat": "Spectral Boat",
-  "cantrip.forgotten_cantrips.spectral_boat.desc": "Summons a spectral boat at the targeted point.",
+  "cantrip.forgotten_cantrips.spectral_boat.desc": "Summons a spectral boat at the targeted point. The boat has a chest that is shared with your Spectral Donkey's! Despawns if not interacted with for some time.",
 
   "cantrip.forgotten_cantrips.spectral_donkey": "Spectral Donkey",
-  "cantrip.forgotten_cantrips.spectral_donkey.desc": "Summons a donkey, whose inventory is shared with your Spectral Boat!",
+  "cantrip.forgotten_cantrips.spectral_donkey.desc": "Summons a spectral donkey, whose inventory is shared with your Spectral Boat's chest! Despawns if not interacted with for some time.",
   "cantrip.forgotten_cantrips.spectral_donkey.toofar": "Can't summon a spectral donkey that far away!",
+  "cantrip.forgotten_cantrips.spectral_donkey.notowner": "This donkey isn't yours!",
+
+  "command.forgotten_cantrips.music_disc.drop.empty": "No music disc stored",
+  "command.forgotten_cantrips.music_disc.drop.success": "Music disc dropped",
 
   "container.forgotten_cantrips.spectral_chest": "Spectral Chest",
 
+  "effect.forgotten_cantrips.undying": "Undying",
+  "effect.forgotten_cantrips.illumination": "Illumination",
+  "effect.forgotten_cantrips.aether_stride": "Aether Stride",
 
   "entity.forgotten_cantrips.spectral_boat": "Spectral Boat",
-  "entity.forgotten_cantrips.spectral_donkey": "Spectral Donkey"
+  "entity.forgotten_cantrips.spectral_donkey": "Spectral Donkey",
+
+  "item.minecraft.potion.effect.undying": "Potion of Undying",
+  "item.minecraft.splash_potion.effect.undying": "Splash Potion of Undying",
+  "item.minecraft.lingering_potion.effect.undying": "Lingering Potion of Undying",
+  "item.minecraft.tipped_arrow.effect.undying": "Arrow of Undying",
+  "item.minecraft.potion.effect.illumination": "Potion of Illumination",
+  "item.minecraft.splash_potion.effect.illumination": "Splash Potion of Illumination",
+  "item.minecraft.lingering_potion.effect.illumination": "Lingering Potion of Illumination",
+  "item.minecraft.tipped_arrow.effect.illumination": "Arrow of Illumination",
+  "item.minecraft.potion.effect.aether_stride": "Potion of Aether Stride",
+  "item.minecraft.splash_potion.effect.aether_stride": "Splash Potion of Aether Stride",
+  "item.minecraft.lingering_potion.effect.aether_stride": "Lingering Potion of Aether Stride",
+  "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride"
 }
