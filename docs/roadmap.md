@@ -1,4 +1,5 @@
 # Sprint #1:
+
 [Sprint milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/milestone/1)
 
 Start date:
@@ -58,3 +59,60 @@ Planned items (user stories+PBIs etc.):
 [[Technical]: Spectral Boat Movement](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/60)
 
 [[Technical]: Spectral Boat Behavior](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/64)
+
+---
+
+# Sprint #2:
+
+[Sprint milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/milestone/2)
+
+Start date:
+Monday, June 22nd, 2026
+
+Finish date:
+Sunday, June 28th, 2026
+
+Goal:
+Deliver a reliable increment by implementing new cantrips, establishing automated quality gates, and addressing customer feedback from the MVP.
+
+Scope rationale:
+Sprint scope was selected after reviewing [Sprint #1 retrospective](../reports/week3/retrospective.md) (unresolved risks: study tech mechanic, random bugs) and customer feedback on the MVP v1.
+
+Expected outcome (brief summary):
+Implement Force Consume [US-01], Empower [US-02], and  Spectral Donkey [US-05] cantrips, define quality requirements, extend CI, and address customer feedback.
+
+Planned items:
+
+### Force Consume [US-01](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/20)
+
+[[Technical]: Force Consume Cantrip Logic](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/87)
+
+[[Technical]: Force Consume Cantrip Supplied Item Logic](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/88)
+
+[[Technical]: Undying Effect](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/93)
+
+[[Technical]: Force Consume Cantrip Localisation](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/97)
+
+[[Technical]: Illumination Effect](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/101)
+
+[[Technical]: Aether Stride Effect](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/104)
+
+[[Technical]: Music disc cases](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/108)
+
+### Empower [US-02](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/21)
+
+[[Design]: Empower cantrips' effects icons](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/130)
+
+[[Design]: Empower Cantrips icon](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/129)
+
+[[Technical]: Type restrictions for Empover Cantrips](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/128)
+
+[[Techical]: Empover cantrips logic](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/127)
+
+### Spectral Donkey[US-05](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/24)
+
+[[Technical]: Spectral Donkey entity](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/79)
+
+[[Technical]: Spectral Donkey chest Link](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/80)
+
+[[Technical]: Spectral Donkey behavior](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/81)
