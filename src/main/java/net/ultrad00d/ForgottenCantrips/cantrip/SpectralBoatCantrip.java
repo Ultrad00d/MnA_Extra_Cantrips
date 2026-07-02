@@ -19,7 +19,7 @@ public class SpectralBoatCantrip {
             DelayedEventQueue.pushEvent(
                 serverLevel,
                 new TimedDelayedEvent<>(
-                    "spectral_bed",
+                    "spectral_boat",
                     cantrip.getDelay() + 1,
                     null,
                     (id, data) -> run(player, cantrip, hand)

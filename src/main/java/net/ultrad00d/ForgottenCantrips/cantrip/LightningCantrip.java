@@ -22,7 +22,7 @@ public class LightningCantrip {
             DelayedEventQueue.pushEvent(
                 serverLevel,
                 new TimedDelayedEvent<>(
-                    "spectral_bed",
+                    "lightning",
                     cantrip.getDelay() + 1,
                     null,
                     (id, data) -> run(player, cantrip, hand)
