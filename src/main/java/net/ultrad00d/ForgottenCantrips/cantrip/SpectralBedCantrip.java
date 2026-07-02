@@ -19,20 +19,28 @@ import net.minecraft.world.phys.HitResult;
 import net.ultrad00d.ForgottenCantrips.blockentity.SpectralBedBlockEntity;
 import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
 
-public class SpectralBedCantrip {
-    public static void delay(Player player, ICantrip cantrip, InteractionHand hand) {
-        if (player.level() instanceof ServerLevel serverLevel)
-            DelayedEventQueue.pushEvent(
-                serverLevel,
-                new TimedDelayedEvent<>(
-                    "spectral_bed",
-                    cantrip.getDelay() + 1,
-                    null,
-                    (id, data) -> run(player, cantrip, hand)
-                )
-            );
+public class SpectralBedCantrip  extends Cantrip {
+    @Override
+    public String getName() {
+        return "spectral_bed";
     }
-    public static void run(Player player, ICantrip cantrip, InteractionHand hand) {     
+    @Override
+    public boolean precond(Player player, ICantrip cantrip, InteractionHand hand) {
+        long dayTime = player.level().getDayTime() % 24000L;
+        boolean isDaytime = dayTime < 13000L;
+
+        if (player.level().dimensionType().bedWorks()) {
+
+            if (isDaytime && !(player.level().isThundering())) {
+                player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_bed.badtime"));
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void run(Player player, ICantrip cantrip, InteractionHand hand) {     
         HitResult rayHit = player.pick(player.getBlockReach(), 0.0F, false);
 
         if (rayHit.getType() != BlockHitResult.Type.BLOCK) {

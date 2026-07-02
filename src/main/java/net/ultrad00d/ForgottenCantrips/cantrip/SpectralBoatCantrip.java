@@ -13,20 +13,17 @@ import net.minecraftforge.common.ForgeMod;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBoat;
 import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 
-public class SpectralBoatCantrip {
-    public static void delay(Player player, ICantrip cantrip, InteractionHand hand) {
-        if (player.level() instanceof ServerLevel serverLevel)
-            DelayedEventQueue.pushEvent(
-                serverLevel,
-                new TimedDelayedEvent<>(
-                    "spectral_boat",
-                    cantrip.getDelay() + 1,
-                    null,
-                    (id, data) -> run(player, cantrip, hand)
-                )
-            );
+public class SpectralBoatCantrip extends Cantrip {
+    @Override
+    public String getName() {
+        return "spectral_boat";
     }
-    public static void run(Player player, ICantrip cantrip, InteractionHand hand) {
+    @Override
+    public boolean precond(Player player, ICantrip cantrip, InteractionHand hand) {
+        return true;
+    }
+    @Override
+    public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         double range;
         try
         {

@@ -19,20 +19,17 @@ import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 
 import net.minecraft.world.item.Items;
 
-public class SpectralDonkeyCantrip {
-    public static void delay(Player player, ICantrip cantrip, InteractionHand hand) {
-        if (player.level() instanceof ServerLevel serverLevel)
-            DelayedEventQueue.pushEvent(
-                serverLevel,
-                new TimedDelayedEvent<>(
-                    "spectral_donkey",
-                    cantrip.getDelay() + 1,
-                    null,
-                    (id, data) -> run(player, cantrip, hand)
-                )
-            );
+public class SpectralDonkeyCantrip extends Cantrip {
+    @Override
+    public String getName() {
+        return "spectral_donkey";
     }
-    public static void run(Player player, ICantrip cantrip, InteractionHand hand) {
+    @Override
+    public boolean precond(Player player, ICantrip cantrip, InteractionHand hand) {
+        return true;
+    }
+    @Override
+    public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         HitResult hitResult = player.pick(player.getBlockReach(), 0.0F, false);
 
 //        if (hitResult.getType() != BlockHitResult.Type.BLOCK) {

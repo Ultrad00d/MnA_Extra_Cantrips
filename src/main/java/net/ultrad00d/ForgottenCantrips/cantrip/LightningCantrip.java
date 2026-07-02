@@ -16,20 +16,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
-public class LightningCantrip {
-    public static void delay(Player player, ICantrip cantrip, InteractionHand hand) {
-        if (player.level() instanceof ServerLevel serverLevel)
-            DelayedEventQueue.pushEvent(
-                serverLevel,
-                new TimedDelayedEvent<>(
-                    "lightning",
-                    cantrip.getDelay() + 1,
-                    null,
-                    (id, data) -> run(player, cantrip, hand)
-                )
-            );
+public class LightningCantrip extends Cantrip {@Override
+    public String getName() {
+        return "lightning";
     }
-    public static void run(Player player, ICantrip cantrip, InteractionHand hand) {
+    @Override
+    public boolean precond(Player player, ICantrip cantrip, InteractionHand hand) {
+        return true;
+    }
+    @Override
+    public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         double range;
         try {
             range = player.getAttributeValue(ForgeMod.BLOCK_REACH.get());
