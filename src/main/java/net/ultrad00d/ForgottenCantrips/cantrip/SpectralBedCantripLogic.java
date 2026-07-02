@@ -18,21 +18,6 @@ import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
 
 public class SpectralBedCantripLogic  extends CantripLogic {
     @Override
-    public boolean precond(Player player, ICantrip cantrip, InteractionHand hand) {
-        long dayTime = player.level().getDayTime() % 24000L;
-        boolean isDaytime = dayTime < 13000L;
-
-        if (player.level().dimensionType().bedWorks()) {
-
-            if (isDaytime && !(player.level().isThundering())) {
-                player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_bed.badtime"));
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {     
         HitResult rayHit = player.pick(player.getBlockReach(), 0.0F, false);
 

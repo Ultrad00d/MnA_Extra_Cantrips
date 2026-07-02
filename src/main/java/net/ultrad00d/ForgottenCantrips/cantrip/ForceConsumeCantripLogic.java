@@ -30,11 +30,6 @@ import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 
 public class ForceConsumeCantripLogic extends CantripLogic {
     @Override
-    public boolean precond(Player player, ICantrip cantrip, InteractionHand hand) {
-        return true;
-    }
-
-    @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         InteractionHand _other_hand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         ItemStack otherHand = player.getItemInHand(_other_hand);

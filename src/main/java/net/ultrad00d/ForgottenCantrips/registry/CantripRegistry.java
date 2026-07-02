@@ -72,7 +72,6 @@ public class CantripRegistry {
     }
 
     public static void run(Player player, ICantrip cantrip, InteractionHand hand, CantripLogic cantripInstance, boolean instant) {
-        if (!cantripInstance.precond(player, cantrip, hand)) return;
         if (player.level() instanceof ServerLevel serverLevel)
             DelayedEventQueue.pushEvent(
                 serverLevel,

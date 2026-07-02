@@ -18,10 +18,6 @@ import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 
 public class SpectralDonkeyCantripLogic extends CantripLogic {
     @Override
-    public boolean precond(Player player, ICantrip cantrip, InteractionHand hand) {
-        return true;
-    }
-    @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         HitResult hitResult = player.pick(player.getBlockReach(), 0.0F, false);
 

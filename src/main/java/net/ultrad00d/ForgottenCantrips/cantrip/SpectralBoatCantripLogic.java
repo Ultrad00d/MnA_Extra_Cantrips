@@ -13,10 +13,6 @@ import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 
 public class SpectralBoatCantripLogic extends CantripLogic {
     @Override
-    public boolean precond(Player player, ICantrip cantrip, InteractionHand hand) {
-        return true;
-    }
-    @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         double range;
         try
