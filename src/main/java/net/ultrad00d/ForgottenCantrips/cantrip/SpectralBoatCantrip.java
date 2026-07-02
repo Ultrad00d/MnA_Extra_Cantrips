@@ -1,8 +1,6 @@
 package net.ultrad00d.ForgottenCantrips.cantrip;
 
 import com.mna.api.cantrips.ICantrip;
-import com.mna.api.timing.DelayedEventQueue;
-import com.mna.api.timing.TimedDelayedEvent;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
