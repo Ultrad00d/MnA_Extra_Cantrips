@@ -28,7 +28,7 @@ import net.minecraft.world.phys.Vec3;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 
-public class ForceConsumeCantrip extends Cantrip {
+public class ForceConsumeCantripLogic extends CantripLogic {
     @Override
     public String getName() {
         return "force_consume";

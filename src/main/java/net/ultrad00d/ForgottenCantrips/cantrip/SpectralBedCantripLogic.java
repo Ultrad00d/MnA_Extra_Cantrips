@@ -16,7 +16,7 @@ import net.minecraft.world.phys.HitResult;
 import net.ultrad00d.ForgottenCantrips.blockentity.SpectralBedBlockEntity;
 import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
 
-public class SpectralBedCantrip  extends Cantrip {
+public class SpectralBedCantripLogic  extends CantripLogic {
     @Override
     public String getName() {
         return "spectral_bed";

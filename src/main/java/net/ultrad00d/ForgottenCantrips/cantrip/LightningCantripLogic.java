@@ -14,7 +14,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
-public class LightningCantrip extends Cantrip {@Override
+public class LightningCantripLogic extends CantripLogic {
+    @Override
     public String getName() {
         return "lightning";
     }

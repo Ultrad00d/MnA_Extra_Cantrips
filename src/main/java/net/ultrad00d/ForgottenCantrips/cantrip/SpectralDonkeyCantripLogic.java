@@ -16,7 +16,7 @@ import net.minecraft.world.phys.Vec3;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralDonkey;
 import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 
-public class SpectralDonkeyCantrip extends Cantrip {
+public class SpectralDonkeyCantripLogic extends CantripLogic {
     @Override
     public String getName() {
         return "spectral_donkey";
