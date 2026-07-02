@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
 import net.minecraft.client.model.BoatModel;
+import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -22,6 +23,7 @@ import net.ultrad00d.ForgottenCantrips.entity.SpectralBoat;
 public class SpectralBoatRenderer extends EntityRenderer<SpectralBoat>
 {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/entity/spectral_boat.png");
+    private static final float SPECTRAL_ALPHA = 0.6F;
 
     private final BoatModel model;
 
@@ -29,7 +31,7 @@ public class SpectralBoatRenderer extends EntityRenderer<SpectralBoat>
     {
         super(context);
         shadowRadius = 0.8F;
-        model = new BoatModel(context.bakeLayer(ModelLayers.createBoatModelName(Boat.Type.OAK)));
+        model = new ChestBoatModel(context.bakeLayer(ModelLayers.createChestBoatModelName(Boat.Type.OAK)));
     }
 
     @Override
@@ -56,7 +58,7 @@ public class SpectralBoatRenderer extends EntityRenderer<SpectralBoat>
         poseStack.mulPose(Axis.YP.rotationDegrees(90.0F));
         model.setupAnim(boat, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
 
-        VertexConsumer boatBuffer = buffer.getBuffer(model.renderType(TEXTURE));
+        VertexConsumer boatBuffer = buffer.getBuffer(RenderType.entityTranslucent(TEXTURE));
         model.renderToBuffer(
                 poseStack,
                 boatBuffer,
@@ -65,7 +67,7 @@ public class SpectralBoatRenderer extends EntityRenderer<SpectralBoat>
                 1.0F,
                 1.0F,
                 1.0F,
-                1.0F
+                SPECTRAL_ALPHA
         );
 
         if (!boat.isUnderWater())

@@ -1,15 +1,12 @@
 package net.ultrad00d.ForgottenCantrips.registry;
 
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
-import net.ultrad00d.ForgottenCantrips.block.SpectralBedBlock;
-import net.ultrad00d.ForgottenCantrips.entity.SpectralBedBlockEntity;
+import net.ultrad00d.ForgottenCantrips.blockentity.SpectralBedBlockEntity;
 
 public class BlockEntityRegistry {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =

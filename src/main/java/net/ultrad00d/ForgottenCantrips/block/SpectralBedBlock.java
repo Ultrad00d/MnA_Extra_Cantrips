@@ -3,11 +3,9 @@ package net.ultrad00d.ForgottenCantrips.block;
 import java.util.List;
 import java.util.Optional;
 
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.ultrad00d.ForgottenCantrips.registry.BlockEntityRegistry;
 import org.jetbrains.annotations.NotNull;
 
 import com.mojang.datafixers.util.Either;
@@ -37,7 +35,7 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.ultrad00d.ForgottenCantrips.entity.SpectralBedBlockEntity;
+import net.ultrad00d.ForgottenCantrips.blockentity.SpectralBedBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class SpectralBedBlock extends BedBlock {
@@ -182,6 +180,7 @@ public class SpectralBedBlock extends BedBlock {
         }
         return (level, pos, pState1, pBlockEntity) -> {
             if (level.getGameTime() % 20 == 0) {
+                if (!level.dimensionType().bedWorks()) return;
 
                 long timeOfDay = level.getDayTime() % 24000L;
 

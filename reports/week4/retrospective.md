@@ -1,7 +1,7 @@
 ## What went well
 1. Spectral Donkey's inventory is the same as Spectral Boat's one.
 2. Spectral Boat disappears after thirty seconds player did not used it.
-3. 
+3. Some cantrip bugs were detected during customer interview and fixed immediately.
 
 ## What did not go well
 1. Spectral Donkey can walk on water.

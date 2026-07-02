@@ -1,4 +1,4 @@
-package net.ultrad00d.ForgottenCantrips.entity;
+package net.ultrad00d.ForgottenCantrips.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
