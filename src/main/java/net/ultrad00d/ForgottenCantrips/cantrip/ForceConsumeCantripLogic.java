@@ -30,11 +30,6 @@ import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 
 public class ForceConsumeCantripLogic extends CantripLogic {
     @Override
-    public String getName() {
-        return "force_consume";
-    }
-
-    @Override
     public boolean precond(Player player, ICantrip cantrip, InteractionHand hand) {
         return true;
     }

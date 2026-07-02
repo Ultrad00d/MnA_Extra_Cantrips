@@ -16,10 +16,6 @@ import net.minecraftforge.common.ForgeMod;
 
 public class LightningCantripLogic extends CantripLogic {
     @Override
-    public String getName() {
-        return "lightning";
-    }
-    @Override
     public boolean precond(Player player, ICantrip cantrip, InteractionHand hand) {
         return true;
     }

@@ -6,7 +6,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 
 public abstract class CantripLogic {
-    public abstract String getName();
     public abstract boolean precond(Player player, ICantrip cantrip, InteractionHand hand);
     public abstract void run(Player player, ICantrip cantrip, InteractionHand hand);
 }

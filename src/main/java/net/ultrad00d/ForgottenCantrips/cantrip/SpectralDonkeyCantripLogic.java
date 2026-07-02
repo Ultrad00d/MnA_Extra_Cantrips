@@ -18,10 +18,6 @@ import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 
 public class SpectralDonkeyCantripLogic extends CantripLogic {
     @Override
-    public String getName() {
-        return "spectral_donkey";
-    }
-    @Override
     public boolean precond(Player player, ICantrip cantrip, InteractionHand hand) {
         return true;
     }

@@ -18,10 +18,6 @@ import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
 
 public class SpectralBedCantripLogic  extends CantripLogic {
     @Override
-    public String getName() {
-        return "spectral_bed";
-    }
-    @Override
     public boolean precond(Player player, ICantrip cantrip, InteractionHand hand) {
         long dayTime = player.level().getDayTime() % 24000L;
         boolean isDaytime = dayTime < 13000L;

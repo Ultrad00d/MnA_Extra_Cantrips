@@ -77,8 +77,8 @@ public class CantripRegistry {
             DelayedEventQueue.pushEvent(
                 serverLevel,
                 new TimedDelayedEvent<>(
-                    cantripInstance.getName(),
-                    instant ? 1 : cantrip.getDelay(),
+                    player.getUUID().toString() + "cantrip",
+                    instant ? 1 : ICON_SHOW_TIME + 1,
                     null,
                     (id, data) -> cantripInstance.run(player, cantrip, hand)
                 )
