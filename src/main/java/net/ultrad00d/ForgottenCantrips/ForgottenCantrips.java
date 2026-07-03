@@ -40,6 +40,7 @@ import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryScreen;
 import net.ultrad00d.ForgottenCantrips.registry.ItemRegistry;
 import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
 import net.ultrad00d.ForgottenCantrips.effect.UndyingEffect;
+import software.bernie.geckolib.GeckoLib;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ForgottenCantrips.MOD_ID)
@@ -59,6 +60,8 @@ public class ForgottenCantrips {
         EffectRegistry.register(modEventBus);
         PotionRegistry.register(modEventBus);
         MenuRegistry.register(modEventBus);
+
+        GeckoLib.initialize();
 
         modEventBus.addListener(this::commonSetup);
 
