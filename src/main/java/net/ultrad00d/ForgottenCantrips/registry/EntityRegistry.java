@@ -33,7 +33,7 @@ public final class EntityRegistry {
     public static final RegistryObject<EntityType<OldWizard>> OLD_WIZARD =
             ENTITY_TYPES.register("old_wizard", () ->
                     EntityType.Builder.of(OldWizard::new, MobCategory.MISC)
-                            .sized(1F, 1.25F)
+                            .sized(0.7F, 1.15F)
                             .build(ForgottenCantrips.MOD_ID + ":old_wizard")
             );
 
