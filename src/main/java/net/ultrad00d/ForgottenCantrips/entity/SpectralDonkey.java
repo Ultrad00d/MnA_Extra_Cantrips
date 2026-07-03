@@ -49,8 +49,12 @@ public class SpectralDonkey extends AbstractChestedHorse {
         if (++noRiderTicks >= LIFETIME_TICKS) { discard(); }
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return AbstractChestedHorse.createLivingAttributes().add(Attributes.FOLLOW_RANGE, 16.0F).add(Attributes.ATTACK_KNOCKBACK).add(Attributes.JUMP_STRENGTH, 1.45F);
+    public static AttributeSupplier createAttributes() {
+        return AbstractChestedHorse.createLivingAttributes()
+                .add(Attributes.FOLLOW_RANGE, 16.0F)
+                .add(Attributes.ATTACK_KNOCKBACK)
+                .add(Attributes.JUMP_STRENGTH, 1.45F)
+                .build();
     }
 
     protected void randomizeAttributes(@NotNull RandomSource randomSource) {
