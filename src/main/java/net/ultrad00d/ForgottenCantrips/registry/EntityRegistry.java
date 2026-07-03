@@ -19,14 +19,14 @@ public final class EntityRegistry {
                     EntityType.Builder.of(SpectralBoat::new, MobCategory.MISC)
                             .sized(1.375F, 0.5625F)
                             .clientTrackingRange(10)
-                            .build("forgotten_cantrips:spectral_boat")
+                            .build(ForgottenCantrips.MOD_ID + ":spectral_boat")
             );
 
     public static final RegistryObject<EntityType<SpectralDonkey>> SPECTRAL_DONKEY =
             ENTITY_TYPES.register("spectral_donkey", () ->
                     EntityType.Builder.of(SpectralDonkey::new, MobCategory.CREATURE)
                             .sized(1.3964844F, 1.5F)
-                            .build("forgotten_cantrips:spectral_donkey")
+                            .build(ForgottenCantrips.MOD_ID + ":spectral_donkey")
             );
 
     public static void register(IEventBus eventBus) {

@@ -22,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 import net.ultrad00d.ForgottenCantrips.screen.MusicDiscSlotProvider;
 
@@ -32,7 +33,7 @@ public class ForceConsumeCantripLogic implements ICantripLogic {
         ItemStack otherHand = player.getItemInHand(_other_hand);
 
         if (otherHand.isEmpty()) {
-            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.force_consume.noitem"));
+            player.sendSystemMessage(Component.translatable("cantrip." + ForgottenCantrips.MOD_ID + ".force_consume.noitem"));
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.ANVIL_LAND, player.getSoundSource(), 1.0F, 1.0F);
             return;
@@ -41,7 +42,7 @@ public class ForceConsumeCantripLogic implements ICantripLogic {
         boolean effectApplied = applyEffect(player, otherHand);
 
         if (!effectApplied) {
-            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.force_consume.baditem"));
+            player.sendSystemMessage(Component.translatable("cantrip." + ForgottenCantrips.MOD_ID + ".force_consume.baditem"));
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.ANVIL_LAND, player.getSoundSource(), 1.0F, 1.0F);
             return;

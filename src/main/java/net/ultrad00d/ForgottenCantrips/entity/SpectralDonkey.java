@@ -20,6 +20,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
+import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryMenu;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryProvider;
 import org.jetbrains.annotations.NotNull;
@@ -101,7 +102,7 @@ public class SpectralDonkey extends AbstractChestedHorse {
             return InteractionResult.SUCCESS;
         } else {
             if (!this.level().isClientSide()) {
-                player.displayClientMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_donkey.notowner"), true);
+                player.displayClientMessage(Component.translatable("cantrip." + ForgottenCantrips.MOD_ID + ".spectral_donkey.notowner"), true);
             }
             return InteractionResult.FAIL;
         }
@@ -111,7 +112,7 @@ public class SpectralDonkey extends AbstractChestedHorse {
         player.getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(cap -> {
             NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
                     (id, playerInv, p) -> new SharedInventoryMenu(id, playerInv, cap.getInventory()),
-                    Component.translatable("container.forgotten_cantrips.spectral_chest")
+                    Component.translatable("container." + ForgottenCantrips.MOD_ID + ".spectral_chest")
             ));
         });
     }
