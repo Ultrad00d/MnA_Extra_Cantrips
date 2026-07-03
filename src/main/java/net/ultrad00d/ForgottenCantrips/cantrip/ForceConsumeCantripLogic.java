@@ -25,8 +25,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
-import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
+import net.ultrad00d.ForgottenCantrips.screen.MusicDiscSlotProvider;
 
 public class ForceConsumeCantripLogic extends CantripLogic {
     @Override
@@ -148,15 +148,15 @@ public class ForceConsumeCantripLogic extends CantripLogic {
             Level level = player.level();
             if (!level.isClientSide) {
                 // Stop previous disc sound and drop existing disc from hidden slot if any
-                ForgottenCantrips.stopDiscSound(player);
-                ItemStack old = ForgottenCantrips.getStoredDisc(player);
+                MusicDiscSlotProvider.stopDiscSound(player);
+                ItemStack old = MusicDiscSlotProvider.getStoredDisc(player);
                 if (!old.isEmpty()) {
                     player.drop(old, false);
                 }
 
                 // Store this disc in the hidden slot with timer data
-                long duration = ForgottenCantrips.getDiscDuration(Item.getId(item));
-                ForgottenCantrips.setStoredDisc(player, stack, level.getGameTime(), duration);
+                long duration = MusicDiscSlotProvider.getDiscDuration(Item.getId(item));
+                MusicDiscSlotProvider.setStoredDisc(player, stack, level.getGameTime(), duration);
 
                 // Play the sound
                 var sound = record.getSound();
