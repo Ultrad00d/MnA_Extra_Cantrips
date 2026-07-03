@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
-public class LightningCantripLogic extends CantripLogic {
+public class LightningCantripLogic implements ICantripLogic {
     @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         double range;

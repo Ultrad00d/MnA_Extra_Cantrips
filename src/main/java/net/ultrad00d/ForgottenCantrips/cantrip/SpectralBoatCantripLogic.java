@@ -11,7 +11,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBoat;
 import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 
-public class SpectralBoatCantripLogic extends CantripLogic {
+public class SpectralBoatCantripLogic implements ICantripLogic {
     @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         double range;

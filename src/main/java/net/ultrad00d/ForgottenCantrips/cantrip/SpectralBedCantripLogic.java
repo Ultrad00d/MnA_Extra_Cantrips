@@ -16,7 +16,7 @@ import net.minecraft.world.phys.HitResult;
 import net.ultrad00d.ForgottenCantrips.blockentity.SpectralBedBlockEntity;
 import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
 
-public class SpectralBedCantripLogic  extends CantripLogic {
+public class SpectralBedCantripLogic implements ICantripLogic {
     @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {     
         HitResult rayHit = player.pick(player.getBlockReach(), 0.0F, false);

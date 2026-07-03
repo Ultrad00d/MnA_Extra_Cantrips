@@ -16,7 +16,7 @@ import net.minecraft.world.phys.Vec3;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralDonkey;
 import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 
-public class SpectralDonkeyCantripLogic extends CantripLogic {
+public class SpectralDonkeyCantripLogic implements ICantripLogic {
     @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         HitResult hitResult = player.pick(player.getBlockReach(), 0.0F, false);

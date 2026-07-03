@@ -17,7 +17,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import net.ultrad00d.ForgottenCantrips.cantrip.CantripLogic;
+import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
+import net.ultrad00d.ForgottenCantrips.cantrip.ICantripLogic;
 import net.ultrad00d.ForgottenCantrips.cantrip.ForceConsumeCantripLogic;
 import net.ultrad00d.ForgottenCantrips.cantrip.LightningCantripLogic;
 import net.ultrad00d.ForgottenCantrips.cantrip.SpectralBedCantripLogic;
@@ -46,29 +47,29 @@ public class CantripRegistry {
 
         // Lightning Cantrip
         registry.registerCantrip(
-                fromNamespaceAndPath("forgotten_cantrips", "lightning"),
-                fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/lightning.png"),
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "lightning"),
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/lightning.png"),
                 3,
                 (player, cantrip, hand) -> run(player, cantrip, hand, new LightningCantripLogic(), false),
                 ItemStack.EMPTY,
                         RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
         ).setDelay(ICON_SHOW_TIME)
-         .setRequiredAdvancement(fromNamespaceAndPath("forgotten_cantrips", "uc1/part_3"));
+         .setRequiredAdvancement(fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "uc1/part_3"));
 
         // Spectral Bed Cantrip
         registry.registerCantrip(
-                fromNamespaceAndPath("forgotten_cantrips", "spectral_bed"),
-                fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/spectral_bed.png"),
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "spectral_bed"),
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/spectral_bed.png"),
                 1,
                 (player, cantrip, hand) -> run(player, cantrip, hand, new SpectralBedCantripLogic(), false),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
         ).setDelay(ICON_SHOW_TIME)
-         .setRequiredAdvancement(fromNamespaceAndPath("forgotten_cantrips", "uc2/part_3"));
+         .setRequiredAdvancement(fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "uc2/part_3"));
         // Spectral Boat Cantrip
         registry.registerCantrip(
-                fromNamespaceAndPath("forgotten_cantrips", "spectral_boat"),
-                fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/spectral_boat.png"),
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "spectral_boat"),
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/spectral_boat.png"),
                 1,
                 (player, cantrip, hand) -> run(player, cantrip, hand, new SpectralBoatCantripLogic(), false),
                 ItemStack.EMPTY,
@@ -76,8 +77,8 @@ public class CantripRegistry {
         ).setDelay(ICON_SHOW_TIME);
         // Force Consume Cantrip
         registry.registerCantrip(
-                fromNamespaceAndPath("forgotten_cantrips", "force_consume"),
-                fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/force_consume.png"),
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "force_consume"),
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/force_consume.png"),
                 1,
                 (player, cantrip, hand) -> run(player, cantrip, hand, new ForceConsumeCantripLogic(), true),
                 ItemStack.EMPTY,
@@ -85,13 +86,13 @@ public class CantripRegistry {
         );
         // Spectral Donkey Cantrip
         registry.registerCantrip(
-                fromNamespaceAndPath("forgotten_cantrips", "spectral_donkey"),
-                fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/spectral_donkey.png"),
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "spectral_donkey"),
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/spectral_donkey.png"),
                 1,
-                (player, cantrip, hand) -> run(player, cantrip, hand, (CantripLogic) new SpectralDonkeyCantripLogic(), false),
+                (player, cantrip, hand) -> run(player, cantrip, hand, (ICantripLogic) new SpectralDonkeyCantripLogic(), false),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
-        ).setRequiredAdvancement(fromNamespaceAndPath("forgotten_cantrips", "uc3/part_3"));
+        ).setRequiredAdvancement(fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "uc3/part_3"));
     }
 
     public static boolean advancementCheck(Player player, ICantrip cantrip) {
@@ -111,15 +112,15 @@ public class CantripRegistry {
     public static boolean allowedToCast(Player player, ICantrip cantrip) {
         if (!advancementCheck(player, cantrip)) {
             player.sendSystemMessage(
-                    Component.translatable("cantrip.forgotten_cantrips.locked.pre")
-                            .append(Component.translatable("cantrip.forgotten_cantrips." + cantrip.getId().getPath()))
-                            .append(Component.translatable("cantrip.forgotten_cantrips.locked.post")));
+                    Component.translatable("cantrip."+ ForgottenCantrips.MOD_ID + ".locked.pre")
+                            .append(Component.translatable("cantrip." + ForgottenCantrips.MOD_ID + "." + cantrip.getId().getPath()))
+                            .append(Component.translatable("cantrip." + ForgottenCantrips.MOD_ID + ".locked.post")));
             return false;
         }
         return true;
     }
 
-    public static void run(Player player, ICantrip cantrip, InteractionHand hand, CantripLogic cantripInstance, boolean instant) {
+    public static void run(Player player, ICantrip cantrip, InteractionHand hand, ICantripLogic cantripInstance, boolean instant) {
         if (!allowedToCast(player, cantrip)) return;
         if (player.level() instanceof ServerLevel serverLevel)
             DelayedEventQueue.pushEvent(
