@@ -10,12 +10,7 @@ import com.mna.api.tools.RLoc;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import net.ultrad00d.ForgottenCantrips.cantrip.CantripLogic;
-import net.ultrad00d.ForgottenCantrips.cantrip.ForceConsumeCantripLogic;
-import net.ultrad00d.ForgottenCantrips.cantrip.LightningCantripLogic;
-import net.ultrad00d.ForgottenCantrips.cantrip.SpectralBedCantripLogic;
-import net.ultrad00d.ForgottenCantrips.cantrip.SpectralBoatCantripLogic;
-import net.ultrad00d.ForgottenCantrips.cantrip.SpectralDonkeyCantripLogic;
+import net.ultrad00d.ForgottenCantrips.cantrip.*;
 import net.minecraft.world.entity.player.Player;
 
 public class CantripRegistry {
