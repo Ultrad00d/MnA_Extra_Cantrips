@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"idle": {
+		"animation.old_wizard.idle": {
 			"loop": true,
 			"animation_length": 1.9583,
 			"override_previous_animation": true,
@@ -497,7 +497,7 @@
 				}
 			}
 		},
-		"walk": {
+		"animation.old_wizard.walk": {
 			"loop": true,
 			"animation_length": 1.2917,
 			"bones": {
@@ -1104,7 +1104,7 @@
 				}
 			}
 		},
-		"run": {
+		"animation.old_wizard.run": {
 			"loop": true,
 			"animation_length": 0.4167,
 			"bones": {
@@ -1407,7 +1407,7 @@
 				}
 			}
 		},
-		"spell": {
+		"animation.old_wizard.spell": {
 			"animation_length": 4,
 			"bones": {
 				"arm_left": {
@@ -1589,8 +1589,7 @@
 				}
 			}
 		},
-		"anger": {
-			"loop": "hold_on_last_frame",
+		"animation.old_wizard.anger": {
 			"animation_length": 5.5,
 			"bones": {
 				"old_wizard": {
@@ -1722,7 +1721,7 @@
 				}
 			}
 		},
-		"shaking": {
+		"animation.old_wizard.shaking": {
 			"loop": true,
 			"animation_length": 3,
 			"bones": {
@@ -1789,7 +1788,7 @@
 				}
 			}
 		},
-		"grow_1": {
+		"animation.old_wizard.grow_1": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 2,
 			"bones": {
@@ -2109,7 +2108,7 @@
 				}
 			}
 		},
-		"grow_2": {
+		"animation.old_wizard.grow_2": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 2.8333,
 			"bones": {
@@ -2417,7 +2416,7 @@
 				}
 			}
 		},
-		"book": {
+		"animation.old_wizard.book": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 0.625,
 			"bones": {
@@ -2513,7 +2512,7 @@
 				}
 			}
 		},
-		"read": {
+		"animation.old_wizard.read": {
 			"loop": true,
 			"animation_length": 5.6667,
 			"bones": {
