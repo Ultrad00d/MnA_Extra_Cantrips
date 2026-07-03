@@ -1,13 +1,19 @@
 package net.ultrad00d.ForgottenCantrips.screen;
 
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundStopSoundPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.level.Level;
 import net.ultrad00d.ForgottenCantrips.definitions.MusicDiscDefinitions;
 
 public class MusicDiscSlotProvider {
@@ -48,6 +54,29 @@ public class MusicDiscSlotProvider {
         var level = sp.serverLevel();
         level.getChunkSource().chunkMap.broadcast(sp, packet);
         sp.connection.send(packet);
+    }
+
+    public static void playMusicDisc(Player player, ItemStack disc, Level level) {
+        MusicDiscSlotProvider.stopDiscSound(player);
+        ItemStack old = MusicDiscSlotProvider.getStoredDisc(player);
+        if (!old.isEmpty()) {
+            player.drop(old, false);
+        }
+
+        RecordItem record = (RecordItem) disc.getItem();
+        long duration = MusicDiscSlotProvider.getDiscDuration(Item.getId(disc.getItem()));
+        MusicDiscSlotProvider.setStoredDisc(player, disc, level.getGameTime(), duration);
+
+        var sound = record.getSound();
+        var packet = new ClientboundSoundEntityPacket(
+            Holder.direct(sound),
+            SoundSource.RECORDS,
+            player,
+            1.0F, 1.0F,
+            player.getRandom().nextLong()
+        );
+        ((ServerLevel) level).getChunkSource().chunkMap.broadcast(player, packet);
+        if (player instanceof ServerPlayer sp) sp.connection.send(packet);
     }
 
     public static int dropMusicDisc(Player player) {
