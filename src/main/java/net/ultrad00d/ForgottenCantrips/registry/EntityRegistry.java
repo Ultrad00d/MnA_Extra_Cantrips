@@ -7,6 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
+import net.ultrad00d.ForgottenCantrips.entity.OldWizard;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBoat;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralDonkey;
 
@@ -27,6 +28,13 @@ public final class EntityRegistry {
                     EntityType.Builder.of(SpectralDonkey::new, MobCategory.CREATURE)
                             .sized(1.3964844F, 1.5F)
                             .build(ForgottenCantrips.MOD_ID + ":spectral_donkey")
+            );
+
+    public static final RegistryObject<EntityType<OldWizard>> OLD_WIZARD =
+            ENTITY_TYPES.register("old_wizard", () ->
+                    EntityType.Builder.of(OldWizard::new, MobCategory.MISC)
+                            .sized(1F, 1.25F)
+                            .build(ForgottenCantrips.MOD_ID + ":old_wizard")
             );
 
     public static void register(IEventBus eventBus) {
