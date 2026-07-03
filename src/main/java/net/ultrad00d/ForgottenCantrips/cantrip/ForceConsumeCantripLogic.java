@@ -2,11 +2,8 @@ package net.ultrad00d.ForgottenCantrips.cantrip;
 
 import com.mna.api.cantrips.ICantrip;
 
-import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -25,8 +22,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
-import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
+import net.ultrad00d.ForgottenCantrips.screen.MusicDiscSlotProvider;
 
 public class ForceConsumeCantripLogic extends CantripLogic {
     @Override
@@ -144,33 +141,10 @@ public class ForceConsumeCantripLogic extends CantripLogic {
         }
 
         // Music Discs - play the music disc and store in hidden slot
-        if (item instanceof RecordItem record) {
+        if (item instanceof RecordItem) {
             Level level = player.level();
             if (!level.isClientSide) {
-                // Stop previous disc sound and drop existing disc from hidden slot if any
-                ForgottenCantrips.stopDiscSound(player);
-                ItemStack old = ForgottenCantrips.getStoredDisc(player);
-                if (!old.isEmpty()) {
-                    player.drop(old, false);
-                }
-
-                // Store this disc in the hidden slot with timer data
-                long duration = ForgottenCantrips.getDiscDuration(Item.getId(item));
-                ForgottenCantrips.setStoredDisc(player, stack, level.getGameTime(), duration);
-
-                // Play the sound
-                var sound = record.getSound();
-                var packet = new ClientboundSoundEntityPacket(
-                    Holder.direct(sound),
-                    SoundSource.RECORDS,
-                    player,
-                    1.0F, 1.0F,
-                    player.getRandom().nextLong()
-                );
-                // Broadcast to all players tracking this player
-                ((ServerLevel) level).getChunkSource().chunkMap.broadcast(player, packet);
-                // Also send to the consuming player
-                if (player instanceof ServerPlayer sp) sp.connection.send(packet);
+                MusicDiscSlotProvider.playMusicDisc(player, stack, level);
             }
             return true;
         }
