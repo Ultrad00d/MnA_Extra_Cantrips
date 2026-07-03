@@ -75,6 +75,9 @@ minecraft {
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             property 'forge.logging.console.level', 'debug'
 
+            // no geckolib examples in dev
+            property 'geckolib.disable_examples', 'true'
+
             mods {
                 "${mod_id}" {
                     source sourceSets.main
