@@ -2,6 +2,7 @@ package net.ultrad00d.ForgottenCantrips;
 
 import com.mna.api.items.MACreativeTabs;
 
+import net.ultrad00d.ForgottenCantrips.client.renderer.OldWizardRenderer;
 import net.ultrad00d.ForgottenCantrips.registry.*;
 import org.slf4j.Logger;
 
@@ -100,6 +101,11 @@ public class ForgottenCantrips {
                     EntityRegistry.SPECTRAL_DONKEY.get(),
                     SpectralDonkeyRenderer::new
             );
+            EntityRenderers.register(
+                    EntityRegistry.OLD_WIZARD.get(),
+                    OldWizardRenderer::new
+            );
+
             MenuScreens.register(
                     MenuRegistry.SHARED_INVENTORY_MENU.get(),
                     SharedInventoryScreen::new
