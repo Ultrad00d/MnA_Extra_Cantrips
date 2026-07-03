@@ -3,6 +3,10 @@
   "cantrip.forgotten_cantrips.lightning.desc": "Summons a simple lightning bolt where you're looking.",
   "cantrip.forgotten_cantrips.lightning.obstructed": "Can't summon lightning here!",
 
+  "cantrip.forgotten_cantrips.reset_villager_trading_progress": "Reset Villager Trading Progress",
+  "cantrip.forgotten_cantrips.reset_villager_trading_progress.nothing_in_reach": "There are no entities in your reach!",
+  "cantrip.forgotten_cantrips.reset_villager_trading_progress.not_a_villager": "You must look at a villager!",
+
   "cantrip.forgotten_cantrips.spectral_bed": "Spectral Bed",
   "cantrip.forgotten_cantrips.spectral_bed.desc": "Summons a single-use bed where you're looking. The bed doesn't change your respawn point. In dimensions where beds are usable, the bed disappears in the morning and can only be placed at night or during thunderstorms.",
   "cantrip.forgotten_cantrips.spectral_bed.toofar": "Can't place a spectral bed that far away!",
