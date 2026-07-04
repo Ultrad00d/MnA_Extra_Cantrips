@@ -14,6 +14,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 public class OldWizard extends PathfinderMob implements GeoEntity {
     private final AnimatableInstanceCache CACHE = new SingletonAnimatableInstanceCache(this);
+    private boolean isHeadLocked = true;
 
     public OldWizard(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -40,14 +41,12 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     }
 
     private PlayState idle(AnimationState<OldWizard> animationState) {
-        int variant = (int) (Math.random() * 4);
-        switch (variant) {
-            case 1 -> { return animationState.setAndContinue(RawAnimation.begin().then("animation.old_wizard.idle1", Animation.LoopType.PLAY_ONCE)); }
-            case 2 -> { return animationState.setAndContinue(RawAnimation.begin().then("animation.old_wizard.idle2", Animation.LoopType.PLAY_ONCE)); }
-            case 3 -> { return animationState.setAndContinue(RawAnimation.begin().then("animation.old_wizard.idle3", Animation.LoopType.PLAY_ONCE)); }
-            default -> { return animationState.setAndContinue(RawAnimation.begin().then("animation.old_wizard.idle", Animation.LoopType.PLAY_ONCE)); }
-        }
+        animationState.getController().setAnimation(RawAnimation.begin().then("animation.old_wizard.idle", Animation.LoopType.DEFAULT));
+        return PlayState.CONTINUE;
     }
+
+    public void setHeadLocked(boolean state) { this.isHeadLocked = state; }
+    public boolean isHeadLocked() { return this.isHeadLocked; }
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {

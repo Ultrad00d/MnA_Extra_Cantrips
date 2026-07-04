@@ -30,6 +30,10 @@ public class OldWizardModel extends GeoModel<OldWizard> {
 
     @Override
     public void setCustomAnimations(OldWizard animatable, long instanceId, AnimationState<OldWizard> animationState) {
+        if (!animatable.isHeadLocked()) facePlayer(animationState);
+    }
+
+    private void facePlayer(AnimationState<OldWizard> animationState) {
         CoreGeoBone head = getAnimationProcessor().getBone("head");
 
         if (head != null) {
