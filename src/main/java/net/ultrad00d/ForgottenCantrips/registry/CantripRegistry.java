@@ -73,6 +73,15 @@ public class CantripRegistry {
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
         ).setDelay(ICON_SHOW_TIME);
+        // Spectral Armor Cantrip
+        registry.registerCantrip(
+                fromNamespaceAndPath("forgotten_cantrips", "spectral_armor"),
+                fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/spectral_armor.png"),
+                1,
+                (player, cantrip, hand) -> run(player, cantrip, hand, new SpectralArmorCantripLogic(), true),
+                ItemStack.EMPTY,
+                RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+        ).setDelay(ICON_SHOW_TIME);
     }
 
     public static void run(Player player, ICantrip cantrip, InteractionHand hand, CantripLogic cantripInstance, boolean instant) {

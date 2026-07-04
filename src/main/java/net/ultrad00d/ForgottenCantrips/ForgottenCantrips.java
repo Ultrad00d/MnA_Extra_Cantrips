@@ -1,5 +1,6 @@
 package net.ultrad00d.ForgottenCantrips;
 
+import net.ultrad00d.ForgottenCantrips.registry.*;
 import org.slf4j.Logger;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -32,14 +33,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralBoatRenderer;
 import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralDonkeyRenderer;
 import net.ultrad00d.ForgottenCantrips.config.IlluminationConfig;
-import net.ultrad00d.ForgottenCantrips.registry.BlockEntityRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.CantripRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.MenuRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.PotionRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.ItemRegistry;
 import net.ultrad00d.ForgottenCantrips.screen.MusicDiscSlotProvider;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryScreen;
 import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
@@ -57,12 +50,12 @@ public class ForgottenCantrips {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, IlluminationConfig.SPEC);
 
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
+        ItemRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
         BlockEntityRegistry.register(modEventBus);
         EffectRegistry.register(modEventBus);
         PotionRegistry.register(modEventBus);
         MenuRegistry.register(modEventBus);
-        ItemRegistry.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
