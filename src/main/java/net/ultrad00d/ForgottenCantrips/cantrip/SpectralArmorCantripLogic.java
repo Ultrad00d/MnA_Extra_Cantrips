@@ -12,7 +12,7 @@ public class SpectralArmorCantripLogic extends CantripLogic {
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         player.addEffect(new MobEffectInstance(
                 EffectRegistry.SPECTRAL_ARMOR.get(),
-                300,
+                600,
                 0,
                 false,
                 true,

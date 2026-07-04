@@ -1,22 +1,49 @@
-package net.ultrad00d.ForgottenCantrips.cantrip;
+package net.ultrad00d.ForgottenCantrips.event;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
+import net.ultrad00d.ForgottenCantrips.registry.ItemsRegistry;
 
 @Mod.EventBusSubscriber(modid = ForgottenCantrips.MOD_ID)
 public class SpectralArmorEventHandler {
 
-    private static final EquipmentSlot[] ARMOR_SLOTS = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+    private static final EquipmentSlot[] ARMOR_SLOTS = {
+            EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET
+    };
+
+    private static boolean isSpectral(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+        Item item = stack.getItem();
+        return item == ItemsRegistry.SPECTRAL_HELMET.get()
+                || item == ItemsRegistry.SPECTRAL_CHESTPLATE.get()
+                || item == ItemsRegistry.SPECTRAL_LEGGINGS.get()
+                || item == ItemsRegistry.SPECTRAL_BOOTS.get();
+    }
+
+    private static ItemStack createSpectralStack(EquipmentSlot slot) {
+        ItemStack stack = switch (slot) {
+            case HEAD -> new ItemStack(ItemsRegistry.SPECTRAL_HELMET.get());
+            case CHEST -> new ItemStack(ItemsRegistry.SPECTRAL_CHESTPLATE.get());
+            case LEGS -> new ItemStack(ItemsRegistry.SPECTRAL_LEGGINGS.get());
+            case FEET -> new ItemStack(ItemsRegistry.SPECTRAL_BOOTS.get());
+            default -> throw new IllegalArgumentException("Not armor slot " + slot);
+        };
+        stack.getOrCreateTag().putBoolean("Unbreakable", true);
+
+        return stack;
+    }
 
     @SubscribeEvent
     public static void onEffectAdded(MobEffectEvent.Added event) {
@@ -25,7 +52,7 @@ public class SpectralArmorEventHandler {
 
         for (EquipmentSlot slot : ARMOR_SLOTS) {
             if (player.getItemBySlot(slot).isEmpty()) {
-                player.setItemSlot(slot, SpectralArmorTag.createSpectralStack(slot));
+                player.setItemSlot(slot, createSpectralStack(slot));
             }
         }
     }
@@ -45,59 +72,23 @@ public class SpectralArmorEventHandler {
         if (event.getEffectInstance().getEffect() != EffectRegistry.SPECTRAL_ARMOR.get()) return;
         if (!(event.getEntity() instanceof Player player)) return;
 
-        for (EquipmentSlot slot : ARMOR_SLOTS) {
-            if (SpectralArmorTag.isSpectral(player.getItemBySlot(slot))) {
-                player.setItemSlot(slot, ItemStack.EMPTY);
-            }
-        }
+        cleanupSlots(player);
     }
 
     @SubscribeEvent
     public static void onEquipmentChange(LivingEquipmentChangeEvent event) {
         ItemStack from = event.getFrom();
-        ItemStack to = event.getTo();
-
-        if (!SpectralArmorTag.isSpectral(from)) return;
-        if (ItemStack.matches(from, to)) return;
+        if (!isSpectral(from)) return;
+        if (ItemStack.matches(from, event.getTo())) return;
         if (!(event.getEntity() instanceof Player player)) return;
 
-        String removedUid = SpectralArmorTag.getUid(from);
-        if (removedUid == null) return;
-
-        removeByUid(player, removedUid);
-    }
-
-    private static void removeByUid(Player player, String uid) {
-        if (player.containerMenu != null) {
-            ItemStack carried = player.containerMenu.getCarried();
-            if (uid.equals(SpectralArmorTag.getUid(carried))) {
-                player.containerMenu.setCarried(ItemStack.EMPTY);
-            }
-        }
-
-        var items = player.getInventory().items;
-        for (int i = 0; i < items.size(); i++) {
-            ItemStack stack = items.get(i);
-            if (uid.equals(SpectralArmorTag.getUid(stack))) {
-                items.set(i, ItemStack.EMPTY);
-            }
-        }
-
-        double x = player.getX(), y = player.getY(), z = player.getZ();
-        var area = new net.minecraft.world.phys.AABB(x - 16, y - 16, z - 16, x + 16, y + 16, z + 16);
-        if (player.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
-            for (ItemEntity itemEntity : serverLevel.getEntitiesOfClass(ItemEntity.class, area)) {
-                if (uid.equals(SpectralArmorTag.getUid(itemEntity.getItem()))) {
-                    itemEntity.discard();
-                }
-            }
-        }
+        cleanupInventoryAndCursor(player);
     }
 
     @SubscribeEvent
     public static void onItemToss(ItemTossEvent event) {
         ItemEntity itemEntity = event.getEntity();
-        if (SpectralArmorTag.isSpectral(itemEntity.getItem())) {
+        if (isSpectral(itemEntity.getItem())) {
             event.setCanceled(true);
             itemEntity.discard();
         }
@@ -108,29 +99,38 @@ public class SpectralArmorEventHandler {
         if (event.phase != TickEvent.Phase.END) return;
 
         Player player = event.player;
+        if (!player.hasEffect(EffectRegistry.SPECTRAL_ARMOR.get())) {
+            cleanupSlots(player);
+        }
+        cleanupInventoryAndCursor(player);
+    }
 
-        boolean hasEffect = player.hasEffect(EffectRegistry.SPECTRAL_ARMOR.get());
-        if (!hasEffect) {
-            for (EquipmentSlot slot : ARMOR_SLOTS) {
-                ItemStack equipped = player.getItemBySlot(slot);
-                if (SpectralArmorTag.isSpectral(equipped)) {
-                    player.setItemSlot(slot, ItemStack.EMPTY);
-                }
+    private static void cleanupSlots(Player player) {
+        for (EquipmentSlot slot : ARMOR_SLOTS) {
+            if (isSpectral(player.getItemBySlot(slot))) {
+                player.setItemSlot(slot, ItemStack.EMPTY);
             }
         }
+    }
 
+    private static void cleanupInventoryAndCursor(Player player) {
         var items = player.getInventory().items;
         for (int i = 0; i < items.size(); i++) {
-            if (SpectralArmorTag.isSpectral(items.get(i))) {
+            if (isSpectral(items.get(i))) {
                 items.set(i, ItemStack.EMPTY);
             }
         }
 
         if (player.containerMenu != null) {
             ItemStack carried = player.containerMenu.getCarried();
-            if (SpectralArmorTag.isSpectral(carried)) {
+            if (isSpectral(carried)) {
                 player.containerMenu.setCarried(ItemStack.EMPTY);
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void onLivingDrops(LivingDropsEvent event) {
+        event.getDrops().removeIf(itemEntity -> isSpectral(itemEntity.getItem()));
     }
 }
