@@ -6,6 +6,7 @@
   "cantrip.forgotten_cantrips.reset_villager_trading_progress": "Villager Mind-Wiper",
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.desc": "Use with an emerald in other hand while looking at a villager to erase its memory (job, level, offers) and save it onto the emerald, which can then be restored onto any villager (but a nitwit) with a right click.",
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.no_emerald": "You must hold a regular emerald in your other hand!",
+  "cantrip.forgotten_cantrips.reset_villager_trading_progress.nothing_to_copy": "There doesn't seem much to wipe from this villager's head...",
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.nothing_in_reach": "There are no entities in your reach!",
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.not_a_villager": "Try using this on a villager!",
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.nitwit": "This villager seems like too much of a NITWIT to even have a job...",
