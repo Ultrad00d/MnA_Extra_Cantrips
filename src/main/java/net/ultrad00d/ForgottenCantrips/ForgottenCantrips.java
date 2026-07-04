@@ -39,6 +39,7 @@ import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.MenuRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.PotionRegistry;
+import net.ultrad00d.ForgottenCantrips.registry.ItemRegistry;
 import net.ultrad00d.ForgottenCantrips.screen.MusicDiscSlotProvider;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryScreen;
 import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
@@ -61,6 +62,7 @@ public class ForgottenCantrips {
         EffectRegistry.register(modEventBus);
         PotionRegistry.register(modEventBus);
         MenuRegistry.register(modEventBus);
+        ItemRegistry.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
