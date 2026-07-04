@@ -67,6 +67,7 @@ import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.MenuRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.PotionRegistry;
+import net.ultrad00d.ForgottenCantrips.registry.ItemRegistry;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryScreen;
 import net.ultrad00d.ForgottenCantrips.definitions.MusicDiscDefinitions;
 import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
