@@ -46,5 +46,11 @@
   "item.minecraft.potion.effect.aether_stride": "Potion of Aether Stride",
   "item.minecraft.splash_potion.effect.aether_stride": "Splash Potion of Aether Stride",
   "item.minecraft.lingering_potion.effect.aether_stride": "Lingering Potion of Aether Stride",
-  "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride"
+  "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride",
+
+  "item.forgotten_cantrips.spectral_armor": "Spectral Armor",
+  "item.forgotten_cantrips.spectral_helmet": "Spectral Helmet",
+  "item.forgotten_cantrips.spectral_chestplate": "Spectral Chestplate",
+  "item.forgotten_cantrips.spectral_leggings": "Spectral Leggings",
+  "item.forgotten_cantrips.spectral_boots": "Spectral Boots"
 }
