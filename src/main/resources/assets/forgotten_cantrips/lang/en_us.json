@@ -10,8 +10,8 @@
   "cantrip.forgotten_cantrips.spectral_bed.badtarget": "Can't place a spectral bed on there!",
   "cantrip.forgotten_cantrips.spectral_bed.badtime": "In this dimension, spectral beds can only be placed at night or during thunderstorms!",
 
-  "cantrip.forgotten_cantrips.force_consume": "Force Consume",
-  "cantrip.forgotten_cantrips.force_consume.desc": "Consumes the item in your other hand, sometimes even if it is normally not consumable. This can be used to eat items like totem of undyings or potions and to get unpredictable effects.",
+  "cantrip.forgotten_cantrips.force_consume": "Devour",
+  "cantrip.forgotten_cantrips.force_consume.desc": "Consumes the item in your other hand, sometimes even if it is normally not consumable. Devour allows you to eat items like totem of undying or shulker shell, so that you get unpredictable effects.",
   "cantrip.forgotten_cantrips.force_consume.noitem": "No item to consume in the other hand",
   "cantrip.forgotten_cantrips.force_consume.baditem": "Can't eat the item in the other hand",
 
