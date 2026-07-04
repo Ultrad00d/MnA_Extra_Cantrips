@@ -30,11 +30,20 @@ public class ResetVillagerTradingProgressCantripLogic extends CantripLogic {
 
         if (player.level().isClientSide()) return;
 
+        boolean emeraldInOffhand = false;
 
-        if (player.getOffhandItem().getItem() != Items.EMERALD) {
-            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.reset_villager_trading_progress.no_emerald"));
-            return;
+        if (player.getOffhandItem().getItem() == Items.EMERALD) {
+            emeraldInOffhand = true;
+        } else {
+            if (player.getMainHandItem().getItem() == Items.EMERALD) {
+                emeraldInOffhand = false;
+            } else {
+                player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.reset_villager_trading_progress.no_emerald"));
+                return;
+            }
         }
+
+
 
         EntityHitResult entityHit = ProjectileUtil.getEntityHitResult(
                 player.level(),
@@ -65,9 +74,18 @@ public class ResetVillagerTradingProgressCantripLogic extends CantripLogic {
         }
 
 
+        if (!(currentVillager.serializeNBT().contains("Offers"))) {
+            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.reset_villager_trading_progress.nothing_to_copy"));
+            return;
+        }
+
 
         //записываем память в NBT изумруда
-        player.getOffhandItem().setCount(player.getOffhandItem().getCount()-1);
+        if (emeraldInOffhand) {
+            player.getOffhandItem().setCount(player.getOffhandItem().getCount() - 1);
+        } else {
+            player.getMainHandItem().setCount(player.getMainHandItem().getCount() - 1);
+        }
 
 
         ItemLike newEmerald = ItemRegistry.MEMORY_EMERALD.get();
