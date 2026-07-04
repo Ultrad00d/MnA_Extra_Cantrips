@@ -89,6 +89,7 @@ public class ForgottenCantrips {
         EffectRegistry.register(modEventBus);
         PotionRegistry.register(modEventBus);
         MenuRegistry.register(modEventBus);
+        ItemRegistry.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
