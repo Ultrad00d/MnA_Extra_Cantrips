@@ -12,25 +12,13 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientboundStopSoundPacket;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -45,8 +33,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralBoatRenderer;
 import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralDonkeyRenderer;
 import net.ultrad00d.ForgottenCantrips.config.IlluminationConfig;
+import net.ultrad00d.ForgottenCantrips.screen.MusicDiscSlotProvider;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryScreen;
-import net.ultrad00d.ForgottenCantrips.definitions.MusicDiscDefinitions;
 import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
 import net.ultrad00d.ForgottenCantrips.effect.UndyingEffect;
 
@@ -76,10 +64,6 @@ public class ForgottenCantrips {
 
     }
 
-    private static void setDiscPlaying(Player player, boolean playing) {
-        player.getPersistentData().putBoolean(MusicDiscDefinitions.DISC_PLAYING, playing);
-    }
-    
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(CantripRegistry::register);
     }
@@ -123,106 +107,11 @@ public class ForgottenCantrips {
     @SubscribeEvent
     public void onLivingTick(LivingTickEvent event) {
         IlluminationEffect.onLivingTick(event);
-        jukeboxTick(event);
-    }
-    
-    public static ItemStack getStoredDisc(Player player) {
-        CompoundTag data = player.getPersistentData();
-        if (!data.contains(MusicDiscDefinitions.DISC_ITEM)) return ItemStack.EMPTY;
-        return ItemStack.of(data.getCompound(MusicDiscDefinitions.DISC_ITEM));
-    }
-
-    public static long getDiscDuration(int itemId) {
-        return MusicDiscDefinitions.DISC_DURATIONS.getOrDefault(itemId, 3700L) + 60;
-    }
-
-    public static void setStoredDisc(Player player, ItemStack disc, long startTime, long duration) {
-        CompoundTag data = player.getPersistentData();
-        data.put(MusicDiscDefinitions.DISC_ITEM, disc.copyWithCount(1).save(new CompoundTag()));
-        data.putLong(MusicDiscDefinitions.DISC_START, startTime);
-        data.putLong(MusicDiscDefinitions.DISC_DURATION, duration);
-        data.putBoolean(MusicDiscDefinitions.DISC_PLAYING, true);
-    }
-
-    private static void clearStoredDisc(Player player) {
-        CompoundTag data = player.getPersistentData();
-        data.remove(MusicDiscDefinitions.DISC_ITEM);
-        data.remove(MusicDiscDefinitions.DISC_START);
-        data.remove(MusicDiscDefinitions.DISC_DURATION);
-        data.remove(MusicDiscDefinitions.DISC_PLAYING);
-    }
-
-    public static void stopDiscSound(Player player) {
-        if (!(player instanceof ServerPlayer sp)) return;
-        var packet = new ClientboundStopSoundPacket((ResourceLocation) null, SoundSource.RECORDS);
-        var level = sp.serverLevel();
-        level.getChunkSource().chunkMap.broadcast(sp, packet);
-        sp.connection.send(packet);
-    }
-
-    private void jukeboxTick(LivingTickEvent event) {
-        if (!(event.getEntity() instanceof Player player)) return;
-        Level level = player.level();
-        if (level.isClientSide) return;
-
-        CompoundTag data = player.getPersistentData();
-        if (!data.contains(MusicDiscDefinitions.DISC_ITEM)) return;
-        if (!data.getBoolean(MusicDiscDefinitions.DISC_PLAYING)) return;
-
-        long start = data.getLong(MusicDiscDefinitions.DISC_START);
-        long duration = data.getLong(MusicDiscDefinitions.DISC_DURATION);
-        long elapsed = level.getGameTime() - start;
-        if (elapsed < duration + 10) return;
-
-        stopDiscSound(player);
-        ItemStack disc = getStoredDisc(player);
-        if (!disc.isEmpty()) {
-            player.drop(disc, false);
-        }
-        clearStoredDisc(player);
     }
 
     @SubscribeEvent
     public void onPlayerLogout(PlayerLoggedOutEvent event) {
         IlluminationEffect.onPlayerLogout(event);
-        setDiscPlaying(event.getEntity(), false);
-    }
-
-    @SubscribeEvent
-    public void onPlayerLogin(PlayerLoggedInEvent event) {
-        setDiscPlaying(event.getEntity(), false);
-    }
-
-    @SubscribeEvent
-    public void onPlayerClone(PlayerEvent.Clone event) {
-        if (!event.isWasDeath()) return;
-        Player original = event.getOriginal();
-        Player player = event.getEntity();
-        CompoundTag oldData = original.getPersistentData();
-        if (!oldData.contains(MusicDiscDefinitions.DISC_ITEM)) return;
-
-        CompoundTag newData = player.getPersistentData();
-        newData.put(MusicDiscDefinitions.DISC_ITEM, oldData.getCompound(MusicDiscDefinitions.DISC_ITEM));
-        newData.putLong(MusicDiscDefinitions.DISC_START, oldData.getLong(MusicDiscDefinitions.DISC_START));
-        newData.putLong(MusicDiscDefinitions.DISC_DURATION, oldData.getLong(MusicDiscDefinitions.DISC_DURATION));
-        newData.remove(MusicDiscDefinitions.DISC_PLAYING);
-    }
-
-    @SubscribeEvent
-    public void onLivingDeath(LivingDeathEvent event) {
-        if (!(event.getEntity() instanceof Player player)) return;
-        Level level = player.level();
-        if (level.isClientSide) return;
-        stopDiscSound(player);
-        if (level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
-            setDiscPlaying(player, false);
-            return;
-        }
-        ItemStack disc = getStoredDisc(player);
-        if (!disc.isEmpty()) {
-            player.drop(disc, false);
-            clearStoredDisc(player);
-        }
     }
 
     @SubscribeEvent
@@ -233,7 +122,7 @@ public class ForgottenCantrips {
             Commands.literal("forgotten_cantrips")
                 .then(Commands.literal("music_disc")
                     .then(Commands.literal("drop")
-                        .executes(ctx -> dropMusicDisc(ctx.getSource().getPlayerOrException()))
+                        .executes(ctx -> MusicDiscSlotProvider.dropMusicDisc(ctx.getSource().getPlayerOrException()))
                     )
                 )
                 .then(Commands.literal("illumination")
@@ -277,16 +166,4 @@ public class ForgottenCantrips {
         return 1;
     }
 
-    private static int dropMusicDisc(Player player) {
-        ItemStack disc = getStoredDisc(player);
-        if (disc.isEmpty()) {
-            player.sendSystemMessage(Component.translatable("command.forgotten_cantrips.music_disc.drop.empty"));
-            return 0;
-        }
-        stopDiscSound(player);
-        clearStoredDisc(player);
-        player.drop(disc, false);
-        player.sendSystemMessage(Component.translatable("command.forgotten_cantrips.music_disc.drop.success"));
-        return 1;
-    }
 }
