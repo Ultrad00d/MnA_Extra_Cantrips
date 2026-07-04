@@ -7,30 +7,22 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 
-import java.util.function.Supplier;
-
-public enum ArmorMaterials implements ArmorMaterial {
-    SPECTRAL_ARMOR("spectral", 26, new int[]{5, 7, 5, 4}, 25, SoundEvents.ARMOR_EQUIP_GOLD, 1f, 0f, () -> Ingredient.of(ItemsRegistry.ARMOR.get()));
+public enum SpectralArmorMaterial implements ArmorMaterial {
+    SPECTRAL_ARMOR("spectral", 26, new int[]{5, 7, 5, 4}, 0f, SoundEvents.ARMOR_EQUIP_CHAIN);
     private final String name;
     private final int durabilityMultiplier;
     private final int[] protectionAmounts;
-    private final int enchantmentValue;
     private final SoundEvent equipSound;
     private final float toughness;
-    private final float knockbackResistance;
-    private final Supplier<Ingredient> repairIngredient;
 
     private static final int[] BASE_DURABILITY = {11, 15, 16, 13};
 
-    ArmorMaterials(String name, int durabilityMultiplier, int[] protectionAmounts, int enchantmentValue, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
+    SpectralArmorMaterial(String name, int durabilityMultiplier, int[] protectionAmounts, float toughness, SoundEvent equipSound) {
         this.name = name;
         this.durabilityMultiplier = durabilityMultiplier;
         this.protectionAmounts = protectionAmounts;
-        this.enchantmentValue = enchantmentValue;
         this.equipSound = equipSound;
         this.toughness = toughness;
-        this.knockbackResistance = knockbackResistance;
-        this.repairIngredient = repairIngredient;
     }
 
     @Override
@@ -45,7 +37,7 @@ public enum ArmorMaterials implements ArmorMaterial {
 
     @Override
     public int getEnchantmentValue() {
-        return enchantmentValue;
+        return 0;
     }
 
     @Override
@@ -55,7 +47,7 @@ public enum ArmorMaterials implements ArmorMaterial {
 
     @Override
     public Ingredient getRepairIngredient() {
-        return this.repairIngredient.get();
+        return Ingredient.EMPTY;
     }
 
     @Override
@@ -67,9 +59,8 @@ public enum ArmorMaterials implements ArmorMaterial {
     public float getToughness() {
         return this.toughness;
     }
-
     @Override
     public float getKnockbackResistance() {
-        return this.knockbackResistance;
+        return 0;
     }
 }
