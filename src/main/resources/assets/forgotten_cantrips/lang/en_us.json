@@ -23,6 +23,9 @@
   "cantrip.forgotten_cantrips.spectral_donkey.toofar": "Can't summon a spectral donkey that far away!",
   "cantrip.forgotten_cantrips.spectral_donkey.notowner": "This donkey isn't yours!",
 
+  "cantrip.forgotten_cantrips.spectral_slime": "Spectral Slime",
+  "cantrip.forgotten_cantrips.spectral_slime.desc": "Summons a small friendly spectral slime. It follows you from a distance and fights hostile creatures.",
+
   "command.forgotten_cantrips.music_disc.drop.empty": "No music disc stored",
   "command.forgotten_cantrips.music_disc.drop.success": "Music disc dropped",
 
@@ -34,6 +37,15 @@
 
   "entity.forgotten_cantrips.spectral_boat": "Spectral Boat",
   "entity.forgotten_cantrips.spectral_donkey": "Spectral Donkey",
+  "entity.forgotten_cantrips.spectral_slime": "Spectral Slime",
+
+  "item.forgotten_cantrips.spectral_slime_ball": "Spectral Slime Ball",
+
+  "cantrip.forgotten_cantrips.dmg_buff": "Damage Buff",
+  "cantrip.forgotten_cantrips.dmg_buff.desc": "Applies a stacking damage buff effect to yourself.",
+
+  "cantrip.forgotten_cantrips.mana_cost_buff": "Mana Cost Buff",
+  "cantrip.forgotten_cantrips.mana_cost_buff.desc": "Applies a stacking mana cost buff effect to yourself.",
 
   "item.minecraft.potion.effect.undying": "Potion of Undying",
   "item.minecraft.splash_potion.effect.undying": "Splash Potion of Undying",
@@ -46,5 +58,7 @@
   "item.minecraft.potion.effect.aether_stride": "Potion of Aether Stride",
   "item.minecraft.splash_potion.effect.aether_stride": "Splash Potion of Aether Stride",
   "item.minecraft.lingering_potion.effect.aether_stride": "Lingering Potion of Aether Stride",
-  "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride"
+  "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride",
+  "effect.forgotten_cantrips.dmg_buff": "Damage Buff",
+  "effect.forgotten_cantrips.mana_cost_buff": "Mana Cost Buff"
 }

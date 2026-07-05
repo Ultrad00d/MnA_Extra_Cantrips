@@ -9,6 +9,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBoat;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralDonkey;
+import net.ultrad00d.ForgottenCantrips.entity.SpectralSlime;
 
 public final class EntityRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
@@ -27,6 +28,14 @@ public final class EntityRegistry {
                     EntityType.Builder.of(SpectralDonkey::new, MobCategory.CREATURE)
                             .sized(1.3964844F, 1.5F)
                             .build("forgotten_cantrips:spectral_donkey")
+            );
+
+    public static final RegistryObject<EntityType<SpectralSlime>> SPECTRAL_SLIME =
+            ENTITY_TYPES.register("spectral_slime", () ->
+                    EntityType.Builder.of(SpectralSlime::new, MobCategory.CREATURE)
+                            .sized(0.52F, 0.52F)
+                            .clientTrackingRange(10)
+                            .build("forgotten_cantrips:spectral_slime")
             );
 
     public static void register(IEventBus eventBus) {
