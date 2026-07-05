@@ -1,0 +1,56 @@
+@startuml forgotten_cantrips_static_view
+title Forgotten Cantrips - Static Component View
+
+left to right direction
+skinparam componentStyle rectangle
+skinparam linetype ortho
+skinparam shadowing false
+
+actor "Player" as Player
+
+package "Minecraft / Forge environment" {
+  component "Minecraft Client\ninput, UI, rendering" as Client <<external>>
+  component "Forge Runtime\nregistries, event bus,\nconfig, networking" as Forge <<platform>>
+  component "Mana and Artifice API\ncantrip registry,\ndelayed events" as MNA <<external>>
+  component "Required Mod Dependencies\nCurios, GeckoLib" as RequiredMods <<external>>
+}
+
+package "forgotten_cantrips mod" {
+  component "Mod Bootstrap\nForgottenCantrips" as Bootstrap
+  component "Registration Layer\nEntityRegistry, ItemRegistry,\nBlockRegistry, EffectRegistry,\nPotionRegistry, MenuRegistry" as Registries
+  component "Cantrip Layer\nCantripRegistry +\nper-cantrip logic" as Cantrips
+  component "Gameplay Features\nitems, effects, blocks,\nentities, spectral storage" as Gameplay
+  component "Event and Config Integration\nForge event handlers,\ncapabilities, IlluminationConfig" as EventsConfig
+  component "Client Integration\nscreens, renderers,\nGUI/entity assets" as ClientIntegration
+}
+
+database "Minecraft World State\nentities, blocks,\nplayer NBT, config" as World <<platform>>
+component "Resource Assets\ntextures, models,\nlang files" as Assets <<resources>>
+
+Player --> Client
+Client --> Forge
+Forge --> Bootstrap
+Bootstrap --> Registries
+Bootstrap --> EventsConfig
+Bootstrap --> Cantrips
+Registries --> Forge
+EventsConfig --> Forge
+Cantrips --> MNA
+MNA --> Cantrips
+Cantrips --> Gameplay
+EventsConfig --> Gameplay
+Gameplay --> World
+ClientIntegration --> Client
+ClientIntegration --> Assets
+Forge --> MNA
+Forge --> RequiredMods
+Forge --> World
+
+legend right
+  Relationship summary
+  - Forge hosts mod loading, registries, events, config, networking, and persistence.
+  - Forgotten Cantrips registers content and Mana and Artifice cantrip callbacks.
+  - Cantrip and event logic update Minecraft world state server-side.
+  - Client integration supplies screens, renderers, and assets.
+endlegend
+@enduml
