@@ -25,6 +25,7 @@ public class IlluminationEffect extends MobEffect {
     private static final Map<UUID, Set<BlockPos>> ILLUMINATION_LIGHTS = new HashMap<>();
 
     public static void onLivingTick(LivingTickEvent event) {
+        if (net.minecraftforge.fml.ModList.get().isLoaded("lucent")) return;
         if (!(event.getEntity() instanceof Player player)) return;
         var level = player.level();
         if (level.isClientSide) return;
