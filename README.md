@@ -1,5 +1,7 @@
 # Mana and Artifice Forgotten Cantrips
 
+[Hosted Documentation Site](https://ultrad00d.github.io/MnA_Extra_Cantrips/)
+
 [Product Backlog](docs/user-stories.md)
 
 [Week 2 Project Delivery Index](reports/week2/README.md)
@@ -9,6 +11,8 @@
 [Week 3 Project Delivery Index](reports/week3/README.md)
 
 [Week 4 Project Delivery Index](reports/week4/README.md)
+
+[Week 5 Project Delivery Index](reports/week5/README.md)
 
 ---
 
