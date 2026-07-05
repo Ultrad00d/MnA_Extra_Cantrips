@@ -10,6 +10,8 @@
 
 **Linked quality requirement tests:** N/A, TA informed
 
+**Related ADR:** [ADR 0001: Mod Modularity and Registry Separation](architecture/adr/0001-mod-modularity-and-registry-separation.md)
+
 
 ## QR-002: Mod startup time
 
@@ -21,6 +23,7 @@
 
 **Linked quality requirement tests:** N/A, environment with required capabilities isn't readily available, TA informed
 
+**Related ADR:** [ADR 0002: Server-Authoritative Cantrip Validation and Delayed Execution](architecture/adr/0002-server-authoritative-cantrip-validation.md)
 
 
 ## QR-003: CI validation
@@ -34,3 +37,4 @@ https://github.com/Ultrad00d/MnA_Extra_Cantrips/edit/109-week4-documentation/doc
 
 **Linked quality requirement tests:** [QRT-003](quality-requirement-tests.md#qr-003-ci-validation)
 
+**Related ADR:** [ADR 0003: Automated CI/CD and Strict Toolchain Versioning](architecture/adr/0003-automated-ci-cd-and-strict-toolchain-versioning.md)
