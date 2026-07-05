@@ -169,7 +169,7 @@ dependencies {
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
 
     // Lucent (Optional Dependency)
-    compileOnly fg.deobf("lucent-1.20.1-v1.5.5:lucent-1.20.1-v1.5.5:1.5.5")
+    compileOnly fg.deobf("blank:lucent-1.20.1:1.5.5")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
