@@ -1,3 +1,5 @@
+# Quality Requirements
+
 ## QR-001: Functionality separation
 
 **ISO/IEC 25010 sub-characteristic:** Modularity
@@ -29,5 +31,6 @@
 
 **Why this matters:** This helps catch defects early, improving user confidence in this project and reducing development costs.
 https://github.com/Ultrad00d/MnA_Extra_Cantrips/edit/109-week4-documentation/docs/quality-requirement-tests.md#qr-003-ci-validation
+
 **Linked quality requirement tests:** [QRT-003](quality-requirement-tests.md#qr-003-ci-validation)
 
