@@ -49,26 +49,23 @@
 
 ### 5. Heart of the Sea Effect
 
-* Eating Heart of the Sea permanently increases underwater air bubbles.
-* Maximum effect requires eating 5 hearts (adds ~10 bubbles).
-* Suggested change: make it restore air instead of bubbles if current implementation isn't satisfactory.
+* When Devour cantrip is cast with Heart of the Sea in the offhand it simply grants the player Conduit Power effect for 15 minutes.
 
 ---
 
 ## 🎯 Decisions
 
 1. **Spectral Armor Duration:** Continue with 30 seconds for now, gather community feedback on balance.
-2. **Heart of the Sea:** Pass idea to Alexander for consideration - either bubble increase or air restoration.
+2. **Heart of the Sea:** Pass idea for consideration - either bubble increase or air restoration.
 3. **Cantrip Complexity:** Balance concerns about redrawing short-duration effects in combat.
 
 ---
 
 ## 📋 Action Points
 
-* [ ] **Development:** Finalize cantrip delay timing across all spells.
-* [ ] **Audio:** Investigate missing sound when spectral armor effect expires.
-* [ ] **Design:** Address piston signal pass-through issue.
-* [ ] **Future:** Complete mage NPC integration (model, animations, hut already done).
+- [x] Development: Finalize Spectral Armor cantrip timings.
+- [x] Design: Make missing icons for newly added cantrips (Spectral Armor, Villager Mind-Wipe, Empower)
+- [x] Future: Complete mage NPC integration (model, animations and its house are already done).
 
 ---
 
@@ -76,9 +73,6 @@
 
 * **Short Duration Effects (Medium Risk):** 30-second effects may be too short for combat use, requiring constant redrawing.
 * *Resulting Change:* Consider extending to 1 minute, test in combat scenarios.
-
-* **Piston Signal Issue (Low Risk):** Piston doesn't register signals when repeater is activated.
-* *Resulting Change:* Refactor redstone mechanics in cantrip implementation.
 
 ---
 
