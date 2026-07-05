@@ -8,6 +8,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
+      { text: 'Get Started', link: '/get-started/introduction' },
       { text: 'Product', link: '/product/user-stories' },
       { text: 'Quality', link: '/quality/quality-requirements' },
       { text: 'Process', link: '/process/requirements' },
@@ -15,6 +16,13 @@ export default defineConfig({
     ],
 
     sidebar: [
+      {
+        text: 'Get Started',
+        items: [
+          { text: 'Introduction', link: '/get-started/introduction' },
+          { text: 'Demo', link: '/get-started/demo' },
+        ]
+      },
       {
         text: 'Product',
         items: [
