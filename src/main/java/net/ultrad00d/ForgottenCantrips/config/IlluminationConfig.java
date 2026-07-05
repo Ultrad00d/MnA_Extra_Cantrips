@@ -15,15 +15,15 @@ public class IlluminationConfig {
 
         RADIUS_EXT = BUILDER
             .comment("Radius extension of the illumination light cylinder (0-2)")
-            .defineInRange("radius_ext", 0, 0, 2);
+            .defineInRange("radius_ext", 0, 0, 1);
 
         MAX_RADIUS = BUILDER
-            .comment("Maximal radius of the illumination light cylinder (2-8)")
-            .defineInRange("max_radius", 4, 2, 8);
+            .comment("Maximal radius of the illumination light cylinder (1-15)")
+            .defineInRange("max_radius", 15, 1, 15);
 
         TICK_PERIOD = BUILDER
-            .comment("How many ticks between light refreshes (1-20, 20 = 1 second)")
-            .defineInRange("tick_period", 10, 1, 20);
+            .comment("How many ticks between light refreshes (1-10, 10 = 0.5 seconds)")
+            .defineInRange("tick_period", 5, 1, 10);
 
         BUILDER.pop();
         SPEC = BUILDER.build();
