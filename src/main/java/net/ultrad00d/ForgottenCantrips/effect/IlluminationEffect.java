@@ -21,8 +21,14 @@ public class IlluminationEffect extends MobEffect {
     public IlluminationEffect() {
         super(MobEffectCategory.BENEFICIAL, 0xFFFEEE);
     }
-    private static final Map<UUID, BlockPos> PREVIOUS_POSITION = new HashMap<>();
     private static final Map<UUID, Set<BlockPos>> ILLUMINATION_LIGHTS = new HashMap<>();
+
+    private static int drift(double fv) {
+        final double DRIFT_THRESHOLD = 0.35;
+        if (fv <= DRIFT_THRESHOLD) return -1;
+        if (fv >= 1.0 - DRIFT_THRESHOLD) return 1;
+        return 0;
+    }
 
     public static void onLivingTick(LivingTickEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
@@ -42,25 +48,29 @@ public class IlluminationEffect extends MobEffect {
         if (player.tickCount % IlluminationConfig.TICK_PERIOD.get() != 0) return;
 
         int radius = Math.min(switch (effect.getAmplifier()) {
-            case 0 -> 2;
-            case 1 -> 3;
-            default -> 4;
-        } + IlluminationConfig.RADIUS_EXT.get(), IlluminationConfig.MAX_RADIUS.get());
+            case 0 -> 9;
+            case 1 -> 11;
+            case 2 -> 13;
+            default -> 15;
+        } + IlluminationConfig.RADIUS_EXT.get(), 15);
 
         var center = player.blockPosition();
-        if (center.equals(PREVIOUS_POSITION.get(player.getUUID()))) return;
         var current = new HashSet<BlockPos>();
+        double fx = player.getX() - Math.floor(player.getX());
+        double fz = player.getZ() - Math.floor(player.getZ());
 
-        for (int x = -radius; x <= radius; x++)
-            for (int z = -radius; z <= radius; z++) {
-                if (x * x + z * z > radius * radius) continue;
-                for (int y = -1; y <= 1; y++) {
-                    var pos = center.offset(x, y, z);
-                    if (level.getBlockState(pos).isAir())
-                        current.add(pos.immutable());
-                }
-            }
+        
+        {
+            var pos = center.offset(drift(fx), 0, drift(fz));
+            if (level.getBlockState(pos).isAir() || level.getBlockState(pos).is(Blocks.LIGHT))
+                current.add(pos.immutable());
+        }
 
+        for (int y = -1; y <= 1; y++) {
+            var pos = center.offset(0, y, 0);
+            if (level.getBlockState(pos).isAir() || level.getBlockState(pos).is(Blocks.LIGHT))
+                current.add(pos.immutable());
+        }
 
         var previous = ILLUMINATION_LIGHTS.getOrDefault(player.getUUID(), Set.of());
 
@@ -70,10 +80,9 @@ public class IlluminationEffect extends MobEffect {
 
         for (BlockPos pos : current)
             if (!previous.contains(pos))
-                level.setBlock(pos, Blocks.LIGHT.defaultBlockState().setValue(LightBlock.LEVEL, 15), 3);
+                level.setBlock(pos, Blocks.LIGHT.defaultBlockState().setValue(LightBlock.LEVEL, radius), 3);
 
         ILLUMINATION_LIGHTS.put(player.getUUID(), current);
-        PREVIOUS_POSITION.put(player.getUUID(), center);
     }
     public static void onPlayerLogout(PlayerLoggedOutEvent event) {
         var player = event.getEntity();
