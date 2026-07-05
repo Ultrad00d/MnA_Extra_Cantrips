@@ -150,10 +150,10 @@ public class ForceConsumeCantripLogic extends CantripLogic {
             return true;
         }
 
-        // Netherite Scrap - apply the "Resistance" and "Fire Resistance" effects to the player for 1 minute
+        // Netherite Scrap - apply the "Resistance" and "Fire Resistance" effects to the player for 3 minutes (TBD)
         if (item == Items.NETHERITE_SCRAP) {
-            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0));
-            player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 1200, 0));
+            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 3600, 1));
+            player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3600, 1));
             return true;
         }
         // Dragon's Breath - apply the "Levitation" effect to the player for 7 seconds, "Slow Falling" effect for 21 second
