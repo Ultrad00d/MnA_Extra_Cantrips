@@ -1,5 +1,6 @@
 package net.ultrad00d.ForgottenCantrips;
 
+import net.ultrad00d.ForgottenCantrips.registry.*;
 import org.slf4j.Logger;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
