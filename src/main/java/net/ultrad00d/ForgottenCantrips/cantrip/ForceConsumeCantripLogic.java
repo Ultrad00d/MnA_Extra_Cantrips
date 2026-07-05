@@ -174,8 +174,9 @@ public class ForceConsumeCantripLogic extends CantripLogic {
             player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1200, 0));
             return true;
         }
-        // Water Bucket - remove the liquid container
+        // Water Bucket - remove the liquid container, put out fire on the player.
         if (item == Items.WATER_BUCKET) {
+            player.clearFire();
             return true;
         }
         // Regular food items - apply nutrition based on the food properties of the item
