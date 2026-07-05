@@ -31,6 +31,7 @@ public class IlluminationEffect extends MobEffect {
     }
 
     public static void onLivingTick(LivingTickEvent event) {
+        if (net.minecraftforge.fml.ModList.get().isLoaded("lucent")) return;
         if (!(event.getEntity() instanceof Player player)) return;
         var level = player.level();
         if (level.isClientSide) return;
