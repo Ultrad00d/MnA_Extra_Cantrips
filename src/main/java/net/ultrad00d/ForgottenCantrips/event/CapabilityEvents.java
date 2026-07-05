@@ -70,51 +70,5 @@ public class CapabilityEvents {
         if (event.getEntity() instanceof SpectralDonkey donkey) { event.setCanceled(true); } //spectral donkey doesn't drop the saddle
     }
 
-
-
-    @SubscribeEvent
-    public static void onPlayerInteractEntity(PlayerInteractEvent.EntityInteractSpecific event) {
-
-        if (event.getEntity().getItemInHand(event.getHand()).getItem() instanceof MemoryEmeraldItem) {
-            if (event.getLevel().isClientSide()) {
-                return;
-            }
-
-            Player player = event.getEntity();
-            Entity target = event.getTarget();
-
-            if (target.getType() == EntityType.VILLAGER) {
-                if (((Villager) target).getVillagerData().getProfession() == VillagerProfession.NITWIT) {
-
-                    event.setCanceled(true);
-                    event.setCancellationResult(InteractionResult.SUCCESS);
-                    event.setResult(Event.Result.DENY);
-
-                    player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.reset_villager_trading_progress.nitwit"));
-
-                } else
-                {
-                    event.setCanceled(true);
-                    event.setCancellationResult(InteractionResult.SUCCESS);
-                    event.setResult(Event.Result.DENY);
-
-                    if (ResetVillagerTradingProgressCantripLogic.applyMemories(event.getItemStack(), (Villager) target)) {
-                        event.getItemStack().setCount(event.getItemStack().getCount() - 1);
-                        player.getInventory().add(new ItemStack(Items.EMERALD, 1));
-                    } else {
-                        player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.reset_villager_trading_progress.empty_warning"));
-                        return;
-                    }
-                }
-
-                } else {
-                    player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.reset_villager_trading_progress.not_a_villager"));
-                    return;
-                }
-
-
-            }
-
-        }
     }
 
