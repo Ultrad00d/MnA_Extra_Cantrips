@@ -26,12 +26,18 @@ public class MemoryEmeraldItem extends Item {
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
 
         CompoundTag nbtData = pStack.getTag();
+
         if (nbtData != null && nbtData.contains("initialized")) {
-            String tooltip = "LV" + String.valueOf(nbtData.getInt("level")) + " " + (nbtData.getString("profession").substring(0, 1).toUpperCase()) + nbtData.getString("profession").substring(1);
-            pTooltipComponents.add(Component.literal(tooltip).withStyle(ChatFormatting.LIGHT_PURPLE));
+            if (nbtData.contains("jobless")) {
+                pTooltipComponents.add(Component.translatable("item.forgotten_cantrips.memory_emerald.jobless").withStyle(ChatFormatting.LIGHT_PURPLE));
+            } else {
+                String tooltip = "LV" + String.valueOf(nbtData.getInt("level")) + " " + (nbtData.getString("profession").substring(0, 1).toUpperCase()) + nbtData.getString("profession").substring(1);
+                pTooltipComponents.add(Component.literal(tooltip).withStyle(ChatFormatting.LIGHT_PURPLE));
+            }
         } else {
             pTooltipComponents.add(Component.translatable("item.forgotten_cantrips.memory_emerald.empty").withStyle(ChatFormatting.LIGHT_PURPLE));
         }
+        pTooltipComponents.add(Component.translatable("item.forgotten_cantrips.memory_emerald.instructions").withStyle(ChatFormatting.WHITE));
     }
 
 }
