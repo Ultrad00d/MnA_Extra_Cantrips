@@ -11,9 +11,6 @@
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.not_a_villager": "Try using this on a villager!",
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.nitwit": "This villager seems like too much of a NITWIT to even have a job...",
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.empty_warning": "It seems this Memory Emerald is... empty? Where did you even get it?",
-  "item.forgotten_cantrips.memory_emerald": "Memory Emerald",
-  "item.forgotten_cantrips.memory_emerald.empty": "Empty",
-
 
   "cantrip.forgotten_cantrips.spectral_bed": "Spectral Bed",
   "cantrip.forgotten_cantrips.spectral_bed.desc": "Summons a single-use bed where you're looking. The bed doesn't change your respawn point. In dimensions where beds are usable, the bed disappears in the morning and can only be placed at night or during thunderstorms.",
@@ -47,6 +44,9 @@
 
   "entity.forgotten_cantrips.spectral_boat": "Spectral Boat",
   "entity.forgotten_cantrips.spectral_donkey": "Spectral Donkey",
+
+  "item.forgotten_cantrips.memory_emerald": "Memory Emerald",
+  "item.forgotten_cantrips.memory_emerald.empty": "Empty",
 
   "item.minecraft.potion.effect.undying": "Potion of Undying",
   "item.minecraft.splash_potion.effect.undying": "Splash Potion of Undying",
