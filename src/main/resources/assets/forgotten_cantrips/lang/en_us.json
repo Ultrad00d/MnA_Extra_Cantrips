@@ -32,6 +32,10 @@
   "cantrip.forgotten_cantrips.spectral_donkey.toofar": "Can't summon a spectral donkey that far away!",
   "cantrip.forgotten_cantrips.spectral_donkey.notowner": "This donkey isn't yours!",
 
+  "cantrip.forgotten_cantrips.spectral_armor": "Spectral Armor",
+  "cantrip.forgotten_cantrips.spectral_armor.desc": "Summons a powerful Spectral armor set! With Great Power, comes Greater Spectral Defence. Taking it off however will shred it into pieces.",
+
+
   "command.forgotten_cantrips.music_disc.drop.empty": "No music disc stored",
   "command.forgotten_cantrips.music_disc.drop.success": "Music disc dropped",
 
