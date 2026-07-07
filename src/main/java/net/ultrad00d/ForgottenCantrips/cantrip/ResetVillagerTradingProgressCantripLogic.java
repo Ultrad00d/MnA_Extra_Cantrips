@@ -156,7 +156,7 @@ public class ResetVillagerTradingProgressCantripLogic extends CantripLogic {
         if (!(emeraldNBT.contains("jobless"))) {
 
             target.setVillagerXp(emeraldNBT.getInt("exp"));
-            target.setVillagerData(target.getVillagerData().setLevel(emeraldNBT.getInt("level")).setProfession(ForgeRegistries.VILLAGER_PROFESSIONS.getValue(new ResourceLocation(emeraldNBT.getString("profession")))));
+            target.setVillagerData(target.getVillagerData().setLevel(emeraldNBT.getInt("level")).setProfession(ForgeRegistries.VILLAGER_PROFESSIONS.getValue(ResourceLocation.parse(emeraldNBT.getString("profession")))));
 
             CompoundTag originalVillagerNBT = target.serializeNBT();
             originalVillagerNBT.remove("Offers");

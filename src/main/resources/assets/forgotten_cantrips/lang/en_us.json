@@ -4,17 +4,13 @@
   "cantrip.forgotten_cantrips.lightning.obstructed": "Can't summon lightning here!",
 
   "cantrip.forgotten_cantrips.reset_villager_trading_progress": "Villager Mind-Wiper",
-  "cantrip.forgotten_cantrips.reset_villager_trading_progress.desc": "To be used on villagers. When holding an emerald in other hand, saves the villager's memory onto the emerald. When holding a memory emerald in the other hand, transfers the memories from the emerald onto the villager.",
-  "cantrip.forgotten_cantrips.reset_villager_trading_progress.no_emerald": "You must hold a regular or a memory emerald in your other hand!",
+  "cantrip.forgotten_cantrips.reset_villager_trading_progress.desc": "Use with an emerald in other hand while looking at a villager to erase its memory (job, level, offers) and save it onto the emerald, which can then be restored onto any villager (but a nitwit) with a right click.",
+  "cantrip.forgotten_cantrips.reset_villager_trading_progress.no_emerald": "You must hold a regular emerald in your other hand!",
+  "cantrip.forgotten_cantrips.reset_villager_trading_progress.nothing_to_copy": "There doesn't seem much to wipe from this villager's head...",
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.nothing_in_reach": "There are no entities in your reach!",
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.not_a_villager": "Try using this on a villager!",
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.nitwit": "This villager seems like too much of a NITWIT to even have a job...",
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.empty_warning": "It seems this Memory Emerald is... empty? Where did you even get it?",
-  "item.forgotten_cantrips.memory_emerald": "Memory Emerald",
-  "item.forgotten_cantrips.memory_emerald.empty": "Empty",
-  "item.forgotten_cantrips.memory_emerald.instructions": "Hold in other hand while casting Villager Mind-Wiper to apply these memories onto a villager!",
-  "item.forgotten_cantrips.memory_emerald.jobless": "Jobless",
-
 
   "cantrip.forgotten_cantrips.spectral_bed": "Spectral Bed",
   "cantrip.forgotten_cantrips.spectral_bed.desc": "Summons a single-use bed where you're looking. The bed doesn't change your respawn point. In dimensions where beds are usable, the bed disappears in the morning and can only be placed at night or during thunderstorms.",
@@ -23,8 +19,8 @@
   "cantrip.forgotten_cantrips.spectral_bed.badtarget": "Can't place a spectral bed on there!",
   "cantrip.forgotten_cantrips.spectral_bed.badtime": "In this dimension, spectral beds can only be placed at night or during thunderstorms!",
 
-  "cantrip.forgotten_cantrips.force_consume": "Force Consume",
-  "cantrip.forgotten_cantrips.force_consume.desc": "Consumes the item in your other hand, sometimes even if it is normally not consumable. This can be used to eat items like totem of undyings or potions and to get unpredictable effects.",
+  "cantrip.forgotten_cantrips.force_consume": "Devour",
+  "cantrip.forgotten_cantrips.force_consume.desc": "Consumes the item in your other hand, sometimes even if it is normally not consumable. Devour allows you to eat items like totem of undying or shulker shell, so that you get unpredictable effects.",
   "cantrip.forgotten_cantrips.force_consume.noitem": "No item to consume in the other hand",
   "cantrip.forgotten_cantrips.force_consume.baditem": "Can't eat the item in the other hand",
 
@@ -36,6 +32,10 @@
   "cantrip.forgotten_cantrips.spectral_donkey.toofar": "Can't summon a spectral donkey that far away!",
   "cantrip.forgotten_cantrips.spectral_donkey.notowner": "This donkey isn't yours!",
 
+  "cantrip.forgotten_cantrips.spectral_armor": "Spectral Armor",
+  "cantrip.forgotten_cantrips.spectral_armor.desc": "Summons a powerful Spectral armor set! With Great Power, comes Greater Spectral Defence. Taking it off however will shred it into pieces.",
+
+
   "command.forgotten_cantrips.music_disc.drop.empty": "No music disc stored",
   "command.forgotten_cantrips.music_disc.drop.success": "Music disc dropped",
 
@@ -44,9 +44,15 @@
   "effect.forgotten_cantrips.undying": "Undying",
   "effect.forgotten_cantrips.illumination": "Illumination",
   "effect.forgotten_cantrips.aether_stride": "Aether Stride",
+  "effect.forgotten_cantrips.spectral_armor": "Spectral Armor",
 
   "entity.forgotten_cantrips.spectral_boat": "Spectral Boat",
   "entity.forgotten_cantrips.spectral_donkey": "Spectral Donkey",
+
+  "item.forgotten_cantrips.memory_emerald": "Memory Emerald",
+  "item.forgotten_cantrips.memory_emerald.empty": "Empty",
+  "item.forgotten_cantrips.memory_emerald.instructions": "Hold in other hand while casting Villager Mind-Wiper to apply these memories onto a villager!",
+  "item.forgotten_cantrips.memory_emerald.jobless": "Jobless",
 
   "item.minecraft.potion.effect.undying": "Potion of Undying",
   "item.minecraft.splash_potion.effect.undying": "Splash Potion of Undying",
@@ -59,5 +65,10 @@
   "item.minecraft.potion.effect.aether_stride": "Potion of Aether Stride",
   "item.minecraft.splash_potion.effect.aether_stride": "Splash Potion of Aether Stride",
   "item.minecraft.lingering_potion.effect.aether_stride": "Lingering Potion of Aether Stride",
-  "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride"
+  "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride",
+
+  "item.forgotten_cantrips.spectral_helmet": "Spectral Helmet",
+  "item.forgotten_cantrips.spectral_chestplate": "Spectral Chestplate",
+  "item.forgotten_cantrips.spectral_leggings": "Spectral Leggings",
+  "item.forgotten_cantrips.spectral_boots": "Spectral Boots"
 }
