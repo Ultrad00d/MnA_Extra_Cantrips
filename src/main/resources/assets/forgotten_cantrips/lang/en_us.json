@@ -51,6 +51,8 @@
 
   "item.forgotten_cantrips.memory_emerald": "Memory Emerald",
   "item.forgotten_cantrips.memory_emerald.empty": "Empty",
+  "item.forgotten_cantrips.memory_emerald.instructions": "Hold in other hand while casting Villager Mind-Wiper to apply these memories onto a villager!",
+  "item.forgotten_cantrips.memory_emerald.jobless": "Jobless",
 
   "item.minecraft.potion.effect.undying": "Potion of Undying",
   "item.minecraft.splash_potion.effect.undying": "Splash Potion of Undying",

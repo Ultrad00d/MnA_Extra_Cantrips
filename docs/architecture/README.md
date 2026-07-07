@@ -8,6 +8,13 @@ Forgotten Cantrips is a Minecraft Forge 1.20.1 mod that adds new Mana and Artifi
 | Dynamic | [dynamic_view.svg](dynamic_view.svg) | [spectral-bed-sequence.puml](dynamic-view/spectral-bed-sequence.puml) |
 | Deployment | [deployment_view.svg](deployment_view.svg) | [deployment-diagram.puml](deployment-view/deployment-diagram.puml) |
 
+## Architectural Decisions Synthesis
+The core views of this system work together to guarantee a highly stable, maintainable, and unexploitable Minecraft modding extension. These architectural pillars are governed by three core Architectural Decision Records:
+
+* **[ADR 0001: Mod Modularity and Registry Separation](adr/0001-mod-modularity-and-registry-separation.md)**: Governs package safety and logical boundaries within the **Static View**.
+* **[ADR 0002: Server-Authoritative Cantrip Validation](adr/0002-server-authoritative-cantrip-validation.md)**: Manages network boundaries and processing sequence rules detailed in the **Dynamic View**.
+* **[ADR 0003: Automated CI/CD and Strict Toolchain Versioning](adr/0003-automated-ci-cd-and-strict-toolchain-versioning.md)**: Structures the continuous Integration and build lifecycle shown in the **Deployment View**.
+
 ## Static View
 
 ### Component Diagram

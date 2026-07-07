@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Fixed
 - Devour cantrip lightning effect fixed
 
+### Changed
+
+Memory Emeralds can now only be applied using the Villager Mind-Wiper cantrip
+
 ## 0.3.0 - 2026-06-28
 
 ### Added
