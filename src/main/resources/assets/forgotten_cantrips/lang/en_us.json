@@ -35,6 +35,11 @@
   "cantrip.forgotten_cantrips.spectral_armor": "Spectral Armor",
   "cantrip.forgotten_cantrips.spectral_armor.desc": "Summons a powerful Spectral armor set! With Great Power, comes Greater Spectral Defence. Taking it off however will shred it into pieces.",
 
+  "cantrip.forgotten_cantrips.colossus_oak": "Colossus Oak",
+  "cantrip.forgotten_cantrips.colossus_oak.desc": "Desc",
+  "cantrip.forgotten_cantrips.colossus_oak.toofar": "Can't find a tree to grow!",
+  "cantrip.forgotten_cantrips.colossus_oak.not_growable": "Can't grow that!",
+
 
   "command.forgotten_cantrips.music_disc.drop.empty": "No music disc stored",
   "command.forgotten_cantrips.music_disc.drop.success": "Music disc dropped",
