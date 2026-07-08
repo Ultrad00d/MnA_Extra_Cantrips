@@ -27,7 +27,7 @@ public class CantripRegistry {
                 (player, cantrip, hand) -> run(player, cantrip, hand, new LightningCantripLogic(), false),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
-        ).setDelay(ICON_SHOW_TIME);
+        );
         // Spectral Bed Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath("forgotten_cantrips", "spectral_bed"),
@@ -36,7 +36,7 @@ public class CantripRegistry {
                 (player, cantrip, hand) -> run(player, cantrip, hand, new SpectralBedCantripLogic(), false),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
-        ).setDelay(ICON_SHOW_TIME);
+        );
         // Spectral Boat Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath("forgotten_cantrips", "spectral_boat"),
@@ -45,7 +45,7 @@ public class CantripRegistry {
                 (player, cantrip, hand) -> run(player, cantrip, hand, new SpectralBoatCantripLogic(), false),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
-        ).setDelay(ICON_SHOW_TIME);
+        );
         // Force Consume Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath("forgotten_cantrips", "force_consume"),
@@ -54,7 +54,7 @@ public class CantripRegistry {
                 (player, cantrip, hand) -> run(player, cantrip, hand, new ForceConsumeCantripLogic(), true),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
-        ).setDelay(ICON_SHOW_TIME);
+        );
         // Spectral Donkey Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath("forgotten_cantrips", "spectral_donkey"),
@@ -63,7 +63,7 @@ public class CantripRegistry {
                 (player, cantrip, hand) -> run(player, cantrip, hand, (CantripLogic) new SpectralDonkeyCantripLogic(), false),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
-        ).setDelay(ICON_SHOW_TIME);
+        );
         // Reset Villager Trading Progress Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath("forgotten_cantrips", "reset_villager_trading_progress"),
@@ -72,7 +72,7 @@ public class CantripRegistry {
                 (player, cantrip, hand) -> run(player, cantrip, hand, new ResetVillagerTradingProgressCantripLogic(), false),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
-        ).setDelay(ICON_SHOW_TIME);
+        );
         // Spectral Armor Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath("forgotten_cantrips", "spectral_armor"),
@@ -81,7 +81,16 @@ public class CantripRegistry {
                 (player, cantrip, hand) -> run(player, cantrip, hand, new SpectralArmorCantripLogic(), true),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
-        ).setDelay(ICON_SHOW_TIME);
+        );
+        // Colossus Oak Cantrip
+        registry.registerCantrip(
+                fromNamespaceAndPath("forgotten_cantrips", "colossus_oak"),
+                fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/colossus_oak.png"),
+                1,
+                (player, cantrip, hand) -> run(player, cantrip, hand, new ColossusOakCantripLogic(), false),
+                ItemStack.EMPTY,
+                RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+        );
     }
 
     public static void run(Player player, ICantrip cantrip, InteractionHand hand, CantripLogic cantripInstance, boolean instant) {
