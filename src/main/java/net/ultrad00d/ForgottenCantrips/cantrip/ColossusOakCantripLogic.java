@@ -2,11 +2,13 @@ package net.ultrad00d.ForgottenCantrips.cantrip;
 
 import com.mna.api.cantrips.ICantrip;
 import net.minecraft.ResourceLocationException;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.commands.PlaceCommand;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
@@ -14,6 +16,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.StructureBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -116,6 +120,8 @@ public class ColossusOakCantripLogic extends CantripLogic {
         boolean success = growTreeStructure(player, serverLevel, rootPos, rootsBlockEntity, treeType, treeTier, growthDirection.getSerializedName());
 
         if (success) {
+            // updating root logic, but it crashes MC right now
+
             // Finally, update the blockstate property to the newly achieved tier
 //            BlockState updatedRootState = serverLevel.getBlockState(rootPos)
 //                    .setValue(ColossusTreeRootsBlock.TIER, treeTier)
@@ -133,6 +139,9 @@ public class ColossusOakCantripLogic extends CantripLogic {
         return "oak";
     }
 
+    /**
+     Lazy implementation (using structure from {@link PlaceCommand#placeTemplate(CommandSourceStack, ResourceLocation, BlockPos, Rotation, Mirror, float, int)})
+     */
     private boolean growTreeStructure(Player player, ServerLevel level, BlockPos rootPos, ColossusTreeRootsBlockEntity blockEntity, String type, int targetTier, String rotation) {
         ResourceLocation structureLoc = ResourceLocation.fromNamespaceAndPath(
                 ForgottenCantrips.MOD_ID, "tree/" + type + "/t" + targetTier + "/" + rotation
@@ -149,6 +158,7 @@ public class ColossusOakCantripLogic extends CantripLogic {
         StructurePlaceSettings structureplacesettings = new StructurePlaceSettings();
 
         structuretemplate.placeInWorld(level, rootPos.offset(-4, 1, -4), rootPos.offset(-4, 1, -4), structureplacesettings, StructureBlockEntity.createRandom(0), 3);
+        // Offsets differ per view direction:
         // north -5 1 -4
         // west  -4 1 -4
         // south -4 1 -4
@@ -157,7 +167,7 @@ public class ColossusOakCantripLogic extends CantripLogic {
 
 
 
-
+        // Some Gemini spaghetti code, which is what we need, but not what actually works
 
 //
 //        var templateOpt = level.getServer().getStructureManager().get(structureLoc);
