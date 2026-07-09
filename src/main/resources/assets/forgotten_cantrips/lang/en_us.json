@@ -39,6 +39,10 @@
   "cantrip.forgotten_cantrips.colossus_oak.desc": "Desc",
   "cantrip.forgotten_cantrips.colossus_oak.toofar": "Can't find a tree to grow!",
   "cantrip.forgotten_cantrips.colossus_oak.not_growable": "Can't grow that!",
+  "cantrip.forgotten_cantrips.colossus_oak.root_destroyed": "This tree roots are destroyed, it can't grow taller",
+  "cantrip.forgotten_cantrips.colossus_oak.max_tier": "The roots of this tree are way to complex for my magic to grow them further!",
+  "cantrip.forgotten_cantrips.colossus_oak.too_damaged": "This poor tree is too damaged to be grown!",
+  "cantrip.forgotten_cantrips.colossus_oak.root_failed_to_create": "Root for this tree got so whimsy and magically complicated, it perished before it was generated properly!",
 
 
   "command.forgotten_cantrips.music_disc.drop.empty": "No music disc stored",
@@ -75,5 +79,9 @@
   "item.forgotten_cantrips.spectral_helmet": "Spectral Helmet",
   "item.forgotten_cantrips.spectral_chestplate": "Spectral Chestplate",
   "item.forgotten_cantrips.spectral_leggings": "Spectral Leggings",
-  "item.forgotten_cantrips.spectral_boots": "Spectral Boots"
+  "item.forgotten_cantrips.spectral_boots": "Spectral Boots",
+
+  "block.forgotten_cantrips.colossus_oak_roots": "Colossus Oak Roots",
+  "block.forgotten_cantrips.colossus_birch_roots": "Colossus Birch Roots",
+  "block.forgotten_cantrips.colossus_jungle_roots": "Colossus Jungle Roots"
 }
