@@ -7,6 +7,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.effect.AetherStrideEffect;
+import net.ultrad00d.ForgottenCantrips.effect.EmpowerCantripBuffEffect;
 import net.ultrad00d.ForgottenCantrips.effect.EmpowerDamageBuffEffect;
 import net.ultrad00d.ForgottenCantrips.effect.EmpowerManaCostBuffEffect;
 import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
@@ -30,6 +31,9 @@ public class EffectRegistry {
 
     public static final RegistryObject<MobEffect> DMG_BUFF = MOB_EFFECTS.register("dmg_buff",
             EmpowerDamageBuffEffect::new);
+
+    public static final RegistryObject<MobEffect> CANTRIP_BUFF = MOB_EFFECTS.register("cantrip_buff",
+            EmpowerCantripBuffEffect::new);
 
 
     public static void register(IEventBus eventBus) {

@@ -29,6 +29,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.ultrad00d.ForgottenCantrips.client.renderer.EmpowerRuneRenderer;
 import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralBoatRenderer;
 import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralDonkeyRenderer;
 import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralSlimeRenderer;
@@ -92,6 +93,7 @@ public class ForgottenCantrips {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            MinecraftForge.EVENT_BUS.register(EmpowerRuneRenderer.class);
             EntityRenderers.register(
                     EntityRegistry.SPECTRAL_BOAT.get(),
                     SpectralBoatRenderer::new

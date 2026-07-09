@@ -47,6 +47,9 @@
   "cantrip.forgotten_cantrips.mana_cost_buff": "Mana Cost Buff",
   "cantrip.forgotten_cantrips.mana_cost_buff.desc": "Applies a stacking mana cost buff effect to yourself.",
 
+  "cantrip.forgotten_cantrips.cantrip_buff": "Cantrip Buff",
+  "cantrip.forgotten_cantrips.cantrip_buff.desc": "Applies a stacking cantrip buff effect to yourself. The effect is reserved for empowering other cantrips later.",
+
   "item.minecraft.potion.effect.undying": "Potion of Undying",
   "item.minecraft.splash_potion.effect.undying": "Splash Potion of Undying",
   "item.minecraft.lingering_potion.effect.undying": "Lingering Potion of Undying",
@@ -60,5 +63,6 @@
   "item.minecraft.lingering_potion.effect.aether_stride": "Lingering Potion of Aether Stride",
   "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride",
   "effect.forgotten_cantrips.dmg_buff": "Damage Buff",
-  "effect.forgotten_cantrips.mana_cost_buff": "Mana Cost Buff"
+  "effect.forgotten_cantrips.mana_cost_buff": "Mana Cost Buff",
+  "effect.forgotten_cantrips.cantrip_buff": "Cantrip Buff"
 }

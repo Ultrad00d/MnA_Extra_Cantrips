@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.cantrip.CantripLogic;
+import net.ultrad00d.ForgottenCantrips.cantrip.EmpowerCantripBuffCantripLogic;
 import net.ultrad00d.ForgottenCantrips.cantrip.EmpowerDamageBuffCantripLogic;
 import net.ultrad00d.ForgottenCantrips.cantrip.EmpowerManaCostBuffCantripLogic;
 import net.ultrad00d.ForgottenCantrips.cantrip.ForceConsumeCantripLogic;
@@ -96,6 +97,15 @@ public class CantripRegistry {
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/mana_cost_buff.png"),
                 2,
                 (player, cantrip, hand) -> run(player, cantrip, hand, new EmpowerManaCostBuffCantripLogic(), false),
+                ItemStack.EMPTY,
+                RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+        );
+        // Cantrip Buff Cantrip
+        registry.registerCantrip(
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "cantrip_buff"),
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/cantrip_buff.png"),
+                2,
+                (player, cantrip, hand) -> run(player, cantrip, hand, new EmpowerCantripBuffCantripLogic(), false),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
         );

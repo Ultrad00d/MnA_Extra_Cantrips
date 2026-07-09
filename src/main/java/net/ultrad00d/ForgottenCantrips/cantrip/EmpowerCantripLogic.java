@@ -36,7 +36,7 @@ public abstract class EmpowerCantripLogic extends CantripLogic
 
         amplifier = Math.min(amplifier, rules.maxAmplifier);
 
-        player.addEffect(new MobEffectInstance(mobEffect, rules.durationTicks, amplifier, false, true, true));
+        player.addEffect(new MobEffectInstance(mobEffect, rules.durationTicks, amplifier, false, false, true));
     }
 
     protected static BuffTierRules getBuffTierRules(Player player)
@@ -130,7 +130,11 @@ public abstract class EmpowerCantripLogic extends CantripLogic
 
     protected static MobEffect[] getForgottenBuffs()
     {
-        return new MobEffect[] { EffectRegistry.DMG_BUFF.get(), EffectRegistry.MANA_COST_BUFF.get() };
+        return new MobEffect[] {
+                EffectRegistry.DMG_BUFF.get(),
+                EffectRegistry.MANA_COST_BUFF.get(),
+                EffectRegistry.CANTRIP_BUFF.get()
+        };
     }
 
     protected static class BuffTierRules
