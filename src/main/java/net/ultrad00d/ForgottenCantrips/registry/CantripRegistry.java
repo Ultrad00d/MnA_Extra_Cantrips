@@ -21,6 +21,8 @@ import net.ultrad00d.ForgottenCantrips.cantrip.SpectralBedCantripLogic;
 import net.ultrad00d.ForgottenCantrips.cantrip.SpectralBoatCantripLogic;
 import net.ultrad00d.ForgottenCantrips.cantrip.SpectralDonkeyCantripLogic;
 import net.ultrad00d.ForgottenCantrips.cantrip.SpectralSlimeCantripLogic;
+import net.ultrad00d.ForgottenCantrips.cantrip.*;
+import net.minecraft.world.entity.player.Player;
 
 public class CantripRegistry {
     private static int ICON_SHOW_TIME = 50;
@@ -100,6 +102,24 @@ public class CantripRegistry {
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
         );
+        // Reset Villager Trading Progress Cantrip
+        registry.registerCantrip(
+                fromNamespaceAndPath("forgotten_cantrips", "reset_villager_trading_progress"),
+                fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/reset_villager.png"),
+                1,
+                (player, cantrip, hand) -> run(player, cantrip, hand, new ResetVillagerTradingProgressCantripLogic(), false),
+                ItemStack.EMPTY,
+                RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+        ).setDelay(ICON_SHOW_TIME);
+        // Spectral Armor Cantrip
+        registry.registerCantrip(
+                fromNamespaceAndPath("forgotten_cantrips", "spectral_armor"),
+                fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/spectral_armor.png"),
+                1,
+                (player, cantrip, hand) -> run(player, cantrip, hand, new SpectralArmorCantripLogic(), true),
+                ItemStack.EMPTY,
+                RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+        ).setDelay(ICON_SHOW_TIME);
         // Cantrip Buff Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "cantrip_buff"),
