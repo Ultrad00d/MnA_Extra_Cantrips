@@ -8,14 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 0.4.0 - 2026-07-05
 
 ### Added
-пше 
 - Spectral Armor cantrip
 - Villager Mind-Wiping cantrip
 
-## Changed
+### Changed
 - Force Consume cantrips was renamed to Devour
 
-## Fixed
+### Fixed
 - Devour cantrip lightning effect fixed
 
 ### Changed
