@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
+import net.ultrad00d.ForgottenCantrips.dialogue.DialogueChoice;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogue;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogueProvider;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardGlobalState;
@@ -133,12 +134,17 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
             if (player.isSecondaryUseActive()) {
                 player.getCapability(WizardDialogueProvider.WIZARD_DIALOGUE_CAP).ifPresent(cap -> {
                     if (cap.getGlobalState() == WizardGlobalState.NOT_MET) {
-                        WizardDialogue.sendWizardReply(player, "intro");
-                        cap.setGlobalState(WizardGlobalState.INTRODUCED);
+                        WizardDialogue.sendWizardReply(player,
+                                "intro.1",
+                                DialogueChoice.CONTINUE,
+                                DialogueChoice.BYE
+                        );
                         return;
                     }
-                    WizardDialogue.sendWizardReply(player, "back_again");
-                    WizardDialogue.sendWizardReply(player, "spells");
+
+                    WizardDialogue.sendWizardReply(player,
+                            "back_again.1"
+                    );
                 });
                 return InteractionResult.SUCCESS;
             }

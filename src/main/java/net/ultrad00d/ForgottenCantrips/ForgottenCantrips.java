@@ -2,7 +2,14 @@ package net.ultrad00d.ForgottenCantrips;
 
 import com.mna.api.items.MACreativeTabs;
 
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.server.level.ServerPlayer;
 import net.ultrad00d.ForgottenCantrips.client.renderer.OldWizardRenderer;
+import net.ultrad00d.ForgottenCantrips.dialogue.DialogueChoice;
+import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogue;
+import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogueProvider;
+import net.ultrad00d.ForgottenCantrips.dialogue.WizardSessionManager;
 import net.ultrad00d.ForgottenCantrips.registry.*;
 import org.slf4j.Logger;
 
@@ -140,11 +147,11 @@ public class ForgottenCantrips {
                     )
                 )
                 .then(Commands.literal("illumination")
-                .then(Commands.literal("max_radius")
-                    .then(Commands.argument("value", IntegerArgumentType.integer(2, 8))
-                        .executes(ctx -> setConfigValue(ctx, "Illumination.max_radius", IntegerArgumentType.getInteger(ctx, "value")))
+                    .then(Commands.literal("max_radius")
+                        .then(Commands.argument("value", IntegerArgumentType.integer(2, 8))
+                            .executes(ctx -> setConfigValue(ctx, "Illumination.max_radius", IntegerArgumentType.getInteger(ctx, "value")))
+                        )
                     )
-                )
                 .then(Commands.literal("tick_period")
                     .then(Commands.argument("value", IntegerArgumentType.integer(1, 20))
                         .executes(ctx -> setConfigValue(ctx, "Illumination.tick_period", IntegerArgumentType.getInteger(ctx, "value")))
@@ -157,7 +164,16 @@ public class ForgottenCantrips {
                 )
             )
         );
+
+        dispatcher.register(
+                Commands.literal("fc_dialogue")
+                        .requires(source -> source.hasPermission(0)) // Available to everyone
+                        .then(Commands.argument("token", StringArgumentType.string())
+                                .executes(this::handleDialogueCommand)
+                        )
+        );
     }
+
     private static int setConfigValue(CommandContext<CommandSourceStack> ctx, String key, int value) {
         ForgeConfigSpec.ConfigValue<Integer> configValue = switch (key) {
             case "Illumination.max_radius" -> IlluminationConfig.MAX_RADIUS;
@@ -177,6 +193,23 @@ public class ForgottenCantrips {
         if (modConfig != null) modConfig.save();
 
         ctx.getSource().sendSuccess(() -> Component.literal("Set " + key + " to " + value), true);
+        return 1;
+    }
+
+    // Anti fraud session system
+    private int handleDialogueCommand(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        String token = StringArgumentType.getString(ctx, "token");
+
+        // Attempt to consume the click action validation session on the server
+        WizardSessionManager.SessionData session = WizardSessionManager.consumeToken(token, player);
+
+        // If valid, apply data and advance state safely
+        if (session != null) {
+            player.getCapability(WizardDialogueProvider.WIZARD_DIALOGUE_CAP).ifPresent(cap -> {
+                WizardDialogue.advanceDialogueFrom(session.choice(), session.fromKey(), player, cap);
+            });
+        }
         return 1;
     }
 }

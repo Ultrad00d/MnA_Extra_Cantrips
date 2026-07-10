@@ -27,33 +27,4 @@ public class CapabilityEvents {
             event.addCapability(ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "wizard_dialogue"), new WizardDialogueProvider());
         }
     }
-
-    @SubscribeEvent
-    public static void onPlayerClone(PlayerEvent.Clone event) {
-        if (!event.isWasDeath()) return;
-
-        event.getOriginal().getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(oldCap ->
-                event.getEntity().getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(newCap ->
-                        newCap.deserializeNBT(oldCap.serializeNBT())
-                )
-        );
-    }
-
-    @SubscribeEvent
-    public static void onContainerOpened(PlayerContainerEvent.Open event) {
-        if (event.getContainer() instanceof HorseInventoryMenu && event.getEntity() instanceof ServerPlayer player && player.getVehicle() != null && player.getVehicle() instanceof SpectralDonkey horse) {
-            horse.openSpectralChest(event.getEntity());
-        }
-
-        if (event.getContainer() instanceof ChestMenu && event.getEntity() instanceof ServerPlayer player && player.getVehicle() != null && player.getVehicle() instanceof SpectralBoat boat) {
-            boat.openSpectralChest(event.getEntity());
-        }
-    }
-
-    @SubscribeEvent
-    public static void onEntityDeath(LivingDeathEvent event)
-    {
-        if (event.getEntity() instanceof SpectralDonkey) { event.setCanceled(true); } //spectral donkey doesn't drop the saddle
-    }
-
 }
