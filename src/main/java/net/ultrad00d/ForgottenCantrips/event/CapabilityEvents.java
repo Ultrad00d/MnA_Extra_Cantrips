@@ -32,11 +32,11 @@ public class CapabilityEvents {
     public static void onPlayerClone(PlayerEvent.Clone event) {
         if (!event.isWasDeath()) return;
 
-        event.getOriginal().getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(oldCap -> {
-            event.getEntity().getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(newCap -> {
-                newCap.deserializeNBT(oldCap.serializeNBT());
-            });
-        });
+        event.getOriginal().getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(oldCap ->
+                event.getEntity().getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(newCap ->
+                        newCap.deserializeNBT(oldCap.serializeNBT())
+                )
+        );
     }
 
     @SubscribeEvent
@@ -53,7 +53,7 @@ public class CapabilityEvents {
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event)
     {
-        if (event.getEntity() instanceof SpectralDonkey donkey) { event.setCanceled(true); } //spectral donkey doesn't drop the saddle
+        if (event.getEntity() instanceof SpectralDonkey) { event.setCanceled(true); } //spectral donkey doesn't drop the saddle
     }
 
 }
