@@ -11,14 +11,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class WizardDialogueProvider implements ICapabilitySerializable<CompoundTag> {
-    public static Capability<WizardDialogueData> DIALOGUE_CAP = CapabilityManager.get(new CapabilityToken<>(){});
+    public static Capability<WizardDialogueData> WIZARD_DIALOGUE_CAP = CapabilityManager.get(new CapabilityToken<>(){});
 
     private final WizardDialogueData backend = new WizardDialogueData();
     private final LazyOptional<WizardDialogueData> optional = LazyOptional.of(() -> backend);
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        return cap == DIALOGUE_CAP ? optional.cast() : LazyOptional.empty();
+        return cap == WIZARD_DIALOGUE_CAP ? optional.cast() : LazyOptional.empty();
     }
 
     @Override

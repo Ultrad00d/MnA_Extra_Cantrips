@@ -85,7 +85,7 @@ public class CantripRegistry {
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "spectral_donkey"),
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/spectral_donkey.png"),
                 1,
-                (player, cantrip, hand) -> run(player, cantrip, hand, (ICantripLogic) new SpectralDonkeyCantripLogic(), false),
+                (player, cantrip, hand) -> run(player, cantrip, hand, new SpectralDonkeyCantripLogic(), false),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
         ).setRequiredAdvancement(fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "uc3/part_3"));
@@ -122,7 +122,7 @@ public class CantripRegistry {
             DelayedEventQueue.pushEvent(
                 serverLevel,
                 new TimedDelayedEvent<>(
-                    player.getUUID().toString() + "cantrip",
+                    player.getUUID() + "cantrip",
                     instant ? 1 : ICON_SHOW_TIME + 1,
                     null,
                     (id, data) -> cantripInstance.run(player, cantrip, hand)
