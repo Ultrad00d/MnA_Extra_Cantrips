@@ -143,7 +143,9 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                     }
 
                     WizardDialogue.sendWizardReply(player,
-                            "back_again.1"
+                            "back_again.1",
+                            DialogueChoice.CONTINUE,
+                            DialogueChoice.BYE
                     );
                 });
                 return InteractionResult.SUCCESS;

@@ -107,6 +107,7 @@ public class WizardDialogue {
 
     public static void advanceDialogueFrom(DialogueChoice action, String from, Player player, WizardDialogueData cap) {
         if (action == DialogueChoice.BYE) {
+            cap.setGlobalState(WizardGlobalState.NOT_MET);
             sendWizardReply(player, "goodbye");
             return;
         }
