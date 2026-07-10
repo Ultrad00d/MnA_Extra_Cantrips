@@ -58,6 +58,7 @@
 
   "entity.forgotten_cantrips.spectral_boat": "Spectral Boat",
   "entity.forgotten_cantrips.spectral_donkey": "Spectral Donkey",
+  "entity.forgotten_cantrips.old_wizard": "Old Wizard",
 
   "item.minecraft.potion.effect.undying": "Potion of Undying",
   "item.minecraft.splash_potion.effect.undying": "Splash Potion of Undying",
@@ -70,5 +71,9 @@
   "item.minecraft.potion.effect.aether_stride": "Potion of Aether Stride",
   "item.minecraft.splash_potion.effect.aether_stride": "Splash Potion of Aether Stride",
   "item.minecraft.lingering_potion.effect.aether_stride": "Lingering Potion of Aether Stride",
-  "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride"
+  "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride",
+
+  "dialogue.forgotten_cantrips.wizard.intro": "Greetings, seeker of the arcane. I can teach you the secrets of magic!",
+  "dialogue.forgotten_cantrips.wizard.back_again": "Ah, back again. What magic are we discussing?",
+  "dialogue.forgotten_cantrips.wizard.spells": ""
 }

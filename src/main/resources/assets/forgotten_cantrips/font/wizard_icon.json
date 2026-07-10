@@ -1,0 +1,19 @@
+{
+	"providers": [
+		{
+			"type": "bitmap",
+			"file": "forgotten_cantrips:gui/dialogue/old_wizard/framed_slice_top.png",
+			"ascent": 8, "height": 9, "chars": [""]
+		},
+		{
+			"type": "bitmap",
+			"file": "forgotten_cantrips:gui/dialogue/old_wizard/framed_slice_mid.png",
+			"ascent": 8, "height": 9, "chars": [""]
+		},
+		{
+			"type": "bitmap",
+			"file": "forgotten_cantrips:gui/dialogue/old_wizard/framed_slice_bot.png",
+			"ascent": 8, "height": 9, "chars": [""]
+		}
+	]
+}

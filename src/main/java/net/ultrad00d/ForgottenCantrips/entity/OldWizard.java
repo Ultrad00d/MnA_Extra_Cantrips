@@ -1,5 +1,8 @@
 package net.ultrad00d.ForgottenCantrips.entity;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -11,6 +14,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
+import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
+import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogue;
+import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogueProvider;
+import net.ultrad00d.ForgottenCantrips.dialogue.WizardGlobalState;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -117,14 +125,32 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         return PlayState.CONTINUE;
     }
 
+    @NotNull
     @Override
-    public InteractionResult interactAt(Player player, Vec3 hitPos, InteractionHand hand) {
-        if (hand == InteractionHand.MAIN_HAND) {
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (!player.level().isClientSide() && hand == InteractionHand.MAIN_HAND) {
+            // Shift Right Click
+            if (player.isSecondaryUseActive()) {
+                player.getCapability(WizardDialogueProvider.WIZARD_DIALOGUE_CAP).ifPresent(cap -> {
+                    if (cap.getGlobalState() == WizardGlobalState.NOT_MET) {
+                        WizardDialogue.sendWizardReply(player, "intro");
+                        cap.setGlobalState(WizardGlobalState.INTRODUCED);
+                        return;
+                    }
+                    WizardDialogue.sendWizardReply(player, "back_again");
+                    WizardDialogue.sendWizardReply(player, "spells");
+                });
+                return InteractionResult.SUCCESS;
+            }
+
+            // Right Click
             this.isBookShown = !this.isBookShown;
             this.isHeadLocked = this.isBookShown;
             if (!isBookShown) { isReading = false; }
+
+            return InteractionResult.SUCCESS;
         }
-        return super.interactAt(player, hitPos, hand);
+        return super.mobInteract(player, hand);
     }
 
     @Override
