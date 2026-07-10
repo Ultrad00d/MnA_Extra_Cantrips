@@ -26,8 +26,6 @@ import net.ultrad00d.ForgottenCantrips.cantrip.SpectralBoatCantripLogic;
 import net.ultrad00d.ForgottenCantrips.cantrip.SpectralDonkeyCantripLogic;
 import net.minecraft.world.entity.player.Player;
 
-import java.util.Objects;
-
 public class CantripRegistry {
     private static final int ICON_SHOW_TIME = 50;
 
@@ -53,8 +51,7 @@ public class CantripRegistry {
                 (player, cantrip, hand) -> run(player, cantrip, hand, new LightningCantripLogic(), false),
                 ItemStack.EMPTY,
                         RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
-        ).setDelay(ICON_SHOW_TIME)
-         .setRequiredAdvancement(fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "uc1/part_3"));
+        ).setRequiredAdvancement(fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "uc1/part_3"));
 
         // Spectral Bed Cantrip
         registry.registerCantrip(
@@ -64,8 +61,7 @@ public class CantripRegistry {
                 (player, cantrip, hand) -> run(player, cantrip, hand, new SpectralBedCantripLogic(), false),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
-        ).setDelay(ICON_SHOW_TIME)
-         .setRequiredAdvancement(fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "uc2/part_3"));
+        ).setRequiredAdvancement(fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "uc2/part_3"));
         // Spectral Boat Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "spectral_boat"),
@@ -74,7 +70,7 @@ public class CantripRegistry {
                 (player, cantrip, hand) -> run(player, cantrip, hand, new SpectralBoatCantripLogic(), false),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
-        ).setDelay(ICON_SHOW_TIME);
+        );
         // Force Consume Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "force_consume"),
@@ -100,7 +96,7 @@ public class CantripRegistry {
             MinecraftServer server = serverPlayer.getServer();
             if (server == null) return false;
 
-            Advancement advancement = server.getAdvancements().getAdvancement(Objects.requireNonNull(cantrip.getRequiredAdvancement()));
+            Advancement advancement = server.getAdvancements().getAdvancement(cantrip.getRequiredAdvancement());
             if (advancement == null) return false;
 
             AdvancementProgress progress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
