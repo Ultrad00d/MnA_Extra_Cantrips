@@ -7,6 +7,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.effect.AetherStrideEffect;
+import net.ultrad00d.ForgottenCantrips.effect.BubbleUpEffect;
 import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
 import net.ultrad00d.ForgottenCantrips.effect.SpectralArmorEffect;
 import net.ultrad00d.ForgottenCantrips.effect.UndyingEffect;
@@ -26,6 +27,9 @@ public class EffectRegistry {
 
     public static final RegistryObject<MobEffect> SPECTRAL_ARMOR = MOB_EFFECTS.register("spectral_armor",
             SpectralArmorEffect::new);
+
+    public static final RegistryObject<MobEffect> BUBBLE_UP = MOB_EFFECTS.register("bubble_up",
+            BubbleUpEffect::new);
 
 
     public static void register(IEventBus eventBus) {

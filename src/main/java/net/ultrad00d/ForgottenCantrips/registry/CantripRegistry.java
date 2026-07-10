@@ -82,6 +82,15 @@ public class CantripRegistry {
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
         ).setDelay(ICON_SHOW_TIME);
+        // Bubble Up Cantrip
+        registry.registerCantrip(
+                fromNamespaceAndPath("forgotten_cantrips", "bubble_up"),
+                fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/bubble_up.png"),
+                1,
+                (player, cantrip, hand) -> run(player, cantrip, hand, new BubbleUpCantripLogic(), true),
+                ItemStack.EMPTY,
+                RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+        ).setDelay(ICON_SHOW_TIME);
     }
 
     public static void run(Player player, ICantrip cantrip, InteractionHand hand, CantripLogic cantripInstance, boolean instant) {
