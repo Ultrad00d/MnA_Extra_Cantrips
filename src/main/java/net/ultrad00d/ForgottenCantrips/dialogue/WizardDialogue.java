@@ -26,7 +26,7 @@ public class WizardDialogue {
     public static void sendWizardReply(Player player, WizardDialogueData cap, String messageKey, DialogueChoice... choices) {
         Minecraft client = Minecraft.getInstance();
         int chatWidthPX = ChatComponent.getWidth(client.options.chatWidth().get());
-        int textSpaceWidth = chatWidthPX - ICON_WIDTH - 4; // 4px = margin
+        int textSpaceWidth = chatWidthPX - ICON_WIDTH - 6; // 4px = margin
 
         // first 3 rows contain an NPC icon, so the translated string gets split across rows
         Component fullMessage = Component.translatable("dialogue." + ForgottenCantrips.MOD_ID + ".wizard." + messageKey);
@@ -137,26 +137,45 @@ public class WizardDialogue {
         // Example dialogue map (by Gemini)
         switch (from) {
             case "intro.1" -> {
-                if (action == DialogueChoice.CONTINUE) {
-                    sendWizardReply(player, cap, "intro.2", DialogueChoice.CONTINUE, DialogueChoice.BYE);
-                }
+                sendWizardReply(player, cap, "intro.2", DialogueChoice.CONTINUE, DialogueChoice.BYE);
             }
             case "intro.2" -> {
-                if (action == DialogueChoice.CONTINUE) {
-                    sendWizardReply(player, cap, "intro.3", DialogueChoice.CONTINUE, DialogueChoice.BYE);
-                }
+                sendWizardReply(player, cap, "intro.3", DialogueChoice.CONTINUE, DialogueChoice.BYE);
             }
             case "intro.3" -> {
-                if (action == DialogueChoice.CONTINUE) {
-                    sendWizardReply(player, cap, "intro.4", DialogueChoice.CONTINUE, DialogueChoice.BYE);
-                }
+                sendWizardReply(player, cap, "intro.4", DialogueChoice.CONTINUE, DialogueChoice.BYE);
             }
             case "intro.4" -> {
+                cap.setGlobalState(WizardGlobalState.INTRODUCED);
+                sendWizardReply(player, cap, "cantrips",
+                        DialogueChoice.LIGHTNING_CANTRIP,
+                        DialogueChoice.SPECTRAL_BED_CANTRIP,
+                        DialogueChoice.SPECTRAL_DONKEY_CANTRIP,
+                        DialogueChoice.SPECTRAL_BOAT_CANTRIP,
+//                        DialogueChoice.SPECTRAL_ARMOR_CANTRIP,
+//                        DialogueChoice.EMPOWER_CANTRIP,
+//                        DialogueChoice.SPECTRAL_SLIME,
+//                        DialogueChoice.BUBBLE_UP_CANTRIP,
+                        DialogueChoice.BYE);
+            }
+            case "back_again.1" -> {
                 if (action == DialogueChoice.CONTINUE) {
-                    cap.setGlobalState(WizardGlobalState.INTRODUCED);
-                    // TODO: make dialogue choices be locked or unclocked based on some logic
-                    sendWizardReply(player, cap, "cantrips", DialogueChoice.CONTINUE, DialogueChoice.BYE);
+                    sendWizardReply(player, cap, "back_again.2",
+                            DialogueChoice.CONTINUE,
+                            DialogueChoice.BYE);
                 }
+            }
+            case "back_again.2" -> {
+                sendWizardReply(player, cap, "cantrips",
+                        DialogueChoice.LIGHTNING_CANTRIP,
+                        DialogueChoice.SPECTRAL_BED_CANTRIP,
+                        DialogueChoice.SPECTRAL_DONKEY_CANTRIP,
+                        DialogueChoice.SPECTRAL_BOAT_CANTRIP,
+//                        DialogueChoice.SPECTRAL_ARMOR_CANTRIP,
+//                        DialogueChoice.EMPOWER_CANTRIP,
+//                        DialogueChoice.SPECTRAL_SLIME,
+//                        DialogueChoice.BUBBLE_UP_CANTRIP,
+                        DialogueChoice.BYE);
             }
             case "cantrips" -> {
                 if (action == DialogueChoice.LIGHTNING_CANTRIP) {
@@ -168,7 +187,7 @@ public class WizardDialogue {
                 }
             }
             // Fallback or unhandled nodes
-            default -> sendWizardReply(player, cap, "back_again", DialogueChoice.BYE);
+            default -> sendWizardReply(player, cap, "fallback", DialogueChoice.BYE);
         }
     }
 }
