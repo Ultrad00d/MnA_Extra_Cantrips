@@ -2,6 +2,7 @@ package net.ultrad00d.ForgottenCantrips.cantrip;
 
 import com.mna.api.tools.RLoc;
 import net.minecraft.resources.ResourceLocation;
+import net.ultrad00d.ForgottenCantrips.dialogue.DialogueChoice;
 import org.jetbrains.annotations.Nullable;
 
 public enum CantripType {
@@ -74,4 +75,10 @@ public enum CantripType {
     public boolean isInstant() { return instant; }
     public @Nullable String getAdvancementPath() { return advancementPath; }
     public ResourceLocation[] getShapes() { return shapes; }
+
+    public static CantripType fromDialogueChoice(DialogueChoice choice) {
+        // Maps "cantrip.lightning" -> LIGHTNING, "cantrip.spectral_slime" -> SPECTRAL_SLIME, etc.
+        String lookupName = choice.name().replace("_CANTRIP", "");
+        return CantripType.valueOf(lookupName);
+    }
 }
