@@ -29,6 +29,12 @@ import net.minecraft.world.entity.player.Player;
 public class CantripRegistry {
     private static final int ICON_SHOW_TIME = 50;
 
+    public static final int LIGHTNING_TIER = 3;
+    public static final int SPECTRAL_BED_TIER = 1;
+    public static final int SPECTRAL_BOAT_TIER = 1;
+    public static final int FORCE_CONSUME_TIER = 1;
+    public static final int SPECTRAL_DONKEY_TIER = 1;
+
     public static void register() {
         com.mna.cantrips.CantripRegistry registry = com.mna.cantrips.CantripRegistry.INSTANCE;
 
@@ -47,7 +53,7 @@ public class CantripRegistry {
         registry.registerCantrip(
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "lightning"),
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/lightning.png"),
-                3,
+                LIGHTNING_TIER,
                 (player, cantrip, hand) -> run(player, cantrip, hand, new LightningCantripLogic(), false),
                 ItemStack.EMPTY,
                         RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
@@ -57,7 +63,7 @@ public class CantripRegistry {
         registry.registerCantrip(
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "spectral_bed"),
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/spectral_bed.png"),
-                1,
+                SPECTRAL_BED_TIER,
                 (player, cantrip, hand) -> run(player, cantrip, hand, new SpectralBedCantripLogic(), false),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
@@ -66,7 +72,7 @@ public class CantripRegistry {
         registry.registerCantrip(
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "spectral_boat"),
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/spectral_boat.png"),
-                1,
+                SPECTRAL_BOAT_TIER,
                 (player, cantrip, hand) -> run(player, cantrip, hand, new SpectralBoatCantripLogic(), false),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
@@ -75,7 +81,7 @@ public class CantripRegistry {
         registry.registerCantrip(
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "force_consume"),
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/force_consume.png"),
-                1,
+                FORCE_CONSUME_TIER,
                 (player, cantrip, hand) -> run(player, cantrip, hand, new ForceConsumeCantripLogic(), true),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
@@ -84,7 +90,7 @@ public class CantripRegistry {
         registry.registerCantrip(
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "spectral_donkey"),
                 fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/spectral_donkey.png"),
-                1,
+                SPECTRAL_DONKEY_TIER,
                 (player, cantrip, hand) -> run(player, cantrip, hand, new SpectralDonkeyCantripLogic(), false),
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")

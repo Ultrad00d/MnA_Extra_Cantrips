@@ -89,5 +89,6 @@
   "dialogue.forgotten_cantrips.wizard.cantrip_already_rote": "Spells list - empty :D",
   "dialogue.forgotten_cantrips.wizard.cantrip.lightning.1": "Placeholder dialogue for lightning cantrip learning path",
 
-  "chat.forgotten_cantrips.click_to_select": "Click to select this option"
+  "chat.forgotten_cantrips.click_to_select": "Click to select this option",
+  "chat.forgotten_cantrips.locked": "Your Tier to learn this is too low"
 }

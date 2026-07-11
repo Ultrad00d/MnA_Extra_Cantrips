@@ -1,5 +1,8 @@
 package net.ultrad00d.ForgottenCantrips.dialogue;
 
+import com.mna.api.capabilities.IPlayerProgression;
+import com.mna.capabilities.MACapabilityForgeEventHandlers;
+import com.mna.capabilities.playerdata.progression.PlayerProgressionProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
@@ -19,10 +22,11 @@ public class WizardDialogue {
     public static final String ICON_L1 = "\uE000";
     public static final String ICON_L2 = "\uE001";
     public static final String ICON_L3 = "\uE002";
-    public static final int ICON_WIDTH = 27; //px
-    public static final int ICON_WIDTH_IN_SPACES = 7; //px
+    public static final String ICON_L4 = "\uE003";
+    public static final int ICON_WIDTH = 36; //px
+    public static final int ICON_WIDTH_IN_SPACES = ICON_WIDTH * 2 / 7; //px
 
-    public static void sendWizardReply(Player player, String messageKey, DialogueChoice... choices) {
+    public static void sendWizardReply(Player player, WizardDialogueData cap, String messageKey, DialogueChoice... choices) {
         Minecraft client = Minecraft.getInstance();
 
         double chatWidthSetting = client.options.chatWidth().get();
@@ -36,13 +40,15 @@ public class WizardDialogue {
         Component row1 = getIconComponent(ICON_L1).append(convertSequenceToComponent(splitLines, 0));
         Component row2 = getIconComponent(ICON_L2).append(convertSequenceToComponent(splitLines, 1));
         Component row3 = getIconComponent(ICON_L3).append(convertSequenceToComponent(splitLines, 2));
+        Component row4 = getIconComponent(ICON_L4).append(convertSequenceToComponent(splitLines, 3));
 
         player.sendSystemMessage(row1);
         player.sendSystemMessage(row2);
         player.sendSystemMessage(row3);
+        player.sendSystemMessage(row4);
 
-        if (splitLines.size() > 3) {
-            for (int i = 3; i < splitLines.size(); i++) {
+        if (splitLines.size() > 4) {
+            for (int i = 4; i < splitLines.size(); i++) {
                 Component indentedRow = getBlankSpacerComponent().append(convertSequenceToComponent(splitLines, i));
                 player.sendSystemMessage(indentedRow);
             }
@@ -54,23 +60,36 @@ public class WizardDialogue {
             WizardSessionManager.clearPlayerTokens(player);
             for (int i = 0; i < choices.length; i++) {
                 DialogueChoice choice = choices[i];
+                boolean isLocked = isChoiceLocked(player, choice, cap);
 
-                String secureToken = UUID.randomUUID().toString().substring(0, 8);
-                WizardSessionManager.registerToken(secureToken, player, choice, messageKey);
+                MutableComponent choiceText = Component.translatable("dialogue." + ForgottenCantrips.MOD_ID + ".choice." + choice.getKey());
 
-                // Translate and style choice text
+                // If locked, prefix with a lock icon
+                if (isLocked) choiceText = Component.literal("🔒 ").append(choiceText);
+
                 MutableComponent choiceBtn =
                         Component.literal("[")
-                            .append(Component.translatable("dialogue." + ForgottenCantrips.MOD_ID + ".choice." + choice.getKey()))
-                        .append(Component.literal("]"))
-                        .withStyle(ChatFormatting.GRAY);
+                            .append(choiceText)
+                        .append(Component.literal("]"));
 
-                // Attach the Click and Hover events
-                choiceBtn.withStyle(style -> style
-                        .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/fc_dialogue " + secureToken))
-                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable("chat." + ForgottenCantrips.MOD_ID + ".click_to_select")))
-                );
+                if (isLocked) {
+                    // Style for LOCKED options
+                    choiceBtn.withStyle(ChatFormatting.DARK_GRAY)
+                            .withStyle(style -> style.withHoverEvent(new HoverEvent(
+                                    HoverEvent.Action.SHOW_TEXT,
+                                    Component.translatable("chat." + ForgottenCantrips.MOD_ID + ".locked")
+                            )));
+                } else {
+                    // Style for AVAILABLE options
+                    String secureToken = UUID.randomUUID().toString().substring(0, 8);
+                    WizardSessionManager.registerToken(secureToken, player, choice, messageKey);
 
+                    choiceBtn.withStyle(ChatFormatting.GRAY)
+                            .withStyle(style -> style
+                                    .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/fc_dialogue " + secureToken))
+                                    .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable("chat." + ForgottenCantrips.MOD_ID + ".click_to_select")))
+                            );
+                }
                 choicesRow.append(choiceBtn);
 
                 // Add a divider if there are more options coming up
@@ -105,10 +124,27 @@ public class WizardDialogue {
         return Component.literal(" ".repeat(ICON_WIDTH_IN_SPACES));
     }
 
+    private static boolean isChoiceLocked(Player player, DialogueChoice choice, WizardDialogueData cap) {
+        // Example requirement logic based on branch states
+        if (choice == DialogueChoice.LIGHTNING_CANTRIP) {
+            int tier = player.getCapability(PlayerProgressionProvider.PROGRESSION)
+                    .map(IPlayerProgression::getTier)
+                    .orElse(1);
+
+            return cap.getBranchState("lightning") != WizardCantripBranchState.SPELL_LEARNED;
+//            return false;
+        }
+
+        // Add logic here for any new cantrips you add to DialogueChoice
+        // if (choice == DialogueChoice.FIRE_CANTRIP) { ... }
+
+        return false;
+    }
+
     public static void advanceDialogueFrom(DialogueChoice action, String from, Player player, WizardDialogueData cap) {
         if (action == DialogueChoice.BYE) {
             cap.setGlobalState(WizardGlobalState.NOT_MET);
-            sendWizardReply(player, "goodbye");
+            sendWizardReply(player, cap, "goodbye");
             return;
         }
 
@@ -116,37 +152,37 @@ public class WizardDialogue {
         switch (from) {
             case "intro.1" -> {
                 if (action == DialogueChoice.CONTINUE) {
-                    sendWizardReply(player, "intro.2", DialogueChoice.CONTINUE, DialogueChoice.BYE);
+                    sendWizardReply(player, cap, "intro.2", DialogueChoice.CONTINUE, DialogueChoice.BYE);
                 }
             }
             case "intro.2" -> {
                 if (action == DialogueChoice.CONTINUE) {
-                    sendWizardReply(player, "intro.3", DialogueChoice.CONTINUE, DialogueChoice.BYE);
+                    sendWizardReply(player, cap, "intro.3", DialogueChoice.CONTINUE, DialogueChoice.BYE);
                 }
             }
             case "intro.3" -> {
                 if (action == DialogueChoice.CONTINUE) {
-                    sendWizardReply(player, "intro.4", DialogueChoice.CONTINUE, DialogueChoice.BYE);
+                    sendWizardReply(player, cap, "intro.4", DialogueChoice.CONTINUE, DialogueChoice.BYE);
                 }
             }
             case "intro.4" -> {
                 if (action == DialogueChoice.CONTINUE) {
                     cap.setGlobalState(WizardGlobalState.INTRODUCED);
                     // TODO: make dialogue choices be locked or unclocked based on some logic
-                    sendWizardReply(player, "cantrips", DialogueChoice.CONTINUE, DialogueChoice.BYE);
+                    sendWizardReply(player, cap, "cantrips", DialogueChoice.CONTINUE, DialogueChoice.BYE);
                 }
             }
             case "cantrips" -> {
                 if (action == DialogueChoice.LIGHTNING_CANTRIP) {
                     if (cap.getBranchState("lightning") == WizardCantripBranchState.NOT_STARTED) {
-                        sendWizardReply(player, "cantrip.lightning.1", DialogueChoice.BACK, DialogueChoice.BYE);
+                        sendWizardReply(player, cap, "cantrip.lightning.1", DialogueChoice.BACK, DialogueChoice.BYE);
                     } else {
-                        sendWizardReply(player, "cantrip_already_route", DialogueChoice.BACK, DialogueChoice.BYE);
+                        sendWizardReply(player, cap, "cantrip_already_route", DialogueChoice.BACK, DialogueChoice.BYE);
                     }
                 }
             }
             // Fallback or unhandled nodes
-            default -> sendWizardReply(player, "back_again", DialogueChoice.BYE);
+            default -> sendWizardReply(player, cap, "back_again", DialogueChoice.BYE);
         }
     }
 }

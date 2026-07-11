@@ -2,18 +2,23 @@
 	"providers": [
 		{
 			"type": "bitmap",
-			"file": "forgotten_cantrips:gui/dialogue/old_wizard/framed_slice_top.png",
+			"file": "forgotten_cantrips:gui/dialogue/old_wizard/slice_1.png",
 			"ascent": 8, "height": 9, "chars": [""]
 		},
 		{
 			"type": "bitmap",
-			"file": "forgotten_cantrips:gui/dialogue/old_wizard/framed_slice_mid.png",
+			"file": "forgotten_cantrips:gui/dialogue/old_wizard/slice_2.png",
 			"ascent": 8, "height": 9, "chars": [""]
 		},
 		{
 			"type": "bitmap",
-			"file": "forgotten_cantrips:gui/dialogue/old_wizard/framed_slice_bot.png",
+			"file": "forgotten_cantrips:gui/dialogue/old_wizard/slice_3.png",
 			"ascent": 8, "height": 9, "chars": [""]
+		},
+		{
+			"type": "bitmap",
+			"file": "forgotten_cantrips:gui/dialogue/old_wizard/slice_4.png",
+			"ascent": 8, "height": 9, "chars": [""]
 		}
 	]
 }

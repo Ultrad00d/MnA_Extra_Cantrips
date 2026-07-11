@@ -135,6 +135,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                 player.getCapability(WizardDialogueProvider.WIZARD_DIALOGUE_CAP).ifPresent(cap -> {
                     if (cap.getGlobalState() == WizardGlobalState.NOT_MET) {
                         WizardDialogue.sendWizardReply(player,
+                                cap,
                                 "intro.1",
                                 DialogueChoice.CONTINUE,
                                 DialogueChoice.BYE
@@ -143,6 +144,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                     }
 
                     WizardDialogue.sendWizardReply(player,
+                            cap,
                             "back_again.1",
                             DialogueChoice.CONTINUE,
                             DialogueChoice.BYE
