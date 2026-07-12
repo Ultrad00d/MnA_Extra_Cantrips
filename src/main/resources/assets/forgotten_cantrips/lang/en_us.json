@@ -11,9 +11,6 @@
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.not_a_villager": "Try using this on a villager!",
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.nitwit": "This villager seems like too much of a NITWIT to even have a job...",
   "cantrip.forgotten_cantrips.reset_villager_trading_progress.empty_warning": "It seems this Memory Emerald is... empty? Where did you even get it?",
-  "item.forgotten_cantrips.memory_emerald": "Memory Emerald",
-  "item.forgotten_cantrips.memory_emerald.empty": "Empty",
-
 
   "cantrip.forgotten_cantrips.spectral_bed": "Spectral Bed",
   "cantrip.forgotten_cantrips.spectral_bed.desc": "Summons a single-use bed where you're looking. The bed doesn't change your respawn point. In dimensions where beds are usable, the bed disappears in the morning and can only be placed at night or during thunderstorms.",
@@ -35,6 +32,18 @@
   "cantrip.forgotten_cantrips.spectral_donkey.toofar": "Can't summon a spectral donkey that far away!",
   "cantrip.forgotten_cantrips.spectral_donkey.notowner": "This donkey isn't yours!",
 
+  "cantrip.forgotten_cantrips.dmg_buff": "Damage Buff",
+  "cantrip.forgotten_cantrips.dmg_buff.desc": "Applies a stacking damage buff effect to yourself.",
+
+  "cantrip.forgotten_cantrips.mana_cost_buff": "Mana Cost Buff",
+  "cantrip.forgotten_cantrips.mana_cost_buff.desc": "Applies a stacking mana cost buff effect to yourself.",
+
+  "cantrip.forgotten_cantrips.cantrip_buff": "Cantrip Buff",
+  "cantrip.forgotten_cantrips.cantrip_buff.desc": "Applies a stacking cantrip buff effect to yourself. The effect is reserved for empowering other cantrips later.",
+
+  "cantrip.forgotten_cantrips.spectral_armor": "Spectral Armor",
+  "cantrip.forgotten_cantrips.spectral_armor.desc": "Summons a powerful Spectral armor set! With Great Power, comes Greater Spectral Defence. Taking it off however will shred it into pieces.",
+
   "cantrip.forgotten_cantrips.spectral_slime": "Spectral Slime",
   "cantrip.forgotten_cantrips.spectral_slime.desc": "Summons a small friendly spectral slime. It follows you from a distance and fights hostile creatures.",
 
@@ -47,21 +56,19 @@
   "effect.forgotten_cantrips.illumination": "Illumination",
   "effect.forgotten_cantrips.aether_stride": "Aether Stride",
   "effect.forgotten_cantrips.spectral_armor": "Spectral Armor",
+  "effect.forgotten_cantrips.dmg_buff": "Damage Buff",
+  "effect.forgotten_cantrips.mana_cost_buff": "Mana Cost Buff",
+  "effect.forgotten_cantrips.cantrip_buff": "Cantrip Buff",
 
   "entity.forgotten_cantrips.spectral_boat": "Spectral Boat",
   "entity.forgotten_cantrips.spectral_donkey": "Spectral Donkey",
   "entity.forgotten_cantrips.spectral_slime": "Spectral Slime",
 
+  "item.forgotten_cantrips.memory_emerald": "Memory Emerald",
+  "item.forgotten_cantrips.memory_emerald.empty": "Empty",
+  "item.forgotten_cantrips.memory_emerald.instructions": "Hold in other hand while casting Villager Mind-Wiper to apply these memories onto a villager!",
+  "item.forgotten_cantrips.memory_emerald.jobless": "Jobless",
   "item.forgotten_cantrips.spectral_slime_ball": "Spectral Slime Ball",
-
-  "cantrip.forgotten_cantrips.dmg_buff": "Damage Buff",
-  "cantrip.forgotten_cantrips.dmg_buff.desc": "Applies a stacking damage buff effect to yourself.",
-
-  "cantrip.forgotten_cantrips.mana_cost_buff": "Mana Cost Buff",
-  "cantrip.forgotten_cantrips.mana_cost_buff.desc": "Applies a stacking mana cost buff effect to yourself.",
-
-  "cantrip.forgotten_cantrips.cantrip_buff": "Cantrip Buff",
-  "cantrip.forgotten_cantrips.cantrip_buff.desc": "Applies a stacking cantrip buff effect to yourself. The effect is reserved for empowering other cantrips later.",
 
   "item.minecraft.potion.effect.undying": "Potion of Undying",
   "item.minecraft.splash_potion.effect.undying": "Splash Potion of Undying",
@@ -75,9 +82,6 @@
   "item.minecraft.splash_potion.effect.aether_stride": "Splash Potion of Aether Stride",
   "item.minecraft.lingering_potion.effect.aether_stride": "Lingering Potion of Aether Stride",
   "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride",
-  "effect.forgotten_cantrips.dmg_buff": "Damage Buff",
-  "effect.forgotten_cantrips.mana_cost_buff": "Mana Cost Buff",
-  "effect.forgotten_cantrips.cantrip_buff": "Cantrip Buff",
 
   "item.forgotten_cantrips.spectral_helmet": "Spectral Helmet",
   "item.forgotten_cantrips.spectral_chestplate": "Spectral Chestplate",

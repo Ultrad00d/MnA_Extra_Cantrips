@@ -116,3 +116,49 @@ Planned items:
 [[Technical]: Spectral Donkey chest Link](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/80)
 
 [[Technical]: Spectral Donkey behavior](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/81)
+
+
+# Sprint #2:
+
+[Sprint milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/milestone/3)
+
+Start date:
+Monday, June 29th, 2026
+
+Finish date:
+Sunday, July 5th, 2026
+
+Goal:
+Deliver a reliable increment by implementing new cantrips, establishing automated quality gates, and addressing customer feedback from the MVP.
+
+Scope rationale:
+Sprint scope was selected after reviewing [Sprint #1 retrospective](../reports/week3/retrospective.md) (unresolved risks: study tech mechanic, random bugs) and customer feedback on the MVP v1.
+
+Expected outcome (brief summary):
+Update Force Consume [US-01], Release Empower [US-02], make Spectral Armor [US-08] and Villager Mind-Wiping [US-07] cantrips and address customer feedback.
+
+Planned items:
+
+### Villager Mind-Wiping [US-07](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/26)
+
+[[Design]: Icon for Reset Villager Cantrip #154](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/26)
+
+[[Technical]: Logic for Villager Mind-Wiper memory erasing #155](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/26)
+
+[[Technical]: Visual and sound effects for successful Villager Trading Progress reset #156](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/26)
+
+[[Technical]: Memory Emerald functionality #164](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/26)
+
+[[Design]: Icon for the Memory Emerald item #165](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/26)
+
+[[Bug]: Villager Mind-Wiping cantrip revert #171](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/26)
+
+### Spectral Armor [US-08](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/27)
+
+[[Technical]: Missing Armor Apperance Logic #151](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/151)
+
+[[Design]: Spectral Armor cantrip icon #176](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/176)
+
+[[Design]: Spectral Armor effect texture #177](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/177)
+
+[[Bug]: Spectral Armor transparency #178](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/178)

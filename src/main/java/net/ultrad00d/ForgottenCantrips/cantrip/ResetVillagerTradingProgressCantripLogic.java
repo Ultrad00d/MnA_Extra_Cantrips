@@ -31,12 +31,16 @@ public class ResetVillagerTradingProgressCantripLogic extends CantripLogic {
         if (player.level().isClientSide()) return;
 
         boolean emeraldInOffhand = false;
+        boolean usingExistingMemoryEmerald = false;
 
-        if (player.getOffhandItem().getItem() == Items.EMERALD) {
+        if ((player.getOffhandItem().getItem() == Items.EMERALD) || (player.getOffhandItem().getItem() == ItemRegistry.MEMORY_EMERALD.get())) {
             emeraldInOffhand = true;
+            usingExistingMemoryEmerald = (player.getOffhandItem().getItem() == ItemRegistry.MEMORY_EMERALD.get());
         } else {
-            if (player.getMainHandItem().getItem() == Items.EMERALD) {
+            if ((player.getMainHandItem().getItem() == Items.EMERALD) || (player.getMainHandItem().getItem() == ItemRegistry.MEMORY_EMERALD.get())) {
                 emeraldInOffhand = false;
+                usingExistingMemoryEmerald = (player.getMainHandItem().getItem() == ItemRegistry.MEMORY_EMERALD.get());
+
             } else {
                 player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.reset_villager_trading_progress.no_emerald"));
                 return;
@@ -73,40 +77,66 @@ public class ResetVillagerTradingProgressCantripLogic extends CantripLogic {
             return;
         }
 
+        if (usingExistingMemoryEmerald) {
+            //прочитать память из изумруда
 
-        if (!(currentVillager.serializeNBT().contains("Offers"))) {
-            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.reset_villager_trading_progress.nothing_to_copy"));
+            if (emeraldInOffhand) {
+                if (applyMemories(player.getOffhandItem(), currentVillager)) {
+                    player.getOffhandItem().setCount(player.getOffhandItem().getCount() - 1);
+                    player.getInventory().add(new ItemStack(Items.EMERALD, 1));
+                } else {
+                    player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.reset_villager_trading_progress.empty_warning"));
+                    return;
+                }
+            } else {
+                if (applyMemories(player.getMainHandItem(), currentVillager)) {
+                    player.getMainHandItem().setCount(player.getMainHandItem().getCount() - 1);
+                    player.getInventory().add(new ItemStack(Items.EMERALD, 1));
+                } else {
+                    player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.reset_villager_trading_progress.empty_warning"));
+                    return;
+                }
+            }
             return;
         }
+        else {
+            //записать память в изумруд
 
 
-        //записываем память в NBT изумруда
-        if (emeraldInOffhand) {
-            player.getOffhandItem().setCount(player.getOffhandItem().getCount() - 1);
-        } else {
-            player.getMainHandItem().setCount(player.getMainHandItem().getCount() - 1);
-        }
+            //записываем память в NBT изумруда
+
+            if (emeraldInOffhand) {
+                player.getOffhandItem().setCount(player.getOffhandItem().getCount() - 1);
+            } else {
+                player.getMainHandItem().setCount(player.getMainHandItem().getCount() - 1);
+            }
 
 
-        ItemLike newEmerald = ItemRegistry.MEMORY_EMERALD.get();
-        ItemStack newEmeraldStack = new ItemStack(newEmerald,1);
+            ItemLike newEmerald = ItemRegistry.MEMORY_EMERALD.get();
+            ItemStack newEmeraldStack = new ItemStack(newEmerald, 1);
 
-        CompoundTag emeraldNBT = newEmeraldStack.getOrCreateTag();
-        emeraldNBT.putInt("level", currentVillager.getVillagerData().getLevel());
-        emeraldNBT.putInt("exp", currentVillager.getVillagerXp());
-        emeraldNBT.put("Offers", currentVillager.serializeNBT().get("Offers"));
-        emeraldNBT.putString("profession", currentVillager.getVillagerData().getProfession().toString());
-        emeraldNBT.putBoolean("initialized", true);
+            CompoundTag emeraldNBT = newEmeraldStack.getOrCreateTag();
+            emeraldNBT.putBoolean("initialized", true);
 
-        player.getInventory().add(newEmeraldStack);
+            if (!(currentVillager.serializeNBT().contains("Offers"))) {
+                emeraldNBT.putBoolean("jobless",true);
+            } else {
+
+                emeraldNBT.putInt("level", currentVillager.getVillagerData().getLevel());
+                emeraldNBT.putInt("exp", currentVillager.getVillagerXp());
+                emeraldNBT.put("Offers", currentVillager.serializeNBT().get("Offers"));
+                emeraldNBT.putString("profession", currentVillager.getVillagerData().getProfession().toString());
+            }
+                player.getInventory().add(newEmeraldStack);
 
 
 
-        wipeVillagerMemory(currentVillager);
+            wipeVillagerMemory(currentVillager);
 
-        targetEntity.playSound(SoundEvents.BEACON_DEACTIVATE, 1, 1.2F);
-        for (int i = 0; i < 15; i++) {
-            ((ServerLevel) player.level()).sendParticles(ParticleTypes.CLOUD, targetEntity.getX(), targetEntity.getY()+1.5F, (targetEntity.getZ()), 3, Math.random()*0.6,Math.random()*0.15, Math.random()*0.6, 0.0);
+            targetEntity.playSound(SoundEvents.BEACON_DEACTIVATE, 1, 1.2F);
+            for (int i = 0; i < 15; i++) {
+                ((ServerLevel) player.level()).sendParticles(ParticleTypes.CLOUD, targetEntity.getX(), targetEntity.getY() + 1.5F, (targetEntity.getZ()), 3, Math.random() * 0.6, Math.random() * 0.15, Math.random() * 0.6, 0.0);
+            }
         }
     }
 
@@ -119,20 +149,26 @@ public class ResetVillagerTradingProgressCantripLogic extends CantripLogic {
             return false;
         }
 
+
+
         wipeVillagerMemory(target);
 
-        target.setVillagerXp(emeraldNBT.getInt("exp"));
-        target.setVillagerData(target.getVillagerData().setLevel(emeraldNBT.getInt("level")).setProfession(ForgeRegistries.VILLAGER_PROFESSIONS.getValue(ResourceLocation.parse(emeraldNBT.getString("profession")))));
+        if (!(emeraldNBT.contains("jobless"))) {
 
-        CompoundTag originalVillagerNBT = target.serializeNBT();
-        originalVillagerNBT.remove("Offers");
-        originalVillagerNBT.put("Offers", emeraldNBT.get("Offers"));
-        target.deserializeNBT(originalVillagerNBT);
+            target.setVillagerXp(emeraldNBT.getInt("exp"));
+            target.setVillagerData(target.getVillagerData().setLevel(emeraldNBT.getInt("level")).setProfession(ForgeRegistries.VILLAGER_PROFESSIONS.getValue(ResourceLocation.parse(emeraldNBT.getString("profession")))));
 
-        target.refreshBrain((ServerLevel)target.level());
+            CompoundTag originalVillagerNBT = target.serializeNBT();
+            originalVillagerNBT.remove("Offers");
+            originalVillagerNBT.put("Offers", emeraldNBT.get("Offers"));
+            target.deserializeNBT(originalVillagerNBT);
+
+        }
+            target.refreshBrain((ServerLevel) target.level());
 
 
-        target.playSound(SoundEvents.BEACON_ACTIVATE, 1, 1.2F);
+            target.playSound(SoundEvents.BEACON_ACTIVATE, 1, 1.2F);
+
         for (int i = 0; i < 15; i++) {
             ((ServerLevel) target.level()).sendParticles(ParticleTypes.CLOUD, target.getX(), target.getY()+1.5F, (target.getZ()), 3, Math.random()*0.6,Math.random()*0.15, Math.random()*0.6, 0.0);
         }

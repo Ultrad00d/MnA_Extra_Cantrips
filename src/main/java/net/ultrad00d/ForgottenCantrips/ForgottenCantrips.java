@@ -141,11 +141,6 @@ public class ForgottenCantrips {
                     )
                 )
                 .then(Commands.literal("illumination")
-                .then(Commands.literal("max_radius")
-                    .then(Commands.argument("value", IntegerArgumentType.integer(2, 8))
-                        .executes(ctx -> setConfigValue(ctx, "Illumination.max_radius", IntegerArgumentType.getInteger(ctx, "value")))
-                    )
-                )
                 .then(Commands.literal("tick_period")
                     .then(Commands.argument("value", IntegerArgumentType.integer(1, 20))
                         .executes(ctx -> setConfigValue(ctx, "Illumination.tick_period", IntegerArgumentType.getInteger(ctx, "value")))
@@ -161,7 +156,6 @@ public class ForgottenCantrips {
     }
     private static int setConfigValue(CommandContext<CommandSourceStack> ctx, String key, int value) {
         ForgeConfigSpec.ConfigValue<Integer> configValue = switch (key) {
-            case "Illumination.max_radius" -> IlluminationConfig.MAX_RADIUS;
             case "Illumination.tick_period" -> IlluminationConfig.TICK_PERIOD;
             case "Illumination.radius_ext" -> IlluminationConfig.RADIUS_EXT;
             default -> null;
