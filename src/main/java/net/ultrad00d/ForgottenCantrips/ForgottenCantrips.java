@@ -29,6 +29,7 @@ import net.minecraftforge.fml.config.ConfigTracker;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.ultrad00d.ForgottenCantrips.client.renderer.EmpowerRuneRenderer;
 import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralBoatRenderer;
@@ -47,6 +48,7 @@ import net.ultrad00d.ForgottenCantrips.screen.MusicDiscSlotProvider;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryScreen;
 import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
 import net.ultrad00d.ForgottenCantrips.effect.UndyingEffect;
+import net.ultrad00d.ForgottenCantrips.spells.SpellBuffAdjusters;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ForgottenCantrips.MOD_ID)
@@ -68,6 +70,7 @@ public class ForgottenCantrips {
         MenuRegistry.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::loadComplete);
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
@@ -76,6 +79,10 @@ public class ForgottenCantrips {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(CantripRegistry::register);
+    }
+
+    private void loadComplete(final FMLLoadCompleteEvent event) {
+        event.enqueueWork(SpellBuffAdjusters::register);
     }
 
     // Add the example block item to the building blocks tab
