@@ -6,7 +6,7 @@ This project is an add-on for the Minecraft Mana And Artifice mod, adding many n
 
 [Changelog](https://github.com/Ultrad00d/MnA_Extra_Cantrips/CHANGELOG.md)
 
-[Public video demo link](https://youtu.be/J0YGRPP-3UY)
+[Public video demo link](https://youtu.be/sZfDrhfFqRE)
 
 [Hosted documentation site](https://ultrad00d.github.io/MnA_Extra_Cantrips/)
 
