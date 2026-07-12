@@ -108,7 +108,7 @@ Contribution traceability table mapping each team member to issues, PRs/MRs, rev
 | Contributor             | Issues | PRs | Review Activity and Testing | Quality and automation | Documentation Work |
 |:------------------------|:---------------------|:-|:-|:-|:-|
 | **alexm-gh**            |  |   |  | - |  |
-| **Dima280807**          |  |   |  | - |  |
+| **Dima280807**          | #140, #170 |   |  | - |  |
 | **dtamindarov5839**     | #210, #218 |   |  | - | Documentation (README, roadmap, fixes) |
 | **l1n0n**               | #214, #215, #216  | #232  |  | - | Documentation (Reflection, customer review summary, retrospective) |
 | **notwindstone**        | https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/228 | https://github.com/Ultrad00d/MnA_Extra_Cantrips/pull/229 | CI testing | Gradle building | The website one (`./vitepress/`) |
