@@ -1,0 +1,47 @@
+@startuml forgotten_cantrips_deployment_view
+title Forgotten Cantrips - Deployment View
+
+skinparam shadowing false
+
+actor "Developer" as Developer
+actor "Customer / Player" as Customer
+
+node "GitHub" {
+  artifact "Source Repository" as Repo
+  component "GitHub Actions\nJDK 17 + Gradle" as Actions
+  artifact "Release JAR\nforgotten_cantrips-*.jar" as Jar
+  artifact "GitHub Pages\nVitePress docs" as Pages
+}
+
+node "Customer Minecraft Client\nMinecraft 1.20.1 + Forge 47.4.20" {
+  artifact "mods/forgotten_cantrips.jar" as ClientMod
+  artifact "Required mods\nMana and Artifice,\nCurios, GeckoLib" as ClientDeps
+  component "Client-side mod code\nscreens, renderers, assets" as ClientSide
+  component "Integrated server\nsingle-player / LAN" as IntegratedServer
+  database "Local saves\nworld, player NBT, config" as LocalState
+}
+
+node "Dedicated Server Host\noptional multiplayer" {
+  artifact "mods/forgotten_cantrips.jar" as ServerMod
+  artifact "Required server mods" as ServerDeps
+  component "Server-side mod code\nregistries, cantrips,\nevents, capabilities" as ServerSide
+  database "Server world save\nplayer data, config" as ServerState
+}
+
+Developer --> Repo
+Repo --> Actions
+Actions --> Jar
+Actions --> Pages
+Customer --> Pages
+Customer --> Jar
+Jar ..> ClientMod
+Jar ..> ServerMod
+ClientMod --> ClientDeps
+ClientMod --> ClientSide
+ClientMod --> IntegratedServer
+IntegratedServer --> LocalState
+ServerMod --> ServerDeps
+ServerMod --> ServerSide
+ServerSide --> ServerState
+ClientSide <--> ServerSide : Minecraft / Forge protocol
+@enduml

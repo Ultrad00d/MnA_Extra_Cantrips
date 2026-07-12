@@ -1,0 +1,13 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "forgotten_cantrips:item/memory_emerald"
+  },
+  "overrides": [
+    {
+      "predicate": {"enchantment_glint": 1},
+      "model": "forgotten_cantrips:item/memory_emerald"
+    }
+  ]
+  
+}

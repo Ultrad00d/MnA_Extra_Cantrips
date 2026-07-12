@@ -48,7 +48,7 @@ public class CantripRegistry {
             if (server == null) return false;
 
             Advancement advancement = server.getAdvancements().getAdvancement(cantrip.getRequiredAdvancement());
-            if (advancement == null) return false;
+            if (advancement == null) return true;
 
             AdvancementProgress progress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
             return progress.isDone();

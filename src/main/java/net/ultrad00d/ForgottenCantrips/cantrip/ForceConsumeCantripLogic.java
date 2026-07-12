@@ -1,6 +1,7 @@
 package net.ultrad00d.ForgottenCantrips.cantrip;
 
 import com.mna.api.cantrips.ICantrip;
+import com.mna.items.ItemInit;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -126,7 +127,7 @@ public class ForceConsumeCantripLogic implements ICantripLogic {
         }
         // Glowstone, Sea Lantern, Shroomlight, Redstone Lamp - light up the area around the player for 3 minutes
         if (item == Items.GLOWSTONE || item == Items.SEA_LANTERN || item == Items.SHROOMLIGHT || item == Items.REDSTONE_LAMP) {
-            player.addEffect(new MobEffectInstance(EffectRegistry.ILLUMINATION.get(), 3600, 0));
+            player.addEffect(new MobEffectInstance(EffectRegistry.ILLUMINATION.get(), 3600, 1));
             return true;
         }
         // Redstone Torch, Torch, Soul Torch - light up the area around the player for 30 seconds
@@ -150,15 +151,35 @@ public class ForceConsumeCantripLogic implements ICantripLogic {
             return true;
         }
 
-        // Some of the items might be implemented further:
-        // (Optional) Dragon's Breath - apply the "Levitation" effect to the player for 10 seconds
-        // (Optional) Flint and Steel, Fire Charge - set the player on fire for 5 seconds
-        // (Optional) Gunpowder, TNT, End Crystal - create an explosion at the player's location (without destroying blocks)
-        
-
-        // (Technically implemented) Water Bucket, Water Bottle - remove the liquid container
-        // (Technically implemented) Soups - apply corresponding nutrition and remove the bowl
-        // (Technically implemented) Honey Bottle - apply nutrition and remove the bottle
+        // Netherite Scrap - apply the "Resistance" and "Fire Resistance" effects to the player for 3 minutes (TBD)
+        if (item == Items.NETHERITE_SCRAP) {
+            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 3600, 1));
+            player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3600, 1));
+            return true;
+        }
+        // Dragon's Breath - apply the "Levitation" effect to the player for 7 seconds, "Slow Falling" effect for 21 second
+        if (item == Items.DRAGON_BREATH) {
+            player.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 140, 0));
+            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 420, 0));
+            return true;
+        }
+        // Fire Charge - apply "Fire Resistance" effect to the player for 2 minutes (Temporary)
+        if (item == Items.FIRE_CHARGE) {
+            player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 2400, 1));
+            return true;
+        }
+        // Arcane Compound - apply "Undying" effect for 10 seconds, "Resistance" for 1 minute, and "Strength" for 1 minute (Temporary)
+        if (item == ItemInit.ARCANE_COMPOUND.get()) {
+            player.addEffect(new MobEffectInstance(EffectRegistry.UNDYING.get(), 200, 0));
+            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0));
+            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1200, 0));
+            return true;
+        }
+        // Water Bucket - remove the liquid container, put out fire on the player.
+        if (item == Items.WATER_BUCKET) {
+            player.clearFire();
+            return true;
+        }
         // Regular food items - apply nutrition based on the food properties of the item
         FoodProperties food = item.getFoodProperties(stack, player);
         if (food != null) {

@@ -1,0 +1,41 @@
+@startuml forgotten_cantrips_spectral_bed_sequence
+title Forgotten Cantrips - Spectral Bed Cantrip Sequence
+
+skinparam shadowing false
+
+actor "Player" as Player
+participant "Minecraft Client" as Client
+participant "Forge / Minecraft Server" as Server
+participant "Mana and Artifice\nCantrip Registry" as MNA
+participant "Forgotten Cantrips\nCantripRegistry" as FCRegistry
+queue "Mana and Artifice\nDelayedEventQueue" as Queue
+participant "SpectralBedCantripLogic" as Logic
+database "Minecraft Level\nworld state" as Level
+participant "SpectralBedBlock" as BedBlock
+
+Player -> Client : Cast spectral bed cantrip
+Client -> Server : Send cast interaction
+Server -> MNA : Resolve cantrip pattern
+MNA -> FCRegistry : Invoke registered callback
+FCRegistry -> Queue : Schedule delayed execution
+
+... icon delay elapses ...
+
+Queue -> Logic : run(player, cantrip, hand)
+Logic -> Level : Raycast and validate placement
+
+alt Invalid target, time, or space
+  Logic -> Server : Send translatable feedback
+  Server -> Client : Display message
+else Valid placement
+  Logic -> Level : Place spectral bed states
+  Logic -> Level : Attach block entity
+  Level -> Client : Sync world update
+end
+
+Player -> Client : Use spectral bed
+Client -> Server : Send block-use interaction
+Server -> BedBlock : Validate sleep rules
+BedBlock -> Server : Start sleep without spawnpoint
+Server -> Client : Sync sleep state or message
+@enduml
