@@ -54,7 +54,7 @@ We estimate this sprint to be about 50 story points large.
 
 We finished Sprint 4, accomplishing most of what we planned.
 
-[Semver Release v0.4](https://github.com/Ultrad00d/MnA_Extra_Cantrips/releases/tag/mvp-v3)
+[Semver Release v0.4](https://github.com/Ultrad00d/MnA_Extra_Cantrips/releases/tag/untagged-15977e22a1583b834bdc)
 
 This release adds basic functionality for [US-013: Bubble Up](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/175) as well as a few design improvements and bug fixes.
 
