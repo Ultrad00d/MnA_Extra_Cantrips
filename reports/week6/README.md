@@ -109,11 +109,17 @@ Contribution traceability table mapping each team member to issues, PRs/MRs, rev
 |:------------------------|:---------------------|:-|:-|:-|:-|
 | **alexm-gh**            |  |   |  | - |  |
 | **Dima280807**          |  |   |  | - |  |
-| **dtamindarov5839**     |  |   |  | - |  |
-| **l1n0n**               |  |   |  | - |  |
+| **dtamindarov5839**     |  |   |  | - | Documentation (README, roadmap, fixes) |
+| **l1n0n**               |  |   |  | - | Documentation (Reflection, customer review summary, retrospective) |
 | **notwindstone**        |  |   |  |   |  |
 | **Ultrad00d**           |  |   |  | - |  |
 
+Igor Naumov & Wizard dialogue system \\
+Dmitry Mulianov & Empower visual effects and started making Spectral Slime \\
+Linar Kasimov & Bubble Up cantrip logic \\
+Aleksandr Mankov & Documentation \\
+Dayan Tamindarov & Documentation \\
+Aidar Suleimanov & CI \\
 
 ## Screenshots:
 
