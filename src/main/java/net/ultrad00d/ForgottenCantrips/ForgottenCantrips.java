@@ -1,5 +1,6 @@
 package net.ultrad00d.ForgottenCantrips;
 
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.ultrad00d.ForgottenCantrips.registry.*;
 import com.mna.api.items.MACreativeTabs;
 
@@ -12,6 +13,7 @@ import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogue;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogueProvider;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardSessionManager;
 import net.ultrad00d.ForgottenCantrips.registry.*;
+import net.ultrad00d.ForgottenCantrips.spells.SpellBuffAdjusters;
 import org.slf4j.Logger;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -83,6 +85,7 @@ public class ForgottenCantrips {
         GeckoLib.initialize();
 
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::loadComplete);
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
@@ -91,6 +94,10 @@ public class ForgottenCantrips {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(CantripRegistry::register);
+    }
+
+    private void loadComplete(final FMLLoadCompleteEvent event) {
+        event.enqueueWork(SpellBuffAdjusters::register);
     }
 
     // Add the example block item to the building blocks tab
