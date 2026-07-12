@@ -111,7 +111,7 @@ Contribution traceability table mapping each team member to issues, PRs/MRs, rev
 | **Dima280807**          |  |   |  | - |  |
 | **dtamindarov5839**     |  |   |  | - | Documentation (README, roadmap, fixes) |
 | **l1n0n**               |  |   |  | - | Documentation (Reflection, customer review summary, retrospective) |
-| **notwindstone**        | https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/228 | https://github.com/Ultrad00d/MnA_Extra_Cantrips/pull/229 |  |   |  |
+| **notwindstone**        | https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/228 | https://github.com/Ultrad00d/MnA_Extra_Cantrips/pull/229 | CI testing | Gradle building | The website one (`./vitepress/`) |
 | **Ultrad00d**           |  |   |  | - |  |
 
 Igor Naumov & Wizard dialogue system \\
