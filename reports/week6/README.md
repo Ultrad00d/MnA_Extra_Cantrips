@@ -103,7 +103,7 @@ Our [AGENTS.md](/AGENTS.md)
 [Retrospective](retrospective.md) and [reflection](reflection.md) on Sprint 4.
 
 
-Contribution traceability table mapping each team member to issues, PRs/MRs, review activity, testing, quality, automation, or documentation work : (TBA)
+Contribution traceability table mapping each team member to issues, PRs/MRs, review activity, testing, quality, automation, or documentation work :
 # Contribution traceability table
 | Contributor             | Issues | PRs | Review Activity and Testing | Quality and automation | Documentation Work |
 |:------------------------|:---------------------|:-|:-|:-|:-|
@@ -112,14 +112,7 @@ Contribution traceability table mapping each team member to issues, PRs/MRs, rev
 | **dtamindarov5839**     | #210, #218 |   |  | - | Documentation (README, roadmap, fixes) |
 | **l1n0n**               | #214, #215, #216  |   |  | - | Documentation (Reflection, customer review summary, retrospective) |
 | **notwindstone**        | https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/228 | https://github.com/Ultrad00d/MnA_Extra_Cantrips/pull/229 | CI testing | Gradle building | The website one (`./vitepress/`) |
-| **Ultrad00d**           |  |   |  | - |  |
-
-Igor Naumov & Wizard dialogue system \\
-Dmitry Mulianov & Empower visual effects and started making Spectral Slime \\
-Linar Kasimov & Bubble Up cantrip logic \\
-Aleksandr Mankov & Documentation \\
-Dayan Tamindarov & Documentation \\
-Aidar Suleimanov & CI \\
+| **Ultrad00d**           | Work on Colossus Oak |   |  | - | Documentation (Project backlog) |
 
 ## Screenshots:
 
