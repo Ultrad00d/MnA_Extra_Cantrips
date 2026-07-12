@@ -8,7 +8,6 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.server.level.ServerPlayer;
 import net.ultrad00d.ForgottenCantrips.client.renderer.OldWizardRenderer;
-import net.ultrad00d.ForgottenCantrips.dialogue.DialogueChoice;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogue;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogueProvider;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardSessionManager;
@@ -58,7 +57,6 @@ import net.ultrad00d.ForgottenCantrips.registry.MenuRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.PotionRegistry;
 import net.ultrad00d.ForgottenCantrips.screen.MusicDiscSlotProvider;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryScreen;
-import net.ultrad00d.ForgottenCantrips.registry.ItemRegistry;
 import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
 import net.ultrad00d.ForgottenCantrips.effect.UndyingEffect;
 import software.bernie.geckolib.GeckoLib;
@@ -103,7 +101,7 @@ public class ForgottenCantrips {
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTab() == MACreativeTabs.GENERAL) {
-            event.accept(ItemRegistry.ANCIENT_SCROLL);
+//            event.accept(ItemRegistry.ANCIENT_SCROLL);
         }
     }
 
