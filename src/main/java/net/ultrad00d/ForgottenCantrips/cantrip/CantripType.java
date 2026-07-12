@@ -51,6 +51,48 @@ public enum CantripType {
             false,
             "uc1/part_3",
             RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
+    ),
+    SPECTRAL_ARMOR("spectral_armor",
+            1,
+            new SpectralArmorCantripLogic(),
+            true,
+            null,
+            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+    ),
+    RESET_VILLAGER("reset_villager",
+            1,
+            new ResetVillagerTradingProgressCantripLogic(),
+            false,
+            null,
+            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+    ),
+    EMPOWER_DAMAGE_BUFF("mana_cost_buff",
+            2,
+            new EmpowerDamageBuffCantripLogic(),
+            true,
+            null,
+            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+    ),
+    EMPOWER_MANA_BUFF("dmg_buff",
+            2,
+            new EmpowerManaCostBuffCantripLogic(),
+            true,
+            null,
+            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+    ),
+    EMPOWER_CANTRIP_BUFF("cantrip_buff",
+            2,
+            new EmpowerCantripBuffCantripLogic(),
+            true,
+            null,
+            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+    ),
+    SPECTRAL_SLIME("spectral_slime",
+            1,
+            new SpectralSlimeCantripLogic(),
+            false,
+            null,
+            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
     );
 
     private final String id;
@@ -60,7 +102,7 @@ public enum CantripType {
     @Nullable  private final String advancementPath;
     private final ResourceLocation[] shapes;
 
-    CantripType(String id, int tier, ICantripLogic logic, boolean instant, String advancementPath, ResourceLocation... shapes) {
+    CantripType(String id, int tier, ICantripLogic logic, boolean instant, @Nullable String advancementPath, ResourceLocation... shapes) {
         this.id = id;
         this.tier = tier;
         this.logic = logic;

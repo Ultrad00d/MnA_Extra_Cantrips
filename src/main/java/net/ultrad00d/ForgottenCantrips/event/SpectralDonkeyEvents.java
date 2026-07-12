@@ -19,11 +19,15 @@ public class SpectralDonkeyEvents {
     public static void onPlayerClone(PlayerEvent.Clone event) {
         if (!event.isWasDeath()) return;
 
-        event.getOriginal().getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(oldCap ->
-                event.getEntity().getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(newCap ->
-                        newCap.deserializeNBT(oldCap.serializeNBT())
-                )
-        );
+        // The dying player's capabilities are already invalidated by this point (Entity#remove
+        // runs before PlayerEvent.Clone fires), so they must be revived to read them here.
+        event.getOriginal().reviveCaps();
+        event.getOriginal().getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(oldCap -> {
+            event.getEntity().getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(newCap -> {
+                newCap.deserializeNBT(oldCap.serializeNBT());
+            });
+        });
+        event.getOriginal().invalidateCaps();
     }
 
     @SubscribeEvent
@@ -38,8 +42,7 @@ public class SpectralDonkeyEvents {
     }
 
     @SubscribeEvent
-    public static void onEntityDeath(LivingDeathEvent event)
-    {
+    public static void onEntityDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof SpectralDonkey) { event.setCanceled(true); } //spectral donkey doesn't drop the saddle
     }
 }
