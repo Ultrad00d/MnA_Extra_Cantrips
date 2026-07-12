@@ -30,9 +30,19 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.ultrad00d.ForgottenCantrips.client.renderer.EmpowerRuneRenderer;
 import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralBoatRenderer;
 import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralDonkeyRenderer;
+import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralSlimeRenderer;
 import net.ultrad00d.ForgottenCantrips.config.IlluminationConfig;
+import net.ultrad00d.ForgottenCantrips.registry.BlockEntityRegistry;
+import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
+import net.ultrad00d.ForgottenCantrips.registry.CantripRegistry;
+import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
+import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
+import net.ultrad00d.ForgottenCantrips.registry.ItemRegistry;
+import net.ultrad00d.ForgottenCantrips.registry.MenuRegistry;
+import net.ultrad00d.ForgottenCantrips.registry.PotionRegistry;
 import net.ultrad00d.ForgottenCantrips.screen.MusicDiscSlotProvider;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryScreen;
 import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
@@ -84,6 +94,7 @@ public class ForgottenCantrips {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            MinecraftForge.EVENT_BUS.register(EmpowerRuneRenderer.class);
             EntityRenderers.register(
                     EntityRegistry.SPECTRAL_BOAT.get(),
                     SpectralBoatRenderer::new
@@ -91,6 +102,10 @@ public class ForgottenCantrips {
             EntityRenderers.register(
                     EntityRegistry.SPECTRAL_DONKEY.get(),
                     SpectralDonkeyRenderer::new
+            );
+            EntityRenderers.register(
+                    EntityRegistry.SPECTRAL_SLIME.get(),
+                    SpectralSlimeRenderer::new
             );
             MenuScreens.register(
                     MenuRegistry.SHARED_INVENTORY_MENU.get(),

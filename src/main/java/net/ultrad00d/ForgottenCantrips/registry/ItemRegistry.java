@@ -30,6 +30,9 @@ public class ItemRegistry {
 
     public static final RegistryObject<Item> SPECTRAL_BOOTS = registerItem("spectral_boots",
             () -> new ArmorItem(SpectralArmorMaterial.SPECTRAL_ARMOR, ArmorItem.Type.BOOTS, new Item.Properties()));
+  
+    public static final RegistryObject<Item> SPECTRAL_SLIME_BALL = ITEMS.register("spectral_slime_ball",
+            () -> new Item(new Item.Properties()));
 
     private static <T extends Item> RegistryObject<T> registerItem(String name, Supplier<T> item) {
         return ITEMS.register(name, item);

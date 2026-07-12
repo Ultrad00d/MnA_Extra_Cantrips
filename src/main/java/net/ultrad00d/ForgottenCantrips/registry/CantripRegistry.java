@@ -1,15 +1,26 @@
 package net.ultrad00d.ForgottenCantrips.registry;
 
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
-
 import com.mna.api.cantrips.ICantrip;
 import com.mna.api.timing.DelayedEventQueue;
 import com.mna.api.timing.TimedDelayedEvent;
 import com.mna.api.tools.RLoc;
 
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
+import net.ultrad00d.ForgottenCantrips.cantrip.CantripLogic;
+import net.ultrad00d.ForgottenCantrips.cantrip.EmpowerCantripBuffCantripLogic;
+import net.ultrad00d.ForgottenCantrips.cantrip.EmpowerDamageBuffCantripLogic;
+import net.ultrad00d.ForgottenCantrips.cantrip.EmpowerManaCostBuffCantripLogic;
+import net.ultrad00d.ForgottenCantrips.cantrip.ForceConsumeCantripLogic;
+import net.ultrad00d.ForgottenCantrips.cantrip.LightningCantripLogic;
+import net.ultrad00d.ForgottenCantrips.cantrip.SpectralBedCantripLogic;
+import net.ultrad00d.ForgottenCantrips.cantrip.SpectralBoatCantripLogic;
+import net.ultrad00d.ForgottenCantrips.cantrip.SpectralDonkeyCantripLogic;
+import net.ultrad00d.ForgottenCantrips.cantrip.SpectralSlimeCantripLogic;
 import net.ultrad00d.ForgottenCantrips.cantrip.*;
 import net.minecraft.world.entity.player.Player;
 
@@ -64,6 +75,33 @@ public class CantripRegistry {
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
         ).setDelay(ICON_SHOW_TIME);
+        // Spectral Slime Cantrip
+        registry.registerCantrip(
+                fromNamespaceAndPath("forgotten_cantrips", "spectral_slime"),
+                fromNamespaceAndPath("forgotten_cantrips", "textures/gui/cantrips/spectral_slime.png"),
+                1,
+                (player, cantrip, hand) -> run(player, cantrip, hand, new SpectralSlimeCantripLogic(), false),
+                ItemStack.EMPTY,
+                RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+        ).setDelay(ICON_SHOW_TIME);
+         // Damage Buff Cantrip
+        registry.registerCantrip(
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "dmg_buff"),
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/dmg_buff.png"),
+                2,
+                (player, cantrip, hand) -> run(player, cantrip, hand, new EmpowerDamageBuffCantripLogic(), false),
+                ItemStack.EMPTY,
+                RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+        );
+        // Mana Cost Buff Cantrip
+        registry.registerCantrip(
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "mana_cost_buff"),
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/mana_cost_buff.png"),
+                2,
+                (player, cantrip, hand) -> run(player, cantrip, hand, new EmpowerManaCostBuffCantripLogic(), false),
+                ItemStack.EMPTY,
+                RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+        );
         // Reset Villager Trading Progress Cantrip
         registry.registerCantrip(
                 fromNamespaceAndPath("forgotten_cantrips", "reset_villager_trading_progress"),
@@ -82,6 +120,15 @@ public class CantripRegistry {
                 ItemStack.EMPTY,
                 RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
         ).setDelay(ICON_SHOW_TIME);
+        // Cantrip Buff Cantrip
+        registry.registerCantrip(
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "cantrip_buff"),
+                fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/gui/cantrips/cantrip_buff.png"),
+                2,
+                (player, cantrip, hand) -> run(player, cantrip, hand, new EmpowerCantripBuffCantripLogic(), false),
+                ItemStack.EMPTY,
+                RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+        );
     }
 
     public static void run(Player player, ICantrip cantrip, InteractionHand hand, CantripLogic cantripInstance, boolean instant) {
