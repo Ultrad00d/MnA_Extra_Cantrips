@@ -7,6 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
+import net.ultrad00d.ForgottenCantrips.entity.OldWizard;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBoat;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralDonkey;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralSlime;
@@ -20,14 +21,21 @@ public final class EntityRegistry {
                     EntityType.Builder.of(SpectralBoat::new, MobCategory.MISC)
                             .sized(1.375F, 0.5625F)
                             .clientTrackingRange(10)
-                            .build("forgotten_cantrips:spectral_boat")
+                            .build(ForgottenCantrips.MOD_ID + ":spectral_boat")
             );
 
     public static final RegistryObject<EntityType<SpectralDonkey>> SPECTRAL_DONKEY =
             ENTITY_TYPES.register("spectral_donkey", () ->
                     EntityType.Builder.of(SpectralDonkey::new, MobCategory.CREATURE)
                             .sized(1.3964844F, 1.5F)
-                            .build("forgotten_cantrips:spectral_donkey")
+                            .build(ForgottenCantrips.MOD_ID + ":spectral_donkey")
+            );
+
+    public static final RegistryObject<EntityType<OldWizard>> OLD_WIZARD =
+            ENTITY_TYPES.register("old_wizard", () ->
+                    EntityType.Builder.of(OldWizard::new, MobCategory.MISC)
+                            .sized(0.7F, 1.15F)
+                            .build(ForgottenCantrips.MOD_ID + ":old_wizard")
             );
 
     public static final RegistryObject<EntityType<SpectralSlime>> SPECTRAL_SLIME =

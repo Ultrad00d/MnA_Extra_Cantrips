@@ -1,6 +1,18 @@
 package net.ultrad00d.ForgottenCantrips;
 
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.ultrad00d.ForgottenCantrips.registry.*;
+import com.mna.api.items.MACreativeTabs;
+
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.server.level.ServerPlayer;
+import net.ultrad00d.ForgottenCantrips.client.renderer.OldWizardRenderer;
+import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogue;
+import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogueProvider;
+import net.ultrad00d.ForgottenCantrips.dialogue.WizardSessionManager;
+import net.ultrad00d.ForgottenCantrips.registry.*;
+import net.ultrad00d.ForgottenCantrips.spells.SpellBuffAdjusters;
 import org.slf4j.Logger;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -47,6 +59,7 @@ import net.ultrad00d.ForgottenCantrips.screen.MusicDiscSlotProvider;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryScreen;
 import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
 import net.ultrad00d.ForgottenCantrips.effect.UndyingEffect;
+import software.bernie.geckolib.GeckoLib;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ForgottenCantrips.MOD_ID)
@@ -59,7 +72,7 @@ public class ForgottenCantrips {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, IlluminationConfig.SPEC);
 
-        EntityRegistry.ENTITY_TYPES.register(modEventBus);
+        EntityRegistry.register(modEventBus);
         ItemRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
         BlockEntityRegistry.register(modEventBus);
@@ -67,7 +80,10 @@ public class ForgottenCantrips {
         PotionRegistry.register(modEventBus);
         MenuRegistry.register(modEventBus);
 
+        GeckoLib.initialize();
+
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::loadComplete);
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
@@ -78,9 +94,15 @@ public class ForgottenCantrips {
         event.enqueueWork(CantripRegistry::register);
     }
 
+    private void loadComplete(final FMLLoadCompleteEvent event) {
+        event.enqueueWork(SpellBuffAdjusters::register);
+    }
+
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-
+        if (event.getTab() == MACreativeTabs.GENERAL) {
+//            event.accept(ItemRegistry.ANCIENT_SCROLL);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -107,6 +129,11 @@ public class ForgottenCantrips {
                     EntityRegistry.SPECTRAL_SLIME.get(),
                     SpectralSlimeRenderer::new
             );
+            EntityRenderers.register(
+                    EntityRegistry.OLD_WIZARD.get(),
+                    OldWizardRenderer::new
+            );
+
             MenuScreens.register(
                     MenuRegistry.SHARED_INVENTORY_MENU.get(),
                     SharedInventoryScreen::new
@@ -141,6 +168,11 @@ public class ForgottenCantrips {
                     )
                 )
                 .then(Commands.literal("illumination")
+                    .then(Commands.literal("max_radius")
+                        .then(Commands.argument("value", IntegerArgumentType.integer(2, 8))
+                            .executes(ctx -> setConfigValue(ctx, "Illumination.max_radius", IntegerArgumentType.getInteger(ctx, "value")))
+                        )
+                    )
                 .then(Commands.literal("tick_period")
                     .then(Commands.argument("value", IntegerArgumentType.integer(1, 20))
                         .executes(ctx -> setConfigValue(ctx, "Illumination.tick_period", IntegerArgumentType.getInteger(ctx, "value")))
@@ -153,7 +185,16 @@ public class ForgottenCantrips {
                 )
             )
         );
+
+        dispatcher.register(
+                Commands.literal("fc_dialogue")
+                        .requires(source -> source.hasPermission(0)) // Available to everyone
+                        .then(Commands.argument("token", StringArgumentType.string())
+                                .executes(this::handleDialogueCommand)
+                        )
+        );
     }
+
     private static int setConfigValue(CommandContext<CommandSourceStack> ctx, String key, int value) {
         ForgeConfigSpec.ConfigValue<Integer> configValue = switch (key) {
             case "Illumination.tick_period" -> IlluminationConfig.TICK_PERIOD;
@@ -175,4 +216,20 @@ public class ForgottenCantrips {
         return 1;
     }
 
+    // Anti fraud session system
+    private int handleDialogueCommand(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        String token = StringArgumentType.getString(ctx, "token");
+
+        // Attempt to consume the click action validation session on the server
+        WizardSessionManager.SessionData session = WizardSessionManager.consumeToken(token, player);
+
+        // If valid, apply data and advance state safely
+        if (session != null) {
+            player.getCapability(WizardDialogueProvider.WIZARD_DIALOGUE_CAP).ifPresent(cap -> {
+                WizardDialogue.advanceDialogueFrom(session.choice(), session.fromKey(), player, cap);
+            });
+        }
+        return 1;
+    }
 }

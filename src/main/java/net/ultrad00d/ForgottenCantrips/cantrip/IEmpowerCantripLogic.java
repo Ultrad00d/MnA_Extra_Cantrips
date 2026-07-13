@@ -9,14 +9,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.registries.RegistryObject;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 
-public abstract class EmpowerCantripLogic extends CantripLogic
-{
-    protected static void applyBuff(Player player, RegistryObject<MobEffect> effect)
-    {
-        if (player.level().isClientSide())
-        {
-            return;
-        }
+public interface IEmpowerCantripLogic {
+    default void applyBuff(Player player, RegistryObject<MobEffect> effect) {
+        if (player.level().isClientSide()) return;
 
         BuffTierRules rules = getBuffTierRules(player);
         MobEffect mobEffect = effect.get();
@@ -39,12 +34,10 @@ public abstract class EmpowerCantripLogic extends CantripLogic
         player.addEffect(new MobEffectInstance(mobEffect, rules.durationTicks, amplifier, false, false, true));
     }
 
-    protected static BuffTierRules getBuffTierRules(Player player)
-    {
+    default BuffTierRules getBuffTierRules(Player player) {
         int tier = getPlayerTier(player);
 
-        switch (tier)
-        {
+        switch (tier) {
             case 3:
                 return new BuffTierRules(20 * 20, 2, 0);
             case 4:
@@ -57,47 +50,35 @@ public abstract class EmpowerCantripLogic extends CantripLogic
         }
     }
 
-    protected static int getPlayerTier(Player player)
-    {
+    default int getPlayerTier(Player player) {
         IPlayerProgression progression = player.getCapability(ManaAndArtificeMod.getProgressionCapability()).orElse(null);
 
-        if (progression == null)
-        {
-            return 0;
-        }
+        if (progression == null) { return 0; }
 
         return progression.getTier();
     }
 
-    protected static void enforceActiveBuffLimit(Player player, MobEffect buffToApply, int maxActiveBuffs)
-    {
+    default void enforceActiveBuffLimit(Player player, MobEffect buffToApply, int maxActiveBuffs) {
+
         int activeBuffs = countActiveForgottenBuffs(player, buffToApply);
 
-        while (activeBuffs >= maxActiveBuffs)
-        {
+        while (activeBuffs >= maxActiveBuffs) {
             MobEffect buffToRemove = findOldestOtherForgottenBuff(player, buffToApply);
-            if (buffToRemove == null)
-            {
-                return;
-            }
+            if (buffToRemove == null) return;
 
             player.removeEffect(buffToRemove);
             activeBuffs--;
         }
     }
 
-    protected static int countActiveForgottenBuffs(Player player, MobEffect buffToApply)
-    {
+    default int countActiveForgottenBuffs(Player player, MobEffect buffToApply) {
         int activeBuffs = 0;
-        if (player.hasEffect(buffToApply))
-        {
+        if (player.hasEffect(buffToApply)) {
             activeBuffs = 1;
         }
 
-        for (MobEffect buff : getForgottenBuffs())
-        {
-            if (buff != buffToApply && player.hasEffect(buff))
-            {
+        for (MobEffect buff : getForgottenBuffs()) {
+            if (buff != buffToApply && player.hasEffect(buff)) {
                 activeBuffs++;
             }
         }
@@ -105,21 +86,15 @@ public abstract class EmpowerCantripLogic extends CantripLogic
         return activeBuffs;
     }
 
-    protected static MobEffect findOldestOtherForgottenBuff(Player player, MobEffect buffToApply)
-    {
+    default MobEffect findOldestOtherForgottenBuff(Player player, MobEffect buffToApply) {
         MobEffect oldestBuff = null;
         int shortestDuration = Integer.MAX_VALUE;
 
-        for (MobEffect buff : getForgottenBuffs())
-        {
-            if (buff == buffToApply)
-            {
-                continue;
-            }
+        for (MobEffect buff : getForgottenBuffs()) {
+            if (buff == buffToApply) continue;
 
             MobEffectInstance instance = player.getEffect(buff);
-            if (instance != null && instance.getDuration() < shortestDuration)
-            {
+            if (instance != null && instance.getDuration() < shortestDuration) {
                 oldestBuff = buff;
                 shortestDuration = instance.getDuration();
             }
@@ -128,8 +103,7 @@ public abstract class EmpowerCantripLogic extends CantripLogic
         return oldestBuff;
     }
 
-    protected static MobEffect[] getForgottenBuffs()
-    {
+    default MobEffect[] getForgottenBuffs() {
         return new MobEffect[] {
                 EffectRegistry.DMG_BUFF.get(),
                 EffectRegistry.MANA_COST_BUFF.get(),
@@ -137,17 +111,5 @@ public abstract class EmpowerCantripLogic extends CantripLogic
         };
     }
 
-    protected static class BuffTierRules
-    {
-        private final int durationTicks;
-        private final int maxActiveBuffs;
-        private final int maxAmplifier;
-
-        private BuffTierRules(int durationTicks, int maxActiveBuffs, int maxAmplifier)
-        {
-            this.durationTicks = durationTicks;
-            this.maxActiveBuffs = maxActiveBuffs;
-            this.maxAmplifier = maxAmplifier;
-        }
-    }
+    record BuffTierRules(int durationTicks, int maxActiveBuffs, int maxAmplifier) {}
 }

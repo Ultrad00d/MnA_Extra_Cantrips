@@ -6,11 +6,10 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 
-public class EmpowerCantripBuffCantripLogic extends EmpowerCantripLogic
+public class EmpowerCantripBuffCantripLogic implements IEmpowerCantripLogic, ICantripLogic
 {
     @Override
-    public void run(Player player, ICantrip cantrip, InteractionHand hand)
-    {
+    public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         applyBuff(player, EffectRegistry.CANTRIP_BUFF);
     }
 }

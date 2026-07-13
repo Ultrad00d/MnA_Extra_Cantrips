@@ -6,7 +6,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 
-public class EmpowerDamageBuffCantripLogic extends EmpowerCantripLogic
+public class EmpowerDamageBuffCantripLogic implements IEmpowerCantripLogic, ICantripLogic
 {
     @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand)
