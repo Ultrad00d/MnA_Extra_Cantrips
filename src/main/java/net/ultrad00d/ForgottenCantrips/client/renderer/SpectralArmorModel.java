@@ -20,7 +20,6 @@ public class SpectralArmorModel extends HumanoidModel<LivingEntity> {
         this.armorTexture = armorTexture;
     }
 
-    // Copy those animated body part rotations over to custom model
     @Override
     public void setupAnim(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         if (this.original != null) {
@@ -37,7 +36,6 @@ public class SpectralArmorModel extends HumanoidModel<LivingEntity> {
 
         float customAlpha = 0.6f;
 
-        // Render the inner/original parts through our forced translucent buffer
         if (this.original != null) {
             this.original.renderToBuffer(poseStack, translucentConsumer, packedLight, packedOverlay, red, green, blue, customAlpha);
         } else {

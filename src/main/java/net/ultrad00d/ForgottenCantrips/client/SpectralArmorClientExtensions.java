@@ -19,14 +19,9 @@ public class SpectralArmorClientExtensions implements IClientItemExtensions {
         ModelPart modelPart = Minecraft.getInstance().getEntityModels().bakeLayer(
                 armorSlot == EquipmentSlot.LEGS ? ModelLayers.PLAYER_INNER_ARMOR : ModelLayers.PLAYER_OUTER_ARMOR
         );
-
-        // 2. Determine if we need layer_1 or layer_2 texture
         String layerName = (armorSlot == EquipmentSlot.LEGS) ? "layer_2" : "layer_1";
-
-        // Replace "your_mod_id" with your actual mod ID and "your_armor_name" with your armor registration name
         ResourceLocation correctTexture = ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/models/armor/spectral_" + layerName + ".png");
 
-        // 3. Construct and return the translucent model with its correct texture
         return new SpectralArmorModel(modelPart, (HumanoidModel<LivingEntity>) original, correctTexture);
     }
 }

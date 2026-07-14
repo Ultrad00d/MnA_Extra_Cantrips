@@ -15,7 +15,6 @@ public class SpectralArmorItem extends ArmorItem {
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        // Point Forge to your custom Client Extensions configuration here!
         consumer.accept(new SpectralArmorClientExtensions());
     }
 }
