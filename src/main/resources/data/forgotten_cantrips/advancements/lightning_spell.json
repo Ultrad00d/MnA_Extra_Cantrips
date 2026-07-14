@@ -1,0 +1,26 @@
+{
+  "display": {
+    "title": {
+      "text": "Lightning Cantrip"
+    },
+    "description": {
+      "translate": "advancement.forgotten_cantrips.cantrip_1.description"
+    },
+    "icon": {
+      "item": "minecraft:lightning_rod"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "cast_lightning_cantrip": {
+      "trigger": "mna:cast_cantrip",
+      "conditions": {
+        "cantripID": "forgotten_cantrips:lightning"
+      }
+    }
+  },
+  "parent": "forgotten_cantrips:unknown_cantrip_1"
+}

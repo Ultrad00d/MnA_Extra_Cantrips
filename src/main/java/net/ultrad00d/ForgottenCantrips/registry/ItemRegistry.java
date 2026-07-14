@@ -1,4 +1,3 @@
-// ItemsRegistry.java
 package net.ultrad00d.ForgottenCantrips.registry;
 
 import net.minecraft.world.item.ArmorItem;
@@ -8,7 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
-import net.ultrad00d.ForgottenCantrips.item.MemoryEmeraldItem;
+import net.ultrad00d.ForgottenCantrips.item.*;
 
 import java.util.function.Supplier;
 
@@ -30,6 +29,13 @@ public class ItemRegistry {
 
     public static final RegistryObject<Item> SPECTRAL_BOOTS = registerItem("spectral_boots",
             () -> new ArmorItem(SpectralArmorMaterial.SPECTRAL_ARMOR, ArmorItem.Type.BOOTS, new Item.Properties()));
+
+    public static final RegistryObject<Item> SPECTRAL_SLIME_BALL = registerItem("spectral_slime_ball",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> ANCIENT_SCROLL = registerItem("ancient_scroll",
+            () -> new AncientScrollItem(new Item.Properties()));
+
 
     private static <T extends Item> RegistryObject<T> registerItem(String name, Supplier<T> item) {
         return ITEMS.register(name, item);

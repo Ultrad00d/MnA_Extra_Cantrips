@@ -34,7 +34,7 @@ import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
 
 import java.util.*;
 
-public class ColossusOakCantripLogic extends CantripLogic {
+public class ColossusOakCantripLogic implements ICantripLogic {
     private static final Set<Block> TARGET_BLOCKS = Set.of(
             Blocks.OAK_SAPLING, Blocks.BIRCH_SAPLING, Blocks.JUNGLE_SAPLING,
             Blocks.OAK_WOOD,    Blocks.BIRCH_WOOD,    Blocks.JUNGLE_WOOD,

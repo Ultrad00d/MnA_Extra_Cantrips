@@ -58,14 +58,14 @@ Each team member has contributed to very many different issues and PRs due to PB
 
 Screenshots:
 
-![Delivered MVP v1](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/doc-fixes/reports/week3/images/Delivered%20MVP%20v1.png)
+![Delivered MVP v1](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week3/images/Delivered%20MVP%20v1.png)
 
-![Example reviewed PR](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/doc-fixes/reports/week3/images/Example%20reviewed%20PR.png)
+![Example reviewed PR](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week3/images/Example%20reviewed%20PR.png)
 
-![Sprint 1/MVP v1 info](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/doc-fixes/reports/week3/images/MVP%20v1%20info.png)
+![Sprint 1/MVP v1 info](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week3/images/MVP%20v1%20info.png)
 
-![Github release](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/doc-fixes/reports/week3/images/Release.png)
+![Github release](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week3/images/Release.png)
 
-![Sprint backlog](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/doc-fixes/reports/week3/images/Sprint%20Backlog.png)
+![Sprint backlog](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week3/images/Sprint%20Backlog.png)
 
-![Sprint milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/doc-fixes/reports/week3/images/Sprint%20Milestone.png)
+![Sprint milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week3/images/Sprint%20Milestone.png)
