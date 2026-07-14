@@ -57,6 +57,7 @@ public class SpectralDonkey extends AbstractChestedHorse {
                 .build();
     }
 
+    @Override
     protected void randomizeAttributes(@NotNull RandomSource randomSource) {
         this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0F);
         this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.3F);
@@ -64,34 +65,43 @@ public class SpectralDonkey extends AbstractChestedHorse {
         this.getAttribute(ForgeMod.ENTITY_GRAVITY.get()).setBaseValue(0.05F);
     }
 
+    @Override
     public float getStepHeight() {
         return 1.75F;
     }
 
+    @Override
     protected boolean canParent() {
         return false;
     }
 
+    @Override
     public boolean shouldDropExperience() {
         return false;
     }
 
+    @Override
     public boolean canBreatheUnderwater() {
         return true;
     }
 
+    @Override
     public boolean canStandOnFluid(FluidState state) {
-        return state.is(Fluids.WATER) && this.getForward().y > (double)-0.2F && !this.isUnderWater();
+//        return state.is(Fluids.WATER) && this.getForward().y > (double)-0.2F && !this.isUnderWater();
+        return false;
     }
 
+    @Override
     protected float getWaterSlowDown() {
-        return 1.0F;
+        return 0.9F;
     }
 
+    @Override
     public boolean canHoldItem(ItemStack stack) {
         return false;
     }
 
+    @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (player == getOwner()) {
             if (!player.isSecondaryUseActive()) {
@@ -121,11 +131,9 @@ public class SpectralDonkey extends AbstractChestedHorse {
         });
     }
 
-    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
-        return false;
-    }
-    protected void playStepSound(BlockPos pos, BlockState state) {}
-    protected void playJumpSound() {}
+    @Override public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) { return false; }
+    @Override protected void playStepSound(BlockPos pos, BlockState state) {}
+    @Override protected void playJumpSound() {}
 
     public boolean isPersistent() { return isPersistent; }
     public void setPersistent(boolean persistent) { isPersistent = persistent; }
