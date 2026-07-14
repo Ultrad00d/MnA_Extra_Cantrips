@@ -8,6 +8,9 @@ import net.minecraftforge.registries.RegistryObject;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.effect.AetherStrideEffect;
 import net.ultrad00d.ForgottenCantrips.effect.BubbleUpEffect;
+import net.ultrad00d.ForgottenCantrips.effect.EmpowerCantripBuffEffect;
+import net.ultrad00d.ForgottenCantrips.effect.EmpowerDamageBuffEffect;
+import net.ultrad00d.ForgottenCantrips.effect.EmpowerManaCostBuffEffect;
 import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
 import net.ultrad00d.ForgottenCantrips.effect.SpectralArmorEffect;
 import net.ultrad00d.ForgottenCantrips.effect.UndyingEffect;
@@ -25,8 +28,18 @@ public class EffectRegistry {
     public static final RegistryObject<MobEffect> AETHER_STRIDE = MOB_EFFECTS.register("aether_stride",
             AetherStrideEffect::new);
 
+    public static final RegistryObject<MobEffect> MANA_COST_BUFF = MOB_EFFECTS.register("mana_cost_buff",
+            EmpowerManaCostBuffEffect::new);
+
+    public static final RegistryObject<MobEffect> DMG_BUFF = MOB_EFFECTS.register("dmg_buff",
+            EmpowerDamageBuffEffect::new);
+
+    public static final RegistryObject<MobEffect> CANTRIP_BUFF = MOB_EFFECTS.register("cantrip_buff",
+            EmpowerCantripBuffEffect::new);
+
     public static final RegistryObject<MobEffect> SPECTRAL_ARMOR = MOB_EFFECTS.register("spectral_armor",
             SpectralArmorEffect::new);
+
 
     public static final RegistryObject<MobEffect> BUBBLE_UP = MOB_EFFECTS.register("bubble_up",
             BubbleUpEffect::new);

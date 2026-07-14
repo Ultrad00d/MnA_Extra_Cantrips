@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
+import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryMenu;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryProvider;
 import org.jetbrains.annotations.Nullable;
@@ -93,7 +94,7 @@ public class SpectralBoat extends ChestBoat implements OwnableEntity {
         player.getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(cap -> {
             NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
                     (id, playerInv, p) -> new SharedInventoryMenu(id, playerInv, cap.getInventory()),
-                    Component.translatable("container.forgotten_cantrips.spectral_chest")
+                    Component.translatable("container." + ForgottenCantrips.MOD_ID + ".spectral_chest")
             ));
         });
     }
