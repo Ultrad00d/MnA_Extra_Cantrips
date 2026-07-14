@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Spectral Bed, Spectral Boat and Lightning cantrip icons were redesigned
 
+### Fixed
+
+- Spectral Armor protection scales with player tier now
+
 ## 0.4.0 - 2026-07-05
 
 ### Added
