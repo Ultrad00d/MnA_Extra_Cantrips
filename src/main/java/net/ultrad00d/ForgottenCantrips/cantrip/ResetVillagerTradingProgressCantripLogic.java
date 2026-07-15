@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -98,7 +99,7 @@ public class ResetVillagerTradingProgressCantripLogic implements ICantripLogic {
 
         giveItemOrDrop(player, newEmeraldStack);
         wipeVillagerMemory(villager, serverLevel);
-        playEffects(serverLevel, villager);
+        playEffects(serverLevel, villager, SoundEvents.BEACON_DEACTIVATE);
     }
 
     public static boolean applyMemories(ItemStack memoryEmeraldStack, Villager target, ServerLevel level) {
@@ -118,7 +119,7 @@ public class ResetVillagerTradingProgressCantripLogic implements ICantripLogic {
         }
 
         target.refreshBrain(level);
-        playEffects(level, target);
+        playEffects(level, target, SoundEvents.BEACON_ACTIVATE);
         return true;
     }
 
@@ -139,8 +140,8 @@ public class ResetVillagerTradingProgressCantripLogic implements ICantripLogic {
         }
     }
 
-    private static void playEffects(ServerLevel level, Villager target) {
-        target.playSound(SoundEvents.BEACON_ACTIVATE, 1.0F, 1.2F);
+    private static void playEffects(ServerLevel level, Villager target, SoundEvent sound) {
+        target.playSound(sound, 1.0F, 1.2F);
         for (int i = 0; i < 15; i++) {
             level.sendParticles(
                     ParticleTypes.CLOUD,
