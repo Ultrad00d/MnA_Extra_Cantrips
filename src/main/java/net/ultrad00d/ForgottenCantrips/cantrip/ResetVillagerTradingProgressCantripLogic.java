@@ -72,7 +72,7 @@ public class ResetVillagerTradingProgressCantripLogic implements ICantripLogic {
         if (usingMemoryEmerald) {
             if (applyMemories(activeEmeraldItem, villager, serverLevel)) {
                 activeEmeraldItem.shrink(1);
-                player.getInventory().add(new ItemStack(Items.EMERALD, 1));
+                giveItemOrDrop(player, new ItemStack(Items.EMERALD, 1));
             } else {
                 player.sendSystemMessage(Component.translatable(getLangKey("empty_warning")));
             }
