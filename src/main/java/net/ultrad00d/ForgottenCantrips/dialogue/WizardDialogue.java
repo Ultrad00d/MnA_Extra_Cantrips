@@ -1,7 +1,5 @@
 package net.ultrad00d.ForgottenCantrips.dialogue;
 
-import com.mna.api.capabilities.IPlayerProgression;
-import com.mna.capabilities.playerdata.progression.PlayerProgressionProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
@@ -14,7 +12,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Player;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.cantrip.CantripType;
-import net.ultrad00d.ForgottenCantrips.integration.Helper;
+import net.ultrad00d.ForgottenCantrips.util.ProgressionUtil;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +27,7 @@ public class WizardDialogue {
         int chatWidthPX = ChatComponent.getWidth(client.options.chatWidth().get());
         int textSpaceWidth = chatWidthPX - ICON_WIDTH - 6; // 4px = margin
 
-        // first 3 rows contain an NPC icon, so the translated string gets split across rows
+        // first 4 rows contain an NPC icon, so the translated string gets split across rows
         Component fullMessage = Component.translatable("dialogue." + ForgottenCantrips.MOD_ID + ".wizard." + messageKey);
         List<FormattedCharSequence> splitLines = client.font.split(fullMessage, textSpaceWidth);
 
@@ -116,7 +114,7 @@ public class WizardDialogue {
         return switch (choice) {
             case CONTINUE, BACK, BYE, CANTRIPS_MENU -> false;
             default -> {
-                int tier = Helper.getPlayerTier(player);
+                int tier = ProgressionUtil.getPlayerTier(player);
                 int requiredTier = CantripType.fromDialogueChoice(choice).getTier();
 
                 boolean alreadyLearned = cap.getBranchState(choice.getKey()) == WizardCantripBranchState.SPELL_LEARNED;
