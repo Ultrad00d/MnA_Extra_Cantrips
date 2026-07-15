@@ -29,12 +29,15 @@ import net.ultrad00d.ForgottenCantrips.screen.MusicDiscSlotProvider;
 
 public class ForceConsumeCantripLogic implements ICantripLogic {
     @Override
+    public String getCantripId() { return "force_consume"; }
+
+    @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         InteractionHand _other_hand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         ItemStack otherHand = player.getItemInHand(_other_hand);
 
         if (otherHand.isEmpty()) {
-            player.sendSystemMessage(Component.translatable("cantrip." + ForgottenCantrips.MOD_ID + ".force_consume.noitem"));
+            player.sendSystemMessage(Component.translatable(getLangKey("noitem")));
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.ANVIL_LAND, player.getSoundSource(), 1.0F, 1.0F);
             return;
@@ -43,7 +46,7 @@ public class ForceConsumeCantripLogic implements ICantripLogic {
         boolean effectApplied = applyEffect(player, otherHand);
 
         if (!effectApplied) {
-            player.sendSystemMessage(Component.translatable("cantrip." + ForgottenCantrips.MOD_ID + ".force_consume.baditem"));
+            player.sendSystemMessage(Component.translatable(getLangKey("baditem")));
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.ANVIL_LAND, player.getSoundSource(), 1.0F, 1.0F);
             return;
