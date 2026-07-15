@@ -14,6 +14,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Player;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.cantrip.CantripType;
+import net.ultrad00d.ForgottenCantrips.integration.Helper;
 
 import java.util.List;
 import java.util.UUID;
@@ -115,9 +116,7 @@ public class WizardDialogue {
         return switch (choice) {
             case CONTINUE, BACK, BYE, CANTRIPS_MENU -> false;
             default -> {
-                int tier = player.getCapability(PlayerProgressionProvider.PROGRESSION)
-                        .map(IPlayerProgression::getTier)
-                        .orElse(1);
+                int tier = Helper.getPlayerTier(player);
                 int requiredTier = CantripType.fromDialogueChoice(choice).getTier();
 
                 boolean alreadyLearned = cap.getBranchState(choice.getKey()) == WizardCantripBranchState.SPELL_LEARNED;

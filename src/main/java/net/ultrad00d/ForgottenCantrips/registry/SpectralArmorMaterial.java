@@ -8,14 +8,14 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 
 public enum SpectralArmorMaterial implements ArmorMaterial {
-    SPECTRAL_ARMOR("spectral", 26, new int[]{5, 7, 5, 4}, 0f, SoundEvents.ARMOR_EQUIP_CHAIN);
+    SPECTRAL_ARMOR("spectral", 26, new int[]{1, 4, 2, 1}, 0f, SoundEvents.ARMOR_EQUIP_CHAIN);
     private final String name;
     private final int durabilityMultiplier;
     private final int[] protectionAmounts;
     private final SoundEvent equipSound;
     private final float toughness;
 
-    private static final int[] BASE_DURABILITY = {11, 15, 16, 13};
+    private static final int[] BASE_DURABILITY = {1, 1, 1, 1};
 
     SpectralArmorMaterial(String name, int durabilityMultiplier, int[] protectionAmounts, float toughness, SoundEvent equipSound) {
         this.name = name;
