@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Spectral Donkey speed on water was fixed
 - Spectral Donkey transparency fix
+- Cantrip delay now works like in the base mod
 
 ## 0.4.0 - 2026-07-05
 
