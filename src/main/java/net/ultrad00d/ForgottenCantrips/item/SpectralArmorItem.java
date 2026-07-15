@@ -15,6 +15,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
 import java.util.UUID;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.ultrad00d.ForgottenCantrips.client.SpectralArmorClientExtensions;
+
+import java.util.function.Consumer;
 
 public class SpectralArmorItem extends ArmorItem {
     private static final UUID[] ARMOR_MODIFIER_UUID_PER_SLOT = new UUID[]{
@@ -41,12 +45,8 @@ public class SpectralArmorItem extends ArmorItem {
         return multimap;
     }
 
-    private Player getPlayerByUUID(UUID uuid) {
-        if (ServerLifecycleHooks.getCurrentServer() != null) {
-            return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(uuid);
-        }
-        return Minecraft.getInstance().level != null
-                ? Minecraft.getInstance().level.getPlayerByUUID(uuid)
-                : null;
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new SpectralArmorClientExtensions());
     }
 }
