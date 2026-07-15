@@ -23,7 +23,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.ultrad00d.ForgottenCantrips.registry.ItemRegistry;
 
-public class ResetVillagerTradingProgressCantripLogic extends CantripLogic {
+public class ResetVillagerTradingProgressCantripLogic implements ICantripLogic {
 
     @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {

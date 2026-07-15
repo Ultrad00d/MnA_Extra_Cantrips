@@ -23,7 +23,12 @@ public class BubbleUpEffect extends MobEffect {
     private static final Map<UUID, Float> MAGICAL_SPEED = new HashMap<>();
     private static final Map<UUID, Boolean> WAS_IN_WATER = new HashMap<>();
     private static final Map<UUID, Double> INITIAL_Y = new HashMap<>();
-    private static final Map<UUID, Boolean> PRESSED_SHIFT = new HashMap<>();
+    private static final Map<UUID, Boolean> HAS_SNEAKED = new HashMap<>();
+
+    private static final float INITIAL_SPEED = 2.0F;
+    private static final float MAX_SPEED = 18.0F;
+    private static final float SNEAK_DECELERATION = -4.0F;
+    private static final float JUMP_BOOST = 0.8F;
 
     public BubbleUpEffect() {
         super(MobEffectCategory.BENEFICIAL, 0x66CCFF);
@@ -62,11 +67,11 @@ public class BubbleUpEffect extends MobEffect {
 
         if (inWater) {
             if (!MAGICAL_SPEED.containsKey(id)) {
-                MAGICAL_SPEED.put(id, 2.0F);
+                MAGICAL_SPEED.put(id, INITIAL_SPEED);
                 INITIAL_Y.put(id, player.getY());
             }
 
-            float currentSpeed = MAGICAL_SPEED.getOrDefault(id, 2.0F);
+            float currentSpeed = MAGICAL_SPEED.getOrDefault(id, INITIAL_SPEED);
 
             double waterCeilingY = findWaterCeiling(player);
             if (waterCeilingY >= 0 && player.getY() >= waterCeilingY - 0.5) {
@@ -79,13 +84,13 @@ public class BubbleUpEffect extends MobEffect {
             }
 
             if (player.isShiftKeyDown()) {
-                PRESSED_SHIFT.put(id, true);
+                HAS_SNEAKED.put(id, true);
             }
 
-            boolean hasSneaked = PRESSED_SHIFT.getOrDefault(id, false);
+            boolean hasSneaked = HAS_SNEAKED.getOrDefault(id, false);
 
             if (hasSneaked) {
-                currentSpeed = Math.max(currentSpeed - 2.0F, 0);
+                currentSpeed = Math.max(currentSpeed + SNEAK_DECELERATION * 0.05F, 0);
                 if (currentSpeed <= 0) {
                     if (!level.isClientSide()) {
                         player.removeEffect(EffectRegistry.BUBBLE_UP.get());
@@ -94,7 +99,7 @@ public class BubbleUpEffect extends MobEffect {
                     return;
                 }
             } else {
-                currentSpeed = Math.min(currentSpeed + 0.15F, 18.0F);
+                currentSpeed = Math.min(currentSpeed + 0.15F, MAX_SPEED);
             }
 
             MAGICAL_SPEED.put(id, currentSpeed);
@@ -136,7 +141,7 @@ public class BubbleUpEffect extends MobEffect {
             if (WAS_IN_WATER.getOrDefault(id, false)) {
                 Vec3 movement = player.getDeltaMovement();
 
-                double jumpBoost = 0.8F;
+                double jumpBoost = JUMP_BOOST;
                 player.setDeltaMovement(movement.x, jumpBoost, movement.z);
 
                 if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
@@ -175,7 +180,7 @@ public class BubbleUpEffect extends MobEffect {
 
         for (int y = startY; y < startY + 256; y++) {
             if (y >= level.getMaxBuildHeight()) {
-                return level.getMaxBuildHeight();
+                return (double) level.getMaxBuildHeight();
             }
 
             BlockPos checkPos = new BlockPos(playerPos.getX(), y, playerPos.getZ());
@@ -193,7 +198,7 @@ public class BubbleUpEffect extends MobEffect {
 
             boolean belowIsWater = level.getBlockState(checkPos.below()).getBlock() instanceof LiquidBlock;
             if (belowIsWater) {
-                return checkPos.getY();
+                return (double) checkPos.getY();
             }
         }
 
@@ -204,6 +209,6 @@ public class BubbleUpEffect extends MobEffect {
         MAGICAL_SPEED.remove(id);
         WAS_IN_WATER.remove(id);
         INITIAL_Y.remove(id);
-        PRESSED_SHIFT.remove(id);
+        HAS_SNEAKED.remove(id);
     }
 }

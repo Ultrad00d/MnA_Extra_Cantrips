@@ -118,7 +118,7 @@ Planned items:
 [[Technical]: Spectral Donkey behavior](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/81)
 
 
-# Sprint #2:
+# Sprint #3:
 
 [Sprint milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/milestone/3)
 
@@ -162,3 +162,23 @@ Planned items:
 [[Design]: Spectral Armor effect texture #177](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/177)
 
 [[Bug]: Spectral Armor transparency #178](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/178)
+
+
+# Sprint #4:
+
+
+[Sprint milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/milestone/4)
+
+Start date:
+Monday, July 6th, 2026
+
+Finish date:
+Sunday, July 12th, 2026
+
+Goal: complete large parts of remaining unimplemented cantrips, as well as improve on some existing ones.
+
+Scope rationale: team decision. With this week's review, we plan to transition our product towards a stable demo during week 7 by finishing up on the remaining cantrips and implementing customer feedback.
+
+Expected outcome: project is prepared for transition.
+
+[Planned items](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues?q=is%3Aissue%20state%3Aopen%20milestone%3ASprint-Week6)

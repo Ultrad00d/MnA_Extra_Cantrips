@@ -11,18 +11,10 @@ import net.minecraftforge.common.ForgeMod;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBoat;
 import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 
-public class SpectralBoatCantripLogic extends CantripLogic {
+public class SpectralBoatCantripLogic implements ICantripLogic {
     @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
-        double range;
-        try
-        {
-            range = player.getAttributeValue(ForgeMod.BLOCK_REACH.get());
-        } 
-        catch (Throwable var14)
-        {
-            return;
-        }
+        double range = player.getAttributeValue(ForgeMod.BLOCK_REACH.get());
 
         Level level = player.level();
         Vec3 target = player.pick(range, 0.0F, true).getLocation();

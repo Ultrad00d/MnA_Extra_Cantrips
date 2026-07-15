@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 
-public class BubbleUpCantripLogic extends CantripLogic {
+public class BubbleUpCantripLogic implements ICantripLogic {
     @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         if (!player.isUnderWater()) {
