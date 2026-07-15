@@ -39,7 +39,7 @@
   "cantrip.forgotten_cantrips.bubble_up.bubble_column": "The cantrip does not work in the bubble columns",
   "cantrip.forgotten_cantrips.bubble_up": "Bubble Up",
   "cantrip.forgotten_cantrips.bubble_up.desc": "Rapidly floats you up out of the water like a dolphin. Can only be cast while submerged deeper than two blocks under water",
-  "cantrip.forgotten_cantrips.bubble_up.not_submerged": "pupupu: You should be in water to cast Bubble Up!",
+  "cantrip.forgotten_cantrips.bubble_up.not_submerged": "You should be in water to cast Bubble Up!",
 
 
   "command.forgotten_cantrips.music_disc.drop.empty": "No music disc stored",
