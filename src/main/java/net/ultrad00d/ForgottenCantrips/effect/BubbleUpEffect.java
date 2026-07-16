@@ -4,25 +4,24 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.phys.Vec3;
+import net.ultrad00d.ForgottenCantrips.integration.Helper;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
+import org.jetbrains.annotations.NotNull;
 
 public class BubbleUpEffect extends MobEffect {
     private static final Map<UUID, Float> MAGICAL_SPEED = new HashMap<>();
-    private static final Map<UUID, Boolean> WAS_IN_WATER = new HashMap<>();
-    private static final Map<UUID, Double> INITIAL_Y = new HashMap<>();
     private static final Map<UUID, Boolean> HAS_SNEAKED = new HashMap<>();
 
     private static final float INITIAL_SPEED = 2.0F;
@@ -40,175 +39,106 @@ public class BubbleUpEffect extends MobEffect {
     }
 
     @Override
-    public void applyEffectTick(LivingEntity entity, int amplifier) {
-        if (!(entity instanceof Player player)) {
+    public void applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
+        if (!(entity instanceof ServerPlayer player)) return;
+        if (!(player.level() instanceof ServerLevel serverLevel)) return;
+
+        // Get player UUID to store it into the map
+        UUID id = player.getUUID();
+        boolean inWater = player.isInWater();
+        boolean inBubbleColumn = Helper.isInBubbleColumn(player);
+
+        // If at any time in bubble column -> effect wears off
+        if (inBubbleColumn) {
+            player.removeEffect(EffectRegistry.BUBBLE_UP.get());
+            player.connection.send(new ClientboundSoundPacket(
+                    Holder.direct(SoundEvents.ZOMBIE_CONVERTED_TO_DROWNED), SoundSource.PLAYERS,
+                    player.getX(), player.getY(), player.getZ(),
+                    0.4F, 0.4F,
+                    serverLevel.getRandom().nextLong()
+            ));
+            cleanupPlayer(id);
             return;
         }
 
-        Level level = player.level();
-        UUID id = player.getUUID();
-        boolean inWater = player.isInWater();
-        boolean inBubbleColumn = isInBubbleColumn(player);
+        // If the player left the water
+        if (!inWater) {
+            Vec3 movement = player.getDeltaMovement();
 
-        if (inBubbleColumn && !level.isClientSide()) {
+            player.setDeltaMovement(movement.x, JUMP_BOOST, movement.z);
+            player.connection.send(new ClientboundSetEntityMotionPacket(player));
+
+            double x = player.getX();
+            double y = player.getY();
+            double z = player.getZ();
+
+            serverLevel.sendParticles(ParticleTypes.CLOUD, x, y, z, 5, 0.3, 0.3, 0.3, 0.05);
+
             player.removeEffect(EffectRegistry.BUBBLE_UP.get());
             cleanupPlayer(id);
             return;
         }
 
+        // If the container is closed and the player's speed is not increasing
         Vec3 delta = player.getDeltaMovement();
-        if (delta.y <= 0.01 && inWater && MAGICAL_SPEED.containsKey(id)) {
-            if (!level.isClientSide()) {
-                player.removeEffect(EffectRegistry.BUBBLE_UP.get());
-            }
+        if (delta.y <= 0.01 && MAGICAL_SPEED.containsKey(id)) {
+            player.removeEffect(EffectRegistry.BUBBLE_UP.get());
             cleanupPlayer(id);
             return;
         }
 
-        if (inWater) {
-            if (!MAGICAL_SPEED.containsKey(id)) {
-                MAGICAL_SPEED.put(id, INITIAL_SPEED);
-                INITIAL_Y.put(id, player.getY());
-            }
+        float currentSpeed = MAGICAL_SPEED.getOrDefault(id, INITIAL_SPEED);
 
-            float currentSpeed = MAGICAL_SPEED.getOrDefault(id, INITIAL_SPEED);
-
-            double waterCeilingY = findWaterCeiling(player);
-            if (waterCeilingY >= 0 && player.getY() >= waterCeilingY - 0.5) {
-                currentSpeed = 0;
-                if (!level.isClientSide()) {
-                    player.removeEffect(EffectRegistry.BUBBLE_UP.get());
-                }
+        // If during the effect player presses down Shift, then we decrease their ascend speed by SNEAK_DECELERATION
+        // Else we increase their current speed with acceleration = 3m/s
+        if (player.isShiftKeyDown()) HAS_SNEAKED.put(id, true);
+        boolean hasSneaked = HAS_SNEAKED.getOrDefault(id, false);
+        if (hasSneaked) {
+            currentSpeed = Math.max(currentSpeed + SNEAK_DECELERATION * 0.05F, 0);
+            if (currentSpeed <= 0) {
+                player.removeEffect(EffectRegistry.BUBBLE_UP.get());
                 cleanupPlayer(id);
                 return;
             }
-
-            if (player.isShiftKeyDown()) {
-                HAS_SNEAKED.put(id, true);
-            }
-
-            boolean hasSneaked = HAS_SNEAKED.getOrDefault(id, false);
-
-            if (hasSneaked) {
-                currentSpeed = Math.max(currentSpeed + SNEAK_DECELERATION * 0.05F, 0);
-                if (currentSpeed <= 0) {
-                    if (!level.isClientSide()) {
-                        player.removeEffect(EffectRegistry.BUBBLE_UP.get());
-                    }
-                    cleanupPlayer(id);
-                    return;
-                }
-            } else {
-                currentSpeed = Math.min(currentSpeed + 0.15F, MAX_SPEED);
-            }
-
-            MAGICAL_SPEED.put(id, currentSpeed);
-
-            Vec3 movement = player.getDeltaMovement();
-
-            double verticalBoost = currentSpeed * 0.05;
-
-            if (movement.y < 0) {
-                verticalBoost = Math.max(verticalBoost - Math.abs(movement.y), 0);
-            }
-
-            player.setDeltaMovement(movement.x, verticalBoost, movement.z);
-
-            if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
-                serverPlayer.hurtMarked = true;
-
-                if (level instanceof ServerLevel serverLevel) {
-                    double x = player.getX();
-                    double y = player.getY() + 0.5;
-                    double z = player.getZ();
-
-                    int particleCount = Math.max(2, (int) (currentSpeed / 2));
-                    float particleSpread = currentSpeed / 10;
-
-                    serverLevel.sendParticles(ParticleTypes.BUBBLE, x, y, z,
-                            particleCount, particleSpread * 0.4, particleSpread * 0.8, particleSpread * 0.4, 0.02);
-                    serverLevel.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, x, y - 0.3, z,
-                            particleCount / 2, particleSpread * 0.3, particleSpread * 0.6, particleSpread * 0.3, 0.05);
-                }
-
-                if (player.tickCount % 5 == 0) {
-                    level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                            SoundEvents.BUBBLE_COLUMN_BUBBLE_POP, player.getSoundSource(), 0.6F, 1.0F + 0.2F * level.random.nextFloat());
-                }
-            }
-        }
-        else {
-            if (WAS_IN_WATER.getOrDefault(id, false)) {
-                Vec3 movement = player.getDeltaMovement();
-
-                double jumpBoost = JUMP_BOOST;
-                player.setDeltaMovement(movement.x, jumpBoost, movement.z);
-
-                if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
-                    serverPlayer.hurtMarked = true;
-
-                    if (level instanceof ServerLevel serverLevel) {
-                        double x = player.getX();
-                        double y = player.getY();
-                        double z = player.getZ();
-
-                        serverLevel.sendParticles(ParticleTypes.CLOUD, x, y, z, 5, 0.3, 0.3, 0.3, 0.05);
-                    }
-                }
-            }
-
-            if (!level.isClientSide()) {
-                player.removeEffect(EffectRegistry.BUBBLE_UP.get());
-            }
-            cleanupPlayer(id);
-            return;
+        } else {
+            currentSpeed = Math.min(currentSpeed + 0.15F, MAX_SPEED);
         }
 
-        WAS_IN_WATER.put(id, inWater);
-    }
+        // save current speed to use it later
+        MAGICAL_SPEED.put(id, currentSpeed);
 
-    private boolean isInBubbleColumn(Player player) {
-        BlockPos pos = player.blockPosition();
-        return player.level().getBlockState(pos).is(Blocks.BUBBLE_COLUMN) ||
-                player.level().getBlockState(pos.above()).is(Blocks.BUBBLE_COLUMN);
-    }
+        // Apply speed to the player and send them a packet (since this is pure serverside)
+        Vec3 movement = player.getDeltaMovement();
+        double verticalBoost = currentSpeed * 0.05;
+        if (movement.y < 0) verticalBoost = Math.max(verticalBoost + movement.y, 0);
+        player.setDeltaMovement(movement.x, verticalBoost, movement.z);
+        player.connection.send(new ClientboundSetEntityMotionPacket(player));
 
-    private double findWaterCeiling(Player player) {
-        BlockPos playerPos = player.blockPosition();
-        Level level = player.level();
-        int startY = playerPos.getY();
 
-        for (int y = startY; y < startY + 256; y++) {
-            if (y >= level.getMaxBuildHeight()) {
-                return (double) level.getMaxBuildHeight();
-            }
+        double x = player.getX();
+        double y = player.getY() + 0.5;
+        double z = player.getZ();
+        int particleCount = Math.max(2, (int) (currentSpeed / 2));
+        float particleSpread = currentSpeed / 10;
 
-            BlockPos checkPos = new BlockPos(playerPos.getX(), y, playerPos.getZ());
+        serverLevel.sendParticles(ParticleTypes.BUBBLE, x, y, z,
+                particleCount, particleSpread * 0.4, particleSpread * 0.8, particleSpread * 0.4, 0.02);
+        serverLevel.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, x, y - 0.3, z,
+                particleCount / 2, particleSpread * 0.3, particleSpread * 0.6, particleSpread * 0.3, 0.05);
 
-            boolean isCurrentWater = level.getBlockState(checkPos).getBlock() instanceof LiquidBlock;
-            boolean isCurrentAir = level.getBlockState(checkPos).isAir();
 
-            if (isCurrentWater) {
-                continue;
-            }
-
-            if (isCurrentAir) {
-                return -1;
-            }
-
-            boolean belowIsWater = level.getBlockState(checkPos.below()).getBlock() instanceof LiquidBlock;
-            if (belowIsWater) {
-                return (double) checkPos.getY();
-            }
+        if (player.tickCount % 5 == 0) {
+            player.connection.send(new ClientboundSoundPacket(
+                    Holder.direct(SoundEvents.BUBBLE_COLUMN_BUBBLE_POP), SoundSource.PLAYERS,
+                    player.getX(), player.getY(), player.getZ(),
+                    0.6F, 1.0F + 0.2F * serverLevel.random.nextFloat(),
+                    serverLevel.getRandom().nextLong()
+            ));
         }
-
-        return -1;
     }
 
     private void cleanupPlayer(UUID id) {
         MAGICAL_SPEED.remove(id);
-        WAS_IN_WATER.remove(id);
-        INITIAL_Y.remove(id);
         HAS_SNEAKED.remove(id);
     }
 }

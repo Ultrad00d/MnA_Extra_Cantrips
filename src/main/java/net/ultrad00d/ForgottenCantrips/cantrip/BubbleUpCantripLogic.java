@@ -8,6 +8,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
+import net.ultrad00d.ForgottenCantrips.integration.Helper;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 
 public class BubbleUpCantripLogic implements ICantripLogic {
@@ -21,7 +22,7 @@ public class BubbleUpCantripLogic implements ICantripLogic {
             return;
         }
 
-        if (isInBubbleColumn(player)) {
+        if (Helper.isInBubbleColumn(player)) {
             player.sendSystemMessage(Component.translatable(getLangKey("bubble_column")));
             return;
         }
@@ -46,10 +47,5 @@ public class BubbleUpCantripLogic implements ICantripLogic {
 
         return player.level().getBlockState(pos.above(2)).getBlock() == Blocks.WATER &&
                 player.level().getBlockState(pos.above(3)).getBlock() == Blocks.WATER;
-    }
-
-    private boolean isInBubbleColumn(Player player) {
-        BlockPos pos = player.blockPosition();
-        return player.level().getBlockState(pos).getBlock() == Blocks.BUBBLE_COLUMN;
     }
 }
