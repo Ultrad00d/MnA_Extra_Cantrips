@@ -94,7 +94,7 @@ public enum CantripType {
             null,
             RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
     ),
-    BUBBLE_UP("bubble_up",
+    BUBBLE_UP(
             1,
             new BubbleUpCantripLogic(),
             true,

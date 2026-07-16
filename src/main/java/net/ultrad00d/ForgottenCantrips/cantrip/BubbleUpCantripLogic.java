@@ -12,6 +12,9 @@ import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 
 public class BubbleUpCantripLogic implements ICantripLogic {
     @Override
+    public String getCantripId() { return "bubble_up"; }
+
+    @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         if (!player.isUnderWater()) {
             player.sendSystemMessage(
