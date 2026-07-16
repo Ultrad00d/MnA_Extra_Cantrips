@@ -67,18 +67,20 @@ public class ForgottenCantrips {
     public static final String MOD_ID = "forgotten_cantrips"; // lowercase, no spaces, numbers, _ and -
     public static final Logger LOGGER = LogUtils.getLogger();
 
+    @SuppressWarnings("removal")
     public ForgottenCantrips() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, IlluminationConfig.SPEC);
 
+        BlockEntityRegistry.register(modEventBus);
+        BlockRegistry.register(modEventBus);
+        EffectRegistry.register(modEventBus);
         EntityRegistry.register(modEventBus);
         ItemRegistry.register(modEventBus);
-        BlockRegistry.register(modEventBus);
-        BlockEntityRegistry.register(modEventBus);
-        EffectRegistry.register(modEventBus);
-        PotionRegistry.register(modEventBus);
         MenuRegistry.register(modEventBus);
+        PotionRegistry.register(modEventBus);
+        StructureProcessorRegistry.register(modEventBus);
 
         GeckoLib.initialize();
 
@@ -226,9 +228,8 @@ public class ForgottenCantrips {
 
         // If valid, apply data and advance state safely
         if (session != null) {
-            player.getCapability(WizardDialogueProvider.WIZARD_DIALOGUE_CAP).ifPresent(cap -> {
-                WizardDialogue.advanceDialogueFrom(session.choice(), session.fromKey(), player, cap);
-            });
+            player.getCapability(WizardDialogueProvider.WIZARD_DIALOGUE_CAP).ifPresent(cap ->
+                    WizardDialogue.advanceDialogueFrom(session.choice(), session.fromKey(), player, cap));
         }
         return 1;
     }
