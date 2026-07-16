@@ -17,77 +17,77 @@ public enum CantripType {
     // [5] mna:manaweave_patterns/infinity                     [2] mna:manaweave_patterns/knot4
     // [3] mna:manaweave_patterns/inverted_triangle
 
-    LIGHTNING("lightning",
+    LIGHTNING(
             3,
             new LightningCantripLogic(),
             false,
             "uc1/part_3",
             RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
     ),
-    SPECTRAL_BED("spectral_bed",
+    SPECTRAL_BED(
             3,
             new SpectralBedCantripLogic(),
             false,
             "uc1/part_3",
             RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
     ),
-    SPECTRAL_BOAT("spectral_boat",
+    SPECTRAL_BOAT(
             3,
             new SpectralBoatCantripLogic(),
             false,
             "uc1/part_3",
             RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
     ),
-    SPECTRAL_DONKEY("spectral_donkey",
+    SPECTRAL_DONKEY(
             3,
             new SpectralDonkeyCantripLogic(),
             false,
             "uc1/part_3",
             RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
     ),
-    FORCE_CONSUME("force_consume",
+    FORCE_CONSUME(
             3,
             new ForceConsumeCantripLogic(),
             false,
             "uc1/part_3",
             RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
     ),
-    SPECTRAL_ARMOR("spectral_armor",
+    SPECTRAL_ARMOR(
             1,
             new SpectralArmorCantripLogic(),
             true,
             null,
             RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
     ),
-    RESET_VILLAGER("reset_villager",
+    RESET_VILLAGER(
             1,
             new ResetVillagerTradingProgressCantripLogic(),
             false,
             null,
             RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
     ),
-    EMPOWER_DAMAGE_BUFF("dmg_buff",
+    EMPOWER_DAMAGE_BUFF(
             2,
             new EmpowerDamageBuffCantripLogic(),
             true,
             null,
             RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
     ),
-    EMPOWER_MANA_BUFF("mana_cost_buff",
+    EMPOWER_MANA_BUFF(
             2,
             new EmpowerManaCostBuffCantripLogic(),
             true,
             null,
             RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
     ),
-    EMPOWER_CANTRIP_BUFF("cantrip_buff",
+    EMPOWER_CANTRIP_BUFF(
             2,
             new EmpowerCantripBuffCantripLogic(),
             true,
             null,
             RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
     ),
-    SPECTRAL_SLIME("spectral_slime",
+    SPECTRAL_SLIME(
             1,
             new SpectralSlimeCantripLogic(),
             false,
@@ -109,8 +109,8 @@ public enum CantripType {
     @Nullable  private final String advancementPath;
     private final ResourceLocation[] shapes;
 
-    CantripType(String id, int tier, ICantripLogic logic, boolean instant, @Nullable String advancementPath, ResourceLocation... shapes) {
-        this.id = id;
+    CantripType(int tier, ICantripLogic logic, boolean instant, @Nullable String advancementPath, ResourceLocation... shapes) {
+        this.id = logic.getCantripId();
         this.tier = tier;
         this.logic = logic;
         this.instant = instant;

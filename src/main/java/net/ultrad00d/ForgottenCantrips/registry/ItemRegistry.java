@@ -19,16 +19,16 @@ public class ItemRegistry {
             MemoryEmeraldItem::new);
 
     public static final RegistryObject<Item> SPECTRAL_HELMET = registerItem("spectral_helmet",
-            () -> new ArmorItem(SpectralArmorMaterial.SPECTRAL_ARMOR, ArmorItem.Type.HELMET, new Item.Properties()));
+            () -> new SpectralArmorItem(SpectralArmorMaterial.SPECTRAL_ARMOR, ArmorItem.Type.HELMET, new Item.Properties()));
 
     public static final RegistryObject<Item> SPECTRAL_CHESTPLATE = registerItem("spectral_chestplate",
-            () -> new ArmorItem(SpectralArmorMaterial.SPECTRAL_ARMOR, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+            () -> new SpectralArmorItem(SpectralArmorMaterial.SPECTRAL_ARMOR, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
 
     public static final RegistryObject<Item> SPECTRAL_LEGGINGS = registerItem("spectral_leggings",
-            () -> new ArmorItem(SpectralArmorMaterial.SPECTRAL_ARMOR, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+            () -> new SpectralArmorItem(SpectralArmorMaterial.SPECTRAL_ARMOR, ArmorItem.Type.LEGGINGS, new Item.Properties()));
 
     public static final RegistryObject<Item> SPECTRAL_BOOTS = registerItem("spectral_boots",
-            () -> new ArmorItem(SpectralArmorMaterial.SPECTRAL_ARMOR, ArmorItem.Type.BOOTS, new Item.Properties()));
+            () -> new SpectralArmorItem(SpectralArmorMaterial.SPECTRAL_ARMOR, ArmorItem.Type.BOOTS, new Item.Properties()));
 
     public static final RegistryObject<Item> SPECTRAL_SLIME_BALL = registerItem("spectral_slime_ball",
             () -> new Item(new Item.Properties()));

@@ -1,8 +1,11 @@
 package net.ultrad00d.ForgottenCantrips.event;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
@@ -13,8 +16,12 @@ import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
+import net.ultrad00d.ForgottenCantrips.integration.Helper;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.ItemRegistry;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = ForgottenCantrips.MOD_ID)
 public class SpectralArmorEventHandler {
@@ -32,7 +39,7 @@ public class SpectralArmorEventHandler {
                 || item == ItemRegistry.SPECTRAL_BOOTS.get();
     }
 
-    private static ItemStack createSpectralStack(EquipmentSlot slot) {
+    private static ItemStack createSpectralStack(EquipmentSlot slot, int tier) {
         ItemStack stack = switch (slot) {
             case HEAD -> new ItemStack(ItemRegistry.SPECTRAL_HELMET.get());
             case CHEST -> new ItemStack(ItemRegistry.SPECTRAL_CHESTPLATE.get());
@@ -40,7 +47,9 @@ public class SpectralArmorEventHandler {
             case FEET -> new ItemStack(ItemRegistry.SPECTRAL_BOOTS.get());
             default -> throw new IllegalArgumentException("Not armor slot " + slot);
         };
-        stack.getOrCreateTag().putBoolean("Unbreakable", true);
+        CompoundTag tag = stack.getOrCreateTag();
+        tag.putBoolean("Unbreakable", true);
+        tag.putInt("SpectralTier", tier);
 
         return stack;
     }
@@ -50,9 +59,10 @@ public class SpectralArmorEventHandler {
         if (event.getEffectInstance().getEffect() != EffectRegistry.SPECTRAL_ARMOR.get()) return;
         if (!(event.getEntity() instanceof Player player)) return;
 
+        int tier = Helper.getPlayerTier(player);
         for (EquipmentSlot slot : ARMOR_SLOTS) {
             if (player.getItemBySlot(slot).isEmpty()) {
-                player.setItemSlot(slot, createSpectralStack(slot));
+                player.setItemSlot(slot, createSpectralStack(slot, tier));
             }
         }
     }
