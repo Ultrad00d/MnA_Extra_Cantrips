@@ -17,20 +17,17 @@ public class BubbleUpCantripLogic implements ICantripLogic {
     @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         if (!player.isUnderWater()) {
-            player.sendSystemMessage(
-                    Component.translatable("cantrip.forgotten_cantrips.bubble_up.not_submerged"));
+            player.sendSystemMessage(Component.translatable(getLangKey("not_submerged")));
             return;
         }
 
         if (isInBubbleColumn(player)) {
-            player.sendSystemMessage(
-                    Component.translatable("cantrip.forgotten_cantrips.bubble_up.bubble_column"));
+            player.sendSystemMessage(Component.translatable(getLangKey("bubble_column")));
             return;
         }
 
         if (!hasEnoughWaterDepth(player)) {
-            player.sendSystemMessage(
-                    Component.translatable("cantrip.forgotten_cantrips.bubble_up.shallow_water"));
+            player.sendSystemMessage(Component.translatable(getLangKey("shallow_water")));
             return;
         }
 
