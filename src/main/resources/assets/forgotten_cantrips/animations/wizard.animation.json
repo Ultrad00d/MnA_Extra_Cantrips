@@ -1,11 +1,18 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.old_wizard.idle": {
-			"loop": true,
-			"animation_length": 2,
+		"animation.old_wizard.still": {
+			"animation_length": 4,
 			"bones": {
 				"book": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 6, 1]
+						}
+					},
 					"scale": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -14,8 +21,27 @@
 				}
 			}
 		},
-		"animation.old_wizard.idle1": {
-			"loop": true,
+        "animation.old_wizard.idle1": {
+              "animation_length": 4,
+              "bones": {
+                  "book": {
+                      "rotation": {
+                          "vector": [0, 0, 0]
+                      },
+                      "position": {
+                          "0.0": {
+                              "vector": [0, 6, 1]
+                          }
+                      },
+                      "scale": {
+                          "0.0": {
+                              "vector": [0, 0, 0]
+                          }
+                      }
+                  }
+            }
+        },
+		"animation.old_wizard.idle2": {
 			"animation_length": 9,
 			"bones": {
 				"body": {
@@ -91,9 +117,7 @@
 							"lerp_mode": "catmullrom"
 						},
 						"7.0833": {
-							"vector": [0, 0, 0],
-							"easing": "easeInBack",
-							"easingArgs": [100]
+							"vector": [0, 0, 0]
 						},
 						"9.0": {
 							"vector": [0, 0, 0]
@@ -187,6 +211,14 @@
 					}
 				},
 				"book": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 6, 1]
+						}
+					},
 					"scale": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -195,8 +227,7 @@
 				}
 			}
 		},
-		"animation.old_wizard.idle2": {
-			"loop": true,
+		"animation.old_wizard.idle3": {
 			"animation_length": 1.9583,
 			"override_previous_animation": true,
 			"bones": {
@@ -683,6 +714,14 @@
 					}
 				},
 				"book": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 6, 1]
+						}
+					},
 					"scale": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -1290,6 +1329,14 @@
 					}
 				},
 				"book": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 6, 1]
+						}
+					},
 					"scale": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -1593,6 +1640,14 @@
 					}
 				},
 				"book": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 6, 1]
+						}
+					},
 					"scale": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -1775,6 +1830,14 @@
 					}
 				},
 				"book": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 6, 1]
+						}
+					},
 					"scale": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -1907,6 +1970,14 @@
 					}
 				},
 				"book": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 6, 1]
+						}
+					},
 					"scale": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -1916,7 +1987,6 @@
 			}
 		},
 		"animation.old_wizard.shaking": {
-			"loop": true,
 			"animation_length": 3,
 			"bones": {
 				"head": {
@@ -1974,6 +2044,14 @@
 					}
 				},
 				"book": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 6, 1]
+						}
+					},
 					"scale": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -2294,6 +2372,14 @@
 					}
 				},
 				"book": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 6, 1]
+						}
+					},
 					"scale": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -2602,6 +2688,14 @@
 					}
 				},
 				"book": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 6, 1]
+						}
+					},
 					"scale": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -2611,7 +2705,6 @@
 			}
 		},
 		"animation.old_wizard.book": {
-			"loop": "hold_on_last_frame",
 			"animation_length": 0.625,
 			"bones": {
 				"book": {
@@ -2896,8 +2989,7 @@
 				}
 			}
 		},
-		"animation.old_wizard.idle3": {
-			"loop": true,
+		"animation.old_wizard.idle4": {
 			"animation_length": 1.8333,
 			"bones": {
 				"arm_right": {
@@ -3159,6 +3251,14 @@
 					}
 				},
 				"book": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 6, 1]
+						}
+					},
 					"scale": {
 						"0.0": {
 							"vector": [0, 0, 0]
