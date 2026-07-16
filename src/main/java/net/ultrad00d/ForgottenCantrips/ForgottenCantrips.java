@@ -32,7 +32,6 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -108,10 +107,10 @@ public class ForgottenCantrips {
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
-
-    }
+//    @SubscribeEvent
+//    public void onServerStarting(ServerStartingEvent event) {
+//
+//    }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -158,6 +157,7 @@ public class ForgottenCantrips {
         IlluminationEffect.onPlayerLogout(event);
     }
 
+    public static int DEBUG_DAY_OVERRIDE = -1;
     @SubscribeEvent
     public void onRegisterCommands(RegisterCommandsEvent event) {
         var dispatcher = event.getDispatcher();
@@ -193,6 +193,27 @@ public class ForgottenCantrips {
                         .requires(source -> source.hasPermission(0)) // Available to everyone
                         .then(Commands.argument("token", StringArgumentType.string())
                                 .executes(this::handleDialogueCommand)
+                        )
+        );
+
+        dispatcher.register(
+                Commands.literal("wiz")
+                        .then(Commands.literal("setDay")
+                                .then(Commands.argument("day", IntegerArgumentType.integer(0))
+                                        .executes(context -> {
+                                            int day = IntegerArgumentType.getInteger(context, "day");
+                                            DEBUG_DAY_OVERRIDE = day;
+                                            context.getSource().sendSuccess(() -> Component.literal("Forced current day to: " + day), true);
+                                            return 1;
+                                        })
+                                )
+                        )
+                        .then(Commands.literal("resetDay")
+                                .executes(context -> {
+                                    DEBUG_DAY_OVERRIDE = -1;
+                                    context.getSource().sendSuccess(() -> Component.literal("Returned to standard game time tracking."), true);
+                                    return 1;
+                                })
                         )
         );
     }
