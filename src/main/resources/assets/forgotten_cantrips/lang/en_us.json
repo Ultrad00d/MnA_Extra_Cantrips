@@ -47,6 +47,12 @@
   "cantrip.forgotten_cantrips.spectral_slime": "Spectral Slime",
   "cantrip.forgotten_cantrips.spectral_slime.desc": "Summons a small friendly spectral slime. It follows you from a distance and fights hostile creatures.",
 
+  "cantrip.forgotten_cantrips.bubble_up.shallow_water": "You should be at least two blocks under the water",
+  "cantrip.forgotten_cantrips.bubble_up.bubble_column": "The cantrip does not work in the bubble columns",
+  "cantrip.forgotten_cantrips.bubble_up": "Bubble Up",
+  "cantrip.forgotten_cantrips.bubble_up.desc": "Rapidly floats you up out of the water like a dolphin. Can only be cast while submerged deeper than two blocks under water",
+  "cantrip.forgotten_cantrips.bubble_up.not_submerged": "You should be in water to cast Bubble Up!",
+
   "command.forgotten_cantrips.music_disc.drop.empty": "No music disc stored",
   "command.forgotten_cantrips.music_disc.drop.success": "Music disc dropped",
 
@@ -83,6 +89,7 @@
   "effect.forgotten_cantrips.dmg_buff": "Damage Buff",
   "effect.forgotten_cantrips.mana_cost_buff": "Mana Cost Buff",
   "effect.forgotten_cantrips.cantrip_buff": "Cantrip Buff",
+  "effect.forgotten_cantrips.bubble_up": "Bubble Up",
 
   "entity.forgotten_cantrips.spectral_boat": "Spectral Boat",
   "entity.forgotten_cantrips.spectral_donkey": "Spectral Donkey",
