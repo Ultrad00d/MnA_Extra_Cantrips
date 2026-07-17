@@ -10,7 +10,7 @@ import net.ultrad00d.ForgottenCantrips.entity.SpectralSlime;
 import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 
 @Mod.EventBusSubscriber(modid = ForgottenCantrips.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class EventBusEvents {
+public class AttributeRegisterEvents {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(EntityRegistry.SPECTRAL_DONKEY.get(), SpectralDonkey.createAttributes());

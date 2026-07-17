@@ -106,12 +106,6 @@ public class ForgottenCantrips {
         }
     }
 
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
-//    @SubscribeEvent
-//    public void onServerStarting(ServerStartingEvent event) {
-//
-//    }
-
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
@@ -195,7 +189,7 @@ public class ForgottenCantrips {
                                 .executes(this::handleDialogueCommand)
                         )
         );
-
+        // Todo: remove before release or make it safer
         dispatcher.register(
                 Commands.literal("wiz")
                         .then(Commands.literal("setDay")
