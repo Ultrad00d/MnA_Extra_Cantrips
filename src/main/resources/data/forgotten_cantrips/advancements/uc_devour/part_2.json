@@ -1,13 +1,13 @@
 {
   "display": {
     "title": {
-      "text": "Unknown Cantrip: Third symbol"
+      "text": "Unknown Cantrip: Second symbol"
     },
     "description": {
-      "translate": "advancement.forgotten_cantrips.unknown_cantrip_1.part_3"
+      "translate": "advancement.forgotten_cantrips.uc_devour.part_2"
     },
     "icon": {
-      "item": "minecraft:lightning_rod"
+      "item": "minecraft:iron_ingot"
     },
     "frame": "task",
     "show_toast": true,
@@ -19,5 +19,5 @@
       "trigger": "minecraft:impossible"
     }
   },
-  "parent": "forgotten_cantrips:uc1/part_2"
+  "parent": "forgotten_cantrips:uc_devour/part_1"
 }

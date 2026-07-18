@@ -1,10 +1,10 @@
 {
   "display": {
     "title": {
-      "text": "Unknown Cantrip: Third symbol"
+      "text": "Unknown Cantrip: Second symbol"
     },
     "description": {
-      "translate": "advancement.forgotten_cantrips.unknown_cantrip_2.part_3"
+      "translate": "advancement.forgotten_cantrips.uc_spectral_bed.part_2"
     },
     "icon": {
       "item": "minecraft:red_bed"
@@ -19,5 +19,5 @@
       "trigger": "minecraft:impossible"
     }
   },
-  "parent": "forgotten_cantrips:uc2/part_2"
+  "parent": "forgotten_cantrips:uc_spectral_bed/part_1"
 }

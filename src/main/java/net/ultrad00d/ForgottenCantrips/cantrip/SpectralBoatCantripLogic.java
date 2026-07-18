@@ -13,6 +13,9 @@ import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 
 public class SpectralBoatCantripLogic implements ICantripLogic {
     @Override
+    public String getCantripId() { return "spectral_boat"; }
+
+    @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         double range = player.getAttributeValue(ForgeMod.BLOCK_REACH.get());
 

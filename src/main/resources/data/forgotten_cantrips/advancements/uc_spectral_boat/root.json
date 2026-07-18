@@ -1,18 +1,18 @@
 {
   "display": {
     "title": {
-      "translate": "advancement.forgotten_cantrips.unknown_cantrip_1.name"
+      "text": "Unknown Cantrip"
     },
     "description": {
-      "translate": "advancement.forgotten_cantrips.unknown_cantrip_1.description"
+      "translate": "advancement.forgotten_cantrips.uc_spectral_boat.where_to_find"
     },
     "icon": {
-      "item": "minecraft:lightning_rod"
+      "item": "minecraft:oak_boat"
     },
-    "frame": "challenge",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": true
+    "frame": "goal",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
   },
   "criteria": {
     "advancement_1": {
@@ -22,7 +22,7 @@
           "type_specific": {
             "type": "player",
             "advancements": {
-              "forgotten_cantrips:uc1/part_1": true
+              "forgotten_cantrips:uc_spectral_boat/part_1": true
             }
           }
         }
@@ -35,7 +35,7 @@
           "type_specific": {
             "type": "player",
             "advancements": {
-              "forgotten_cantrips:uc1/part_2": true
+              "forgotten_cantrips:uc_spectral_boat/part_2": true
             }
           }
         }
@@ -48,7 +48,7 @@
           "type_specific": {
             "type": "player",
             "advancements": {
-              "forgotten_cantrips:uc1/part_3": true
+              "forgotten_cantrips:uc_spectral_boat/part_3": true
             }
           }
         }
@@ -57,9 +57,9 @@
     "cantrip_cast": {
       "trigger": "mna:cast_cantrip",
       "conditions": {
-        "cantripID": "forgotten_cantrips:lightning"
+        "cantripID": "forgotten_cantrips:spectral_boat"
       }
     }
   },
-  "parent": "forgotten_cantrips:uc1/part_3"
+  "parent": "forgotten_cantrips:root"
 }

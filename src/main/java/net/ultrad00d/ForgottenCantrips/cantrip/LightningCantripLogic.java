@@ -17,6 +17,9 @@ import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 
 public class LightningCantripLogic implements ICantripLogic {
     @Override
+    public String getCantripId() { return "lightning"; }
+
+    @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         double range;
         try {
@@ -27,7 +30,7 @@ public class LightningCantripLogic implements ICantripLogic {
         Vec3 target = player.pick(range, 0.0F, true).getLocation();
         Level level = player.level();
         if (!level.canSeeSky(new BlockPos((int) target.x, (int) target.y, (int) target.z))) {
-            player.sendSystemMessage(Component.translatable("cantrip." + ForgottenCantrips.MOD_ID + ".lightning.obstructed"));
+            player.sendSystemMessage(Component.translatable(getLangKey("obstructed")));
             return;
         }
 

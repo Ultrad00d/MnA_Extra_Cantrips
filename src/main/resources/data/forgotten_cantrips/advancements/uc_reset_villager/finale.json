@@ -1,18 +1,18 @@
 {
   "display": {
     "title": {
-      "text": "Unknown Cantrip"
+      "translate": "advancement.forgotten_cantrips.uc_reset_villager.name"
     },
     "description": {
-      "translate": "advancement.forgotten_cantrips.unknown_cantrip_3.where_to_find"
+      "translate": "advancement.forgotten_cantrips.uc_reset_villager.description"
     },
     "icon": {
-      "item": "minecraft:oak_boat"
+      "item": "forgotten_cantrips:memory_emerald"
     },
-    "frame": "goal",
-    "show_toast": false,
-    "announce_to_chat": false,
-    "hidden": false
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
   },
   "criteria": {
     "advancement_1": {
@@ -22,7 +22,7 @@
           "type_specific": {
             "type": "player",
             "advancements": {
-              "forgotten_cantrips:uc3/part_1": true
+              "forgotten_cantrips:uc_reset_villager/part_1": true
             }
           }
         }
@@ -35,7 +35,7 @@
           "type_specific": {
             "type": "player",
             "advancements": {
-              "forgotten_cantrips:uc3/part_2": true
+              "forgotten_cantrips:uc_reset_villager/part_2": true
             }
           }
         }
@@ -48,7 +48,7 @@
           "type_specific": {
             "type": "player",
             "advancements": {
-              "forgotten_cantrips:uc3/part_3": true
+              "forgotten_cantrips:uc_reset_villager/part_3": true
             }
           }
         }
@@ -57,9 +57,9 @@
     "cantrip_cast": {
       "trigger": "mna:cast_cantrip",
       "conditions": {
-        "cantripID": "forgotten_cantrips:spectral_boat"
+        "cantripID": "forgotten_cantrips:reset_villager"
       }
     }
   },
-  "parent": "forgotten_cantrips:root"
+  "parent": "forgotten_cantrips:uc_reset_villager/part_3"
 }

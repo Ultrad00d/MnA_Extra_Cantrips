@@ -78,6 +78,7 @@ public class ForgottenCantrips {
         EntityRegistry.register(modEventBus);
         ItemRegistry.register(modEventBus);
         MenuRegistry.register(modEventBus);
+        LootModifierRegistry.register(modEventBus);
         PotionRegistry.register(modEventBus);
         StructureProcessorRegistry.register(modEventBus);
 
