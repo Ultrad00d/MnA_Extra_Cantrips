@@ -3,7 +3,7 @@
   "type": "minecraft:jigsaw",
 
   // the path to the template pool json file to use
-  "start_pool": "forgotten_cantrips:old_wizard_house/start_pool",
+  "start_pool": "forgotten_cantrips:old_wizard/house/start_pool",
 
   // This is how many pieces away from the starting piece a piece of the structure can spawn
   // Think of it like the length of the branch of the structure

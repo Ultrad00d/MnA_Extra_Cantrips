@@ -16,7 +16,7 @@ public class StructureUtil {
         if (level instanceof ServerLevel serverLevel) {
             ResourceKey<Structure> oldWizardHouseStructureKey = ResourceKey.create(
                     Registries.STRUCTURE,
-                    ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "old_wizard_house")
+                    ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "old_wizard/house") // TODO: make garden also protected
             );
 
             Structure structure = serverLevel.registryAccess()

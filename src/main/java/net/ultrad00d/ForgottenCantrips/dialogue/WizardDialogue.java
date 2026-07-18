@@ -17,7 +17,7 @@ import net.ultrad00d.ForgottenCantrips.util.ProgressionUtil;
 import java.util.List;
 import java.util.UUID;
 
-public class WizardDialogue {
+public class WizardDialogue { // todo: make dialogue text color slightly purple
     public static final String[] ICON_ROWS = {"\uE000", "\uE001", "\uE002", "\uE003"};
     public static final int ICON_WIDTH = 36; //px
     public static final int ICON_WIDTH_IN_SPACES = ICON_WIDTH * 2 / 7; //px

@@ -170,6 +170,11 @@ dependencies {
 
     // Lucent (Optional Dependency)
     compileOnly fg.deobf("blank:lucent-1.20.1:1.5.5")
+
+    runtimeOnly fg.deobf("maven.modrinth:sk9rgfiA:UTbfe5d1")
+    runtimeOnly fg.deobf("maven.modrinth:nmDcB62a:dFQ9fgvb")
+    runtimeOnly fg.deobf("maven.modrinth:uXXizFIs:DG5Fn9Sz")
+    runtimeOnly fg.deobf("maven.modrinth:yE4MbG65:h9trYS7V")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

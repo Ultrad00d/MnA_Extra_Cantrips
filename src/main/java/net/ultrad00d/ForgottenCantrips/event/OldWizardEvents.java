@@ -33,10 +33,7 @@ public class OldWizardEvents {
                         OldWizard entity = EntityRegistry.OLD_WIZARD.get().create(serverLevel);
                         if (entity != null) {
                             entity.load(nbt);
-                            entity.removeFishingSign();
-
                             serverLevel.addFreshEntity(entity);
-
                             entity.setCurrentAction(OldWizard.Action.RETURNING_HOME);
                         }
                     }
