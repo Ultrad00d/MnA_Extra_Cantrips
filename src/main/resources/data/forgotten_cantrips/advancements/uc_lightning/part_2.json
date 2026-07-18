@@ -1,13 +1,13 @@
 {
   "display": {
     "title": {
-      "text": "Unknown Cantrip: First symbol"
+      "text": "Unknown Cantrip: Second symbol"
     },
     "description": {
-      "translate": "advancement.forgotten_cantrips.unknown_cantrip_3.part_1"
+      "translate": "advancement.forgotten_cantrips.uc_lightning.part_2"
     },
     "icon": {
-      "item": "minecraft:oak_boat"
+      "item": "minecraft:lightning_rod"
     },
     "frame": "task",
     "show_toast": true,
@@ -19,5 +19,5 @@
       "trigger": "minecraft:impossible"
     }
   },
-  "parent": "forgotten_cantrips:uc3/root"
+  "parent": "forgotten_cantrips:uc_lightning/part_1"
 }

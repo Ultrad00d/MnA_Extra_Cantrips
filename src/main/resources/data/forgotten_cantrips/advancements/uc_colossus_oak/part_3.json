@@ -1,13 +1,13 @@
 {
   "display": {
     "title": {
-      "text": "Unknown Cantrip: Second symbol"
+      "text": "Unknown Cantrip: Third symbol"
     },
     "description": {
-      "translate": "advancement.forgotten_cantrips.unknown_cantrip_2.part_2"
+      "translate": "advancement.forgotten_cantrips.uc_colossus_oak.part_3"
     },
     "icon": {
-      "item": "minecraft:red_bed"
+      "item": "minecraft:oak_sapling"
     },
     "frame": "task",
     "show_toast": true,
@@ -19,5 +19,5 @@
       "trigger": "minecraft:impossible"
     }
   },
-  "parent": "forgotten_cantrips:uc2/part_1"
+  "parent": "forgotten_cantrips:uc_colossus_oak/part_2"
 }

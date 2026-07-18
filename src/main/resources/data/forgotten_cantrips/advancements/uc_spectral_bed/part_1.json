@@ -1,13 +1,13 @@
 {
   "display": {
     "title": {
-      "text": "Unknown Cantrip: Second symbol"
+      "text": "Unknown Cantrip: First symbol"
     },
     "description": {
-      "translate": "advancement.forgotten_cantrips.unknown_cantrip_1.part_2"
+      "translate": "advancement.forgotten_cantrips.uc_spectral_bed.part_1"
     },
     "icon": {
-      "item": "minecraft:lightning_rod"
+      "item": "minecraft:red_bed"
     },
     "frame": "task",
     "show_toast": true,
@@ -19,5 +19,5 @@
       "trigger": "minecraft:impossible"
     }
   },
-  "parent": "forgotten_cantrips:uc1/part_1"
+  "parent": "forgotten_cantrips:uc_spectral_bed/root"
 }
