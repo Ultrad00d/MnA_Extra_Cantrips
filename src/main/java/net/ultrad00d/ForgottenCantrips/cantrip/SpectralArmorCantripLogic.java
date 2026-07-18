@@ -9,6 +9,9 @@ import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 
 public class SpectralArmorCantripLogic implements ICantripLogic {
     @Override
+    public String getCantripId() { return "spectral_armor"; }
+
+    @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         player.addEffect(new MobEffectInstance(
                 EffectRegistry.SPECTRAL_ARMOR.get(),

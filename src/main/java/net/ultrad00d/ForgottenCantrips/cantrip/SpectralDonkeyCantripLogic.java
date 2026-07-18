@@ -18,6 +18,9 @@ import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 
 public class SpectralDonkeyCantripLogic implements ICantripLogic {
     @Override
+    public String getCantripId() { return "spectral_donkey"; }
+
+    @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
         HitResult hitResult = player.pick(player.getBlockReach(), 0.0F, false);
 

@@ -79,6 +79,7 @@ public class ForgottenCantrips {
         EffectRegistry.register(modEventBus);
         PotionRegistry.register(modEventBus);
         MenuRegistry.register(modEventBus);
+        LootModifierRegistry.register(modEventBus);
 
         GeckoLib.initialize();
 
