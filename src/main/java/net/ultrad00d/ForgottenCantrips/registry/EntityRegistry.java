@@ -35,7 +35,6 @@ public final class EntityRegistry {
             ENTITY_TYPES.register("old_wizard", () ->
                     EntityType.Builder.of(OldWizard::new, MobCategory.MISC)
                             .sized(0.6F, 1.15F)
-                            .setShouldReceiveVelocityUpdates(true)
                             .build(ForgottenCantrips.MOD_ID + ":old_wizard")
             );
 

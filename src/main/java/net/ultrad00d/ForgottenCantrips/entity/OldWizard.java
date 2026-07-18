@@ -55,8 +55,14 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     // MOVEMENT
     public static final double WALK_SPEED = 0.9;
     public static final double RUN_SPEED = 1.5;
-    public static final double POI_REACH_THRESHOLD = 1.5 /5;
-    public static final double WALK_ANIMATION_THRESHOLD = 0.3;
+    public static final double POI_REACH_THRESHOLD = 1.5;
+    public static final double WALK_ANIMATION_THRESHOLD = 0.3 / 20;
+
+    // House Structure info
+    private BlockPos homePos = null;
+    private Rotation houseRotation = Rotation.NONE;
+    private BlockPos gardenPos = null;
+    private Rotation gardenRotation = null;
 
     // --- SYNCHRONIZED ENTITY DATA ACCESSORS ---
     private static final EntityDataAccessor<Boolean> HEAD_LOCKED = SynchedEntityData.defineId(OldWizard.class, EntityDataSerializers.BOOLEAN);
@@ -77,6 +83,9 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     private boolean hasGardenedToday = false; // todo: add this to nbt // todo: reset during sleep
     // client side tickers
     private int idleTickCooldown = 80;
+    private double oldX = 0;
+    private double oldY = 0;
+    private double oldZ = 0;
 
     private boolean isWaitingForNextIdle = true;
     // --- FRIENDSHIP STATES ---
@@ -104,12 +113,6 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
 
     private String currentIdleAnimation = STILL_ANIMATION;
 
-
-    // House Structure info
-    private BlockPos homePos = null;
-    private Rotation houseRotation = Rotation.NONE;
-    private BlockPos gardenPos = null;
-    private Rotation gardenRotation = null;
 
     // these are relative to the spawner block
     public enum OldWizardPOI {
@@ -150,12 +153,15 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     public static AttributeSupplier createAttributes() {
         return PathfinderMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.MOVEMENT_SPEED, WALK_SPEED / 5)
+                .add(Attributes.MOVEMENT_SPEED, WALK_SPEED / 6)
                 .add(Attributes.JUMP_STRENGTH, 0.5D)
 //                .add(ForgeMod.STEP_HEIGHT_ADDITION.get(), -0.5D)
                 .build();
     }
     @Override public boolean canChangeDimensions() { return false; }
+    @Override public boolean canBeLeashed(Player player) {
+        return false;
+    }
     // ENTITY CREATION BLOCK OVER
 
     @Override
@@ -309,6 +315,11 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     }
     /** Sends Old Wizard to the given world pos */
     public void goTo(BlockPos worldPos, double speed) {
+//        if (this.getNavigation().getPath() != null &&
+//                this.getNavigation().getTargetPos() != null &&
+//                this.getNavigation().getTargetPos().equals(worldPos)) {
+//            return;
+//        }
         this.getNavigation().moveTo(worldPos.getX() + 0.5d, worldPos.getY(), worldPos.getZ() + 0.5d, speed);
     }
     /** Returns distance between Old Wizard and given POI */
@@ -339,8 +350,9 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         RawAnimation builder = RawAnimation.begin();
         Vec3 deltaMovement = this.getDeltaMovement();
         deltaMovement = deltaMovement.add(0, -deltaMovement.y(), 0);
-//        System.out.println(deltaMovement);
+        System.out.println(deltaMovement);
         if (deltaMovement.length() > WALK_ANIMATION_THRESHOLD) {
+            System.out.println("Walking");
             return animationState.setAndContinue(builder.thenPlay(WALK_ANIMATION));
         }
 
@@ -359,7 +371,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
             case READING -> {
                 builder.thenPlay(READ_BOOK_ANIMATION);
             }
-            case STILL -> {
+            case IDLE -> {
                 if (this.idleTickCooldown > 0) {
                     this.currentIdleAnimation = STILL_ANIMATION;
                 } else if (this.isWaitingForNextIdle) {
@@ -373,8 +385,10 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
 
                 builder.thenPlay(currentIdleAnimation);
             }
+            default -> {
+                builder.thenPlay(STILL_ANIMATION);
+            }
         }
-
 
         return animationState.setAndContinue(builder);
     }
@@ -413,8 +427,8 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                     WizardDialogue.sendWizardReply(player,
                             cap,
                             "intro.1",
-                            DialogueChoice.CONTINUE,
-                            DialogueChoice.BYE
+                            DialogueChoice.CONTINUE.getKey(),
+                            DialogueChoice.BYE.getKey()
                     );
                     return;
                 }
@@ -422,8 +436,8 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                 WizardDialogue.sendWizardReply(player,
                         cap,
                         "back_again.1",
-                        DialogueChoice.CONTINUE,
-                        DialogueChoice.BYE
+                        DialogueChoice.CONTINUE.getKey(),
+                        DialogueChoice.BYE.getKey()
                 );
             });
             return InteractionResult.SUCCESS;
@@ -457,6 +471,14 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
 
     public int getFriendshipStateTimer() { return this.friendshipStateTimer; }
     public void setFriendshipStateTimer(int tick) { this.friendshipStateTimer = tick; }
+
+    public Vec3 getClientMovement() {
+        Vec3 delta = this.position().subtract(oldX, oldY, oldZ);
+        this.oldX = this.getX();
+        this.oldY = this.getY();
+        this.oldZ = this.getZ();
+        return delta;
+    }
 
     // --- HOUSE STRUCTURE ---
     @Override
@@ -498,7 +520,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         this.setCurrentAction(Action.values()[nbt.getInt("Action")]); // TODO: insert safe reading here
     }
 
-    public void setHomePos(BlockPos pos) { this.homePos = pos; }
+    public void setHomePos(BlockPos pos) { this.homePos = pos; this.oldX = pos.getX(); this.oldY = pos.getY(); this.oldZ = pos.getZ(); }
     public void setHouseRotation(Rotation rotation) { this.houseRotation = rotation; }
     public void setGarden(Tuple<BlockPos, Rotation> tuple) {
         if (tuple == null) return;

@@ -118,9 +118,12 @@ public enum CantripType {
     public @Nullable String getAdvancementPath() { return advancementPath; }
     public ResourceLocation[] getShapes() { return shapes; }
 
-    public static CantripType fromDialogueChoice(DialogueChoice choice) {
-        // Maps "cantrip.lightning" -> LIGHTNING, "cantrip.spectral_slime" -> SPECTRAL_SLIME, etc.
-        String lookupName = choice.name().replace("_CANTRIP", "");
-        return CantripType.valueOf(lookupName);
+    public static @Nullable CantripType fromId(String id) {
+        for (CantripType type : values()) {
+            if (type.getId().equals(id)) {
+                return type;
+            }
+        }
+        return null;
     }
 }
