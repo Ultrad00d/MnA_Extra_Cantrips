@@ -2,13 +2,22 @@ package net.ultrad00d.ForgottenCantrips.dialogue;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.cantrip.CantripType;
 import net.ultrad00d.ForgottenCantrips.util.ProgressionUtil;
@@ -24,14 +33,54 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
     public static final int midColorHEX = 0x9682a1;
     public static final int lightColorHEX = 0xf5e3ff;
 
-    public static void sendWizardReply(Player player, WizardDialogueData cap, String messageKey, String... choices) {
+    /**
+     * @param player player whom to send dialogue message to
+     * @param messageKey translation key for dialogue, example: dialogue.forgotten_cantrips.messageKey
+     * @param cap player dialogue capability
+     * @param choices available choices list
+     */
+    public static void sendWizardReply(Player player, String messageKey, WizardDialogueData cap, String... choices) {
+        sendWizardReply(player, messageKey, messageKey, cap, choices);
+    }
+
+    /**
+     * @param player player whom to send dialogue message to
+     * @param pageKey string key that will be used to advance the dialogue from and as a session token
+     * @param messageKey translation key for dialogue, example: dialogue.forgotten_cantrips.messageKey
+     * @param cap player dialogue capability
+     * @param choices available choices list
+     */
+    public static void sendWizardReply(Player player, String pageKey, String messageKey, WizardDialogueData cap, String... choices) {
+        sendWizardReply(player, pageKey, Component.translatable("dialogue." + ForgottenCantrips.MOD_ID + ".wizard." + messageKey), cap, choices);
+    }
+
+    /**
+     * @param player player whom to send dialogue message to
+     * @param pageKey string key that will be used to advance the dialogue from and as a session token
+     * @param messageComponent translated message component to send
+     * @param cap player dialogue capability
+     * @param choices available choices list
+     */
+    public static void sendWizardReply(Player player, String pageKey, Component messageComponent, WizardDialogueData cap, String... choices) {
         Minecraft client = Minecraft.getInstance();
         int chatWidthPX = ChatComponent.getWidth(client.options.chatWidth().get());
         int textSpaceWidth = chatWidthPX - ICON_WIDTH - 6; // 4px = margin
 
+        if (player instanceof ServerPlayer serverPlayer) {
+            serverPlayer.connection.send(new ClientboundSoundPacket(
+                    ForgeRegistries.SOUND_EVENTS.getDelegateOrThrow(SoundEvents.VILLAGER_AMBIENT),
+                    SoundSource.VOICE,
+                    player.getX(),
+                    player.getY(),
+                    player.getZ(),
+                    1.0F,
+                    1.6F,
+                    player.getRandom().nextLong()
+            ));
+        }
+
         // first 4 rows contain an NPC icon, so the translated string gets split across rows
-        Component fullMessage = Component.translatable("dialogue." + ForgottenCantrips.MOD_ID + ".wizard." + messageKey);
-        List<FormattedCharSequence> splitLines = client.font.split(fullMessage, textSpaceWidth);
+        List<FormattedCharSequence> splitLines = client.font.split(messageComponent, textSpaceWidth);
 
         //  print the icon for at least 4 rows
         for (int i = 0; i < Math.max(splitLines.size(), 4); i++) {
@@ -51,13 +100,13 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
 
                 // First item in this row chunk
                 String firstKey = choices[i];
-                choicesRow.append(buildChoiceButton(player, cap, firstKey, messageKey));
+                choicesRow.append(buildChoiceButton(player, cap, firstKey, pageKey));
 
                 // Second item in this row chunk (if it exists)
                 if (i + 1 < choices.length) {
                     String secondKey = choices[i + 1];
                     choicesRow.append(Component.literal("  |  ").withStyle(s -> s.withColor(midColorHEX)));
-                    choicesRow.append(buildChoiceButton(player, cap, secondKey, messageKey));
+                    choicesRow.append(buildChoiceButton(player, cap, secondKey, pageKey));
                 }
                 player.sendSystemMessage(choicesRow);
             }
@@ -75,7 +124,7 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
         return Component.literal(" ".repeat(ICON_WIDTH_IN_SPACES));
     }
 
-    private static MutableComponent buildChoiceButton(Player player, WizardDialogueData cap, String choiceKey, String messageKey) {
+    private static MutableComponent buildChoiceButton(Player player, WizardDialogueData cap, String choiceKey, String pageKey) {
         boolean isLocked = isChoiceLocked(player, choiceKey, cap);
 
         // Check if this choiceKey belongs to a CantripType
@@ -100,7 +149,7 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
                     )));
         } else {
             String secureToken = UUID.randomUUID().toString().substring(0, 8);
-            WizardSessionManager.registerToken(secureToken, player, choiceKey, messageKey);
+            WizardSessionManager.registerToken(secureToken, player, choiceKey, pageKey);
 
             return choiceText.withStyle(s -> s.withColor(midColorHEX))
                     .withStyle(style -> style
@@ -138,13 +187,20 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
         return false;
     }
 
-    public static void advanceDialogueFrom(String action, String from, Player player, WizardDialogueData cap) {
-        if (DialogueChoice.BYE.getKey().equals(action)) {
+    /** Advances the dialogue to the given player from given page and choice key
+     * @param choice either CantripType cantripID or DialogueChoice value
+     * @param from page id that this choice was chosen from
+     * @param player player whom advance the dialogue to
+     * @param cap player's dialogue capability
+     */
+    public static void advanceDialogueFrom(String choice, String from, Player player, WizardDialogueData cap) {
+        if (DialogueChoice.BYE.getKey().equals(choice)) {
             cap.setGlobalState(WizardGlobalState.NOT_MET);
-            sendWizardReply(player, cap, "goodbye");
+            sendWizardReply(player, "goodbye", cap);
             return;
-        } else if (DialogueChoice.CANTRIPS_MENU.getKey().equals(action)) {
-            sendWizardReply(player, cap, "cantrips",
+        }
+        else if (DialogueChoice.CANTRIPS_MENU.getKey().equals(choice)) {
+            sendWizardReply(player, "cantrips", cap,
                     CantripType.LIGHTNING.getId(),
                     CantripType.SPECTRAL_BED.getId(),
                     CantripType.SPECTRAL_DONKEY.getId(),
@@ -160,20 +216,19 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
             return;
         }
 
-        // Example dialogue map (by Gemini)
         switch (from) {
             case "intro.1" -> {
-                sendWizardReply(player, cap, "intro.2", DialogueChoice.CONTINUE.getKey(), DialogueChoice.BYE.getKey());
+                sendWizardReply(player, "intro.2", cap, DialogueChoice.CONTINUE.getKey(), DialogueChoice.BYE.getKey());
             }
             case "intro.2" -> {
-                sendWizardReply(player, cap, "intro.3", DialogueChoice.CONTINUE.getKey(), DialogueChoice.BYE.getKey());
+                sendWizardReply(player, "intro.3", cap, DialogueChoice.CONTINUE.getKey(), DialogueChoice.BYE.getKey());
             }
             case "intro.3" -> {
-                sendWizardReply(player, cap, "intro.4", DialogueChoice.CONTINUE.getKey(), DialogueChoice.BYE.getKey());
+                sendWizardReply(player, "intro.4", cap, DialogueChoice.CONTINUE.getKey(), DialogueChoice.BYE.getKey());
             }
             case "intro.4", "back_again.2" -> {
                 cap.setGlobalState(WizardGlobalState.INTRODUCED);
-                sendWizardReply(player, cap, "cantrips",
+                sendWizardReply(player, "cantrips", cap,
                         CantripType.LIGHTNING.getId(),
                         CantripType.SPECTRAL_BED.getId(),
                         CantripType.SPECTRAL_DONKEY.getId(),
@@ -188,60 +243,154 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
                 );
             }
             case "back_again.1" -> {
-                if (DialogueChoice.CONTINUE.getKey().equals(action)) {
-                    sendWizardReply(player, cap, "back_again.2",
+                if (DialogueChoice.CONTINUE.getKey().equals(choice)) {
+                    sendWizardReply(player, "back_again.2", cap,
                             DialogueChoice.CONTINUE.getKey(),
                             DialogueChoice.BYE.getKey()
                     );
                 }
             }
             case "cantrips" -> {
-                String cantripID = "";
-                WizardCantripBranchState state = cap.getBranchState(cantripID);
+                WizardCantripBranchState state = cap.getBranchState(choice, player.level().getDayTime());
                 switch (state) {
                     case PART_1_ITEM_GIVEN, PART_2_ITEM_GIVEN -> {
-                        sendWizardReply(player, cap, "cantrip_item_already_given_today",
+                        sendWizardReply(player,
+                                "cantrip_item_already_given_today",
+                                cap,
                                 DialogueChoice.CANTRIPS_MENU.getKey(),
                                 DialogueChoice.BYE.getKey());
                     }
-                    case PART_1 -> {
-                        sendWizardReply(player, cap, "cantrip_item_1_quest",
-                                DialogueChoice.CANTRIPS_MENU.getKey(),
-                                DialogueChoice.GIVE_ITEM.getKey(),
-                                DialogueChoice.BYE.getKey());
-                    }
-                    case PART_2 -> {
-                        sendWizardReply(player, cap, "cantrip_item_2_quest",
-                                DialogueChoice.CANTRIPS_MENU.getKey(),
-                                DialogueChoice.GIVE_ITEM.getKey(),
-                                DialogueChoice.BYE.getKey());
-                    }
-                    case PART_3 -> {
-                        sendWizardReply(player, cap, "cantrip_item_3_quest",
+                    case PART_1, PART_2, PART_3 -> {
+                        int partNum = state == WizardCantripBranchState.PART_1 ? 1 : (state == WizardCantripBranchState.PART_2 ? 2 : 3);
+                        CantripQuestItem questItem = CantripQuestItem.fromId(choice);
+                        Item requiredItem = questItem != null ? questItem.getItem(partNum - 1) : Items.BEDROCK;
+
+                        Component message = Component.translatable("dialogue." + ForgottenCantrips.MOD_ID + ".wizard.cantrip_item_" + partNum + "_quest", requiredItem.getDescription());
+
+                        sendWizardReply(player,
+                                "cantrip." + choice + ".part_" + partNum,
+                                message,
+                                cap,
                                 DialogueChoice.CANTRIPS_MENU.getKey(),
                                 DialogueChoice.GIVE_ITEM.getKey(),
                                 DialogueChoice.BYE.getKey());
                     }
                     case PART_3_ITEM_GIVEN -> {
-                        sendWizardReply(player, cap, "cantrip_symbols_already_known",
+                        sendWizardReply(player, "cantrip_symbols_already_known", cap,
                                 DialogueChoice.CANTRIPS_MENU.getKey(),
                                 DialogueChoice.BYE.getKey());
                     }
                     case SPELL_LEARNED -> {
-                        sendWizardReply(player, cap, "cantrip_spell_already_known",
+                        sendWizardReply(player, "cantrip_spell_already_known", cap,
                                 DialogueChoice.CANTRIPS_MENU.getKey(),
                                 DialogueChoice.BYE.getKey());
                     }
                     default -> {
-                        sendWizardReply(player, cap, "cantrip." + cantripID + ".description",
+                        sendWizardReply(player,
+                                "cantrip." + choice + ".description",
+                                cap,
                                 DialogueChoice.CANTRIPS_MENU.getKey(),
+                                DialogueChoice.CONTINUE.getKey(),
                                 DialogueChoice.BYE.getKey());
                     }
                 }
             }
+            case "cantrip.lightning.description",
+                 "cantrip.spectral_bed.description",
+                 "cantrip.spectral_donkey.description",
+                 "cantrip.spectral_boat.description",
+                 "cantrip.spectral_armor.description",
+                 "cantrip.mana_cost_buff.description",
+                 "cantrip.dmg_buff.description",
+                 "cantrip.cantrip_buff.description",
+                 "cantrip.spectral_slime.description",
+                 "cantrip.bubble_up.description" -> {
+
+                // continue was chosen
+                String cantripId = from.split("\\.")[1];
+                cap.setBranchState(cantripId, WizardCantripBranchState.PART_1);
+
+                CantripQuestItem questItem = CantripQuestItem.fromId(cantripId);
+                Item requiredItem = questItem != null ? questItem.getItem(0) : Items.BEDROCK;
+                Component message = Component.translatable("dialogue." + ForgottenCantrips.MOD_ID + ".wizard.cantrip_item_1_quest", requiredItem.getDescription());
+
+                sendWizardReply(player,
+                        from.substring(0, from.lastIndexOf('.')) + ".part_1",
+                        message,
+                        cap,
+                        DialogueChoice.CANTRIPS_MENU.getKey(),
+                        DialogueChoice.GIVE_ITEM.getKey(),
+                        DialogueChoice.BYE.getKey());
+            }
+            case "cantrip.lightning.part_1",        "cantrip.lightning.part_2",         "cantrip.lightning.part_3",
+                 "cantrip.spectral_bed.part_1",     "cantrip.spectral_bed.part_2",      "cantrip.spectral_bed.part_3",
+                 "cantrip.spectral_donkey.part_1",  "cantrip.spectral_donkey.part_2",   "cantrip.spectral_donkey.part_3",
+                 "cantrip.spectral_boat.part_1",    "cantrip.spectral_boat.part_2",     "cantrip.spectral_boat.part_3",
+                 "cantrip.spectral_armor.part_1",   "cantrip.spectral_armor.part_2",    "cantrip.spectral_armor.part_3",
+                 "cantrip.mana_cost_buff.part_1",   "cantrip.mana_cost_buff.part_2",    "cantrip.mana_cost_buff.part_3",
+                 "cantrip.dmg_buff.part_1",         "cantrip.dmg_buff.part_2",          "cantrip.dmg_buff.part_3",
+                 "cantrip.cantrip_buff.part_1",     "cantrip.cantrip_buff.part_2",      "cantrip.cantrip_buff.part_3",
+                 "cantrip.spectral_slime.part_1",   "cantrip.spectral_slime.part_2",    "cantrip.spectral_slime.part_3",
+                 "cantrip.bubble_up.part_1",        "cantrip.bubble_up.part_2",         "cantrip.bubble_up.part_3" -> {
+
+                // give item was chosen
+                int partNum = Integer.parseInt(from.substring(from.lastIndexOf('_') + 1));
+
+                if (tryTakingItem(player, from)) {
+                    WizardCantripBranchState nextState = switch (partNum) {
+                        case 1 -> WizardCantripBranchState.PART_1_ITEM_GIVEN;
+                        case 2 -> WizardCantripBranchState.PART_2_ITEM_GIVEN;
+                        default -> WizardCantripBranchState.PART_3_ITEM_GIVEN;
+                    };
+                    String cantripId = from.split("\\.")[1];
+                    cap.setBranchState(cantripId, nextState);
+
+                    long currentTicks = player.level().getDayTime();
+                    long nextMorningTicks = ((currentTicks / 24000L) + 1) * 24000L;
+                    cap.setUnlockTime(cantripId, nextMorningTicks);
+
+                    sendWizardReply(player,
+                            "cantrip_item_" + partNum + "_got",
+                            cap,
+                            DialogueChoice.CANTRIPS_MENU.getKey(),
+                            DialogueChoice.BYE.getKey());
+                } else {
+                    sendWizardReply(player,
+                            "wrong_item_given",
+                            cap,
+                            DialogueChoice.CANTRIPS_MENU.getKey(),
+                            DialogueChoice.BYE.getKey());
+                }
+            }
 
             // Fallback or unhandled nodes
-            default -> sendWizardReply(player, cap, "fallback", DialogueChoice.BYE.getKey());
+            default -> {
+                ForgottenCantrips.LOGGER.error("Unknown key was used: {}", from);
+                sendWizardReply(player, "fallback", cap, DialogueChoice.BYE.getKey());
+            }
         }
+    }
+
+    private static boolean tryTakingItem(Player player, String dialoguePage) {
+        String[] parts = dialoguePage.split("\\.");
+        String cantripId = parts[1];
+        int part = Integer.parseInt(parts[2].replace("part_", ""));
+        CantripQuestItem questItems = CantripQuestItem.fromId(cantripId);
+        if (questItems == null) { return false; }
+
+        Item requiredItem = questItems.getItem(part - 1);
+        ItemStack mainHandStack = player.getMainHandItem();
+        ItemStack offHandStack = player.getOffhandItem();
+
+        if (mainHandStack.is(requiredItem)) {
+            if (!player.isCreative()) mainHandStack.shrink(1);
+            return true;
+        }
+        if (offHandStack.is(requiredItem)) {
+            if (!player.isCreative()) offHandStack.shrink(1);
+            return true;
+        }
+
+        return false;
     }
 }
