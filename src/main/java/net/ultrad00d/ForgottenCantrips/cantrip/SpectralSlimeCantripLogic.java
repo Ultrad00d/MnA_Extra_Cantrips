@@ -9,6 +9,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralSlime;
+import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
 
 public class SpectralSlimeCantripLogic implements ICantripLogic {
@@ -27,10 +28,18 @@ public class SpectralSlimeCantripLogic implements ICantripLogic {
             if (slime != null) {
                 slime.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(slime.blockPosition()), MobSpawnType.TRIGGERED, null, null);
                 slime.setOwnerUUID(player.getUUID());
-                slime.setSize(1, true);
+                slime.setSize(getEmpoweredSlimeSize(player), true);
                 slime.moveTo(target.x, target.y, target.z, player.getYRot(), 0.0F);
                 serverLevel.addFreshEntity(slime);
             }
         }
+    }
+
+    private int getEmpoweredSlimeSize(Player player) {
+        if (!player.hasEffect(EffectRegistry.CANTRIP_BUFF.get())) {
+            return 1;
+        }
+
+        return Math.min(8, 2 + player.getEffect(EffectRegistry.CANTRIP_BUFF.get()).getAmplifier());
     }
 }
