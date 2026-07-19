@@ -103,13 +103,23 @@ Contribution traceability table mapping each team member to issues, PRs/MRs, rev
 # Contribution traceability table
 | Contributor             | Issues | PRs | Review Activity and Testing | Quality and automation | Documentation Work |
 |:------------------------|:---------------------|:-|:-|:-|:-|
-| **alexm-gh**            | [#143](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/143), [#145](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/145), [#147](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/147) | - | - | - |  |
-| **Dima280807**          | [#127](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/127), [#128](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/128), [#129](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/129), [#130](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/130) | - |  | - |  |
-| **dtamindarov5839**     | [#155](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/155), [#164](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/164), [#165](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/165) | - | - | - | Documentation (README, roadmap, fixes) |
-| **l1n0n**               | [#149](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/149), [#151](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/151), [#185](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/185) | - | - | - | Documentation (Reflection, customer review summary, retrospective) |
-| **notwindstone**        | [#180](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/180) |   | CI testing | Gradle building | The website one (`./vitepress/` |
-| **Ultrad00d**           | [#142](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/142), [#158](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/158), [#171](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/171), [#178](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/178) |   |  | - | Documentation (Project backlog) |
+| **alexm-gh**            | [#143](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/143), [#145](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/145), [#147](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/147) | [#148](https://github.com/Ultrad00d/MnA_Extra_Cantrips/pull/148) | - | - |  |
+| **Dima280807**          | [#127](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/127), [#128](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/128), [#129](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/129), [#130](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/130) | Approved Spectral Armor |  | - |  |
+| **dtamindarov5839**     | [#155](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/155), [#164](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/164), [#165](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/165) | [#172](https://github.com/Ultrad00d/MnA_Extra_Cantrips/pull/172) |  | - | Documentation (README, roadmap, fixes) |
+| **l1n0n**               | [#149](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/149), [#151](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/151), [#185](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/185) | [#167](https://github.com/Ultrad00d/MnA_Extra_Cantrips/pull/167) | - | - | Documentation (Reflection, customer review summary, retrospective) |
+| **notwindstone**        | [#180](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/180) | [#191](https://github.com/Ultrad00d/MnA_Extra_Cantrips/pull/191)  | CI testing | Gradle building | The website one (`./vitepress/`) |
+| **Ultrad00d**           | [#142](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/142), [#158](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/158), [#171](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/171), [#178](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/178) | [#162](https://github.com/Ultrad00d/MnA_Extra_Cantrips/pull/162)  | Approved Villager Mind-Wiping | - | Documentation (Project backlog) |
 
 ## Screenshots:
 
-///скрины надо сделать
+![Sprint milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week5/images/SprintMilestone.png)
+
+![Board view](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week5/images/BoardView.png)
+
+![Latest protected-default-branch CI run and test report](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week5/images/LatestCIRunAndTestResult.png)
+
+![SemVer release](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week5/images/semverRelease.png)
+
+![Example reviewed issue-linked PR/MR](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week5/images/ExampleReviewedPR.png)
+
+![Hosted documentation site](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week5/images/DocumentationSite.png)
