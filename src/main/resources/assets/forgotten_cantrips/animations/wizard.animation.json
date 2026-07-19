@@ -2,6 +2,7 @@
 	"format_version": "1.8.0",
 	"animations": {
 		"animation.old_wizard.still": {
+            "loop": "hold_on_last_frame",
 			"animation_length": 4,
 			"bones": {
 				"book": {
@@ -2724,7 +2725,7 @@
 							"vector": [0, 6, 1]
 						},
 						"0.625": {
-							"vector": [0, 10, 1],
+							"vector": [0, 13, 1],
 							"easing": "easeInOutSine"
 						}
 					},
@@ -2908,19 +2909,19 @@
 					},
 					"position": {
 						"0.0": {
-							"vector": [0, 10, 1],
+							"vector": [0, 13, 1],
 							"easing": "easeInOutSine"
 						},
 						"1.7917": {
-							"vector": [0, 10.5, 1],
+							"vector": [0, 13.5, 1],
 							"easing": "easeInOutQuad"
 						},
 						"4.5417": {
-							"vector": [0, 9.75, 1],
+							"vector": [0, 12.75, 1],
 							"easing": "easeInOutQuad"
 						},
 						"5.6667": {
-							"vector": [0, 10, 1]
+							"vector": [0, 13, 1]
 						}
 					},
 					"scale": {
