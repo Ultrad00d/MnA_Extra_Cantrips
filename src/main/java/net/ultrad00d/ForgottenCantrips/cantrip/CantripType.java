@@ -41,7 +41,7 @@ public enum CantripType {
             3,
             new SpectralDonkeyCantripLogic(),
             false,
-            null,
+            "spectral_donkey/part3",
             RLoc.create("manaweave_patterns/inverted_triangle"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/circle")
     ),
     DEVOUR(
