@@ -16,7 +16,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -86,12 +85,11 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     // server side tickers
     private int friendshipStateTimer = 0;
     private int spellTick = 0;
-    private boolean hasGardenedToday = false; // todo: add this to nbt // todo: reset during sleep
+    private boolean hasGardenedToday = false; // todo: reset during sleep
+    private boolean hasLitLightsToday = false;
+    private boolean hasExtinguishedLightsToday = false;
     // client side tickers
     private int idleTickCooldown = 80;
-    private double oldX = 0;
-    private double oldY = 0;
-    private double oldZ = 0;
 
     private boolean isWaitingForNextIdle = true;
     // --- FRIENDSHIP STATES ---
@@ -127,7 +125,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         FISHING_POINT       (11, -1, 4),
         BOOKSHELF_1         (-2, 0, 0),
         BOOKSHELF_2         (-3, 0, 1),
-        BED                 (4, 4, 0),
+        BED                 (5, 4, 0),
         BREWERY             (-1, 4, 2),
 
         // Idle POI
@@ -147,16 +145,12 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         CANDLES_OFFICE      (2, 1, -2),
         LIGHT_OFFICE        (5, 2, -1),
         LIGHT_BEDROOM       (1, 5, 0);
-        // TODO: add random POIs to go to when IDLE. UPD: Are they needed at all? One can look at any random pos nearby maybe
 
         private final int x;
         private final int y;
         private final int z;
         OldWizardPOI(int x, int y, int z) { this.x = x; this.y = y; this.z = z; }
         public BlockPos pos() { return new BlockPos(x, y ,z); }
-        public int x() { return x; }
-        public int y() { return y; }
-        public int z() { return z; }
     }
 
     // ENTITY CREATION BLOCK
@@ -175,9 +169,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                 .build();
     }
     @Override public boolean canChangeDimensions() { return false; }
-    @Override public boolean canBeLeashed(Player player) {
-        return false;
-    }
+    @Override public boolean canBeLeashed(@NotNull Player player) { return false; }
     // ENTITY CREATION BLOCK OVER
 
     @Override
@@ -221,7 +213,6 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         WANDER_AROUND,  // walks around the house in this state
         WALKING_TO_FISH,
         RETURNING_HOME,
-        SLEEPING,
         WALKING_TO_GARDEN,
         SPELL_GROWING_CROPS,
         COLLECTING_CROPS,
@@ -235,8 +226,9 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         WALKING_TO_MANA,
         MAGIC_WORK,
         SPELL_LIGHTS_ON,
+        WALKING_TO_BED,
         SPELL_LIGHTS_OFF,
-        SLEEP
+        SLEEPING
     }
 
     /** Initiates routines based on daytime when IDLE or STILL */
@@ -252,7 +244,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
             if (!this.hasGardenedToday && this.gardenPos != null) this.setCurrentAction(Action.WALKING_TO_GARDEN);
         }
         // Noon (4000 - 8000)
-        else if (dayTime >= 4000 && dayTime < 8000) {
+        else if (dayTime >= 4000 && dayTime < 11500) {
             // TODO: come up with a reading routine
             RandomSource random = this.getRandom();
 
@@ -262,13 +254,16 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                 case 2 -> this.setCurrentAction(Action.WALKING_TO_MANA);
             }
         }
-        // Evening (8000 - 12500)
-        else if (dayTime >= 8000 && dayTime < 12500) {
-            this.setCurrentAction(Action.SPELL_LIGHTS_ON);
+        // Evening (11500 - 12500)
+        else if (dayTime >= 11500 && dayTime < 12500) {
+            if (!this.hasLitLightsToday) {
+                this.setCurrentAction(Action.SPELL_LIGHTS_ON);
+                this.spellTick = SPELL_ANIMATION_TICK_DURATION;
+            }
         }
         // Night (12500 - 24000)
         else if (dayTime >= 12500) {
-            this.setCurrentAction(Action.SPELL_LIGHTS_OFF);
+            this.setCurrentAction(Action.WALKING_TO_BED);
         }
     }
 
@@ -315,6 +310,36 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                 // TODO: implement
                 ForgottenCantrips.LOGGER.info("Finished collecting crops, going home");
                 this.setCurrentAction(Action.RETURNING_HOME);
+            }
+            case SPELL_LIGHTS_ON -> {
+                if (this.spellTick > 0) {
+                    this.spellTick--;
+                } else {
+                    this.turnOnLights();
+                    this.hasLitLightsToday = true;
+                    this.setCurrentAction(Action.WANDER_AROUND);
+                }
+            }
+            case WALKING_TO_BED -> {
+                this.goTo(OldWizardPOI.BED, WALK_SPEED);
+
+                if (this.distanceToPOISqr(OldWizardPOI.BED) < POI_REACH_THRESHOLD) {
+                    this.getNavigation().stop();
+                    this.setCurrentAction(Action.SPELL_LIGHTS_OFF);
+                    this.spellTick = SPELL_ANIMATION_TICK_DURATION;
+                }
+            }
+            case SPELL_LIGHTS_OFF -> {
+                if (this.spellTick > 0) {
+                    this.spellTick--;
+                } else {
+                    this.turnOffLights();
+                    this.hasExtinguishedLightsToday = true;
+                    this.setCurrentAction(Action.SLEEPING);
+                }
+            }
+            case SLEEPING -> {
+                // todo: implement
             }
             case WANDER_AROUND -> {
                 // either reached random idle location or error -> stand still and cast idle animations
@@ -394,7 +419,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
 
         Action action = getCurrentAction();
         switch (action) {
-            case SPELL_GROWING_CROPS -> {
+            case SPELL_GROWING_CROPS, SPELL_LIGHTS_ON, SPELL_LIGHTS_OFF -> {
                 builder.thenPlay(SPELL_ANIMATION);
             }
             case SHOW_BOOK -> {
@@ -449,7 +474,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     /** Used to send dialogue messages on right click */
     @NotNull
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         if (!player.level().isClientSide() && hand == InteractionHand.MAIN_HAND) {
             // TODO: insert friendship mechanic here
             if (player.isSecondaryUseActive()) {
@@ -461,7 +486,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                 Path path = this.getNavigation().getPath();
                 if (path != null) {
                     player.sendSystemMessage(Component.literal("Distance to my destination is " + path.getDistToTarget()));
-                    player.sendSystemMessage(Component.literal("I am going to " + this.lastIdleLocation));
+                    player.sendSystemMessage(Component.literal("Last idle location " + this.lastIdleLocation));
                 }
                 return InteractionResult.SUCCESS;
             }
@@ -501,10 +526,8 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
             return super.hurt(source, amount);
         }
 
-        if (source.getEntity() instanceof LivingEntity attacker) {
-            this.setTarget(attacker);
-            this.setAggressive(true);
-            // Switch state machine to Fight Mode here
+        if (source.getEntity() instanceof Player player) {
+            // todo: add angry state
         }
 
         return false;
@@ -524,7 +547,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
 
     // --- HOUSE STRUCTURE ---
     @Override
-    public void addAdditionalSaveData(CompoundTag nbt) {
+    public void addAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
 
         if (this.homePos != null) nbt.putLong("HomePos", this.homePos.asLong());
@@ -533,10 +556,13 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         if (this.gardenRotation != null) nbt.putInt("GardenRotation", this.gardenRotation.ordinal());
         nbt.putInt("FriendshipTimer", this.friendshipStateTimer);
         nbt.putInt("Action", getCurrentAction().ordinal());
+        nbt.putBoolean("HasGardenedToday", this.hasGardenedToday);
+        nbt.putBoolean("HasLitLightsToday", this.hasLitLightsToday);
+        nbt.putBoolean("HasExtinguishedLightsToday", this.hasExtinguishedLightsToday);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag nbt) {
+    public void readAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
 
         if (nbt.contains("HomePos")) this.homePos = BlockPos.of(nbt.getLong("HomePos"));
@@ -561,9 +587,13 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         this.friendshipStateTimer = nbt.getInt("FriendshipTimer");
         Action[] actions = Action.values();
         this.setCurrentAction(actions[nbt.getInt("Action") % actions.length]);
+
+        if (nbt.contains("HasGardenedToday")) this.hasGardenedToday = nbt.getBoolean("HasGardenedToday");
+        if (nbt.contains("HasLitLightsToday")) this.hasLitLightsToday = nbt.getBoolean("HasLitLightsToday");
+        if (nbt.contains("HasExtinguishedLightsToday")) this.hasExtinguishedLightsToday = nbt.getBoolean("HasExtinguishedLightsToday");
     }
 
-    public void setHomePos(BlockPos pos) { this.homePos = pos; this.oldX = pos.getX(); this.oldY = pos.getY(); this.oldZ = pos.getZ(); }
+    public void setHomePos(BlockPos pos) { this.homePos = pos; }
     public void setHouseRotation(Rotation rotation) { this.houseRotation = rotation; }
     public void setGarden(Tuple<BlockPos, Rotation> tuple) {
         if (tuple == null) return;
