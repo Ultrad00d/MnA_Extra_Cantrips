@@ -67,11 +67,6 @@ Customer review [transcript](customer-review-transcript.md) and [summary](custom
 
 User trial: the customer found the mod satisfactory but proposed a few changes.
 
-| Feedback point | Resulting PBI or issue | Status | Response |
-|---|---|---|---|
-| The customer... | [#0](...) | Done | ... |
-| The customer... | [#0](...) | Not planned for this Sprint | ... |
-
 [Customer handover document](/docs/customer-handover.md)
 
 The customer was shown the repository documentation and found it clear and understandable.
@@ -112,7 +107,7 @@ Contribution traceability table mapping each team member to issues, PRs/MRs, rev
 | **dtamindarov5839**     | #210, #218 |   |  | - | Documentation (README, roadmap, fixes) |
 | **l1n0n**               | #214, #215, #216  | #232  |  | - | Documentation (Reflection, customer review summary, retrospective) |
 | **notwindstone**        | https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/228 | https://github.com/Ultrad00d/MnA_Extra_Cantrips/pull/229 | CI testing | Gradle building | The website one (`./vitepress/`) |
-| **Ultrad00d**           | Work on Colossus Oak |   |  | - | Documentation (Project backlog) |
+| **Ultrad00d**           | [#230](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/230), [#203](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/203), [#204](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/204), [#199](https://github.com/Ultrad00d/MnA_Extra_Cantrips/issues/199), dialogue system |   |  | Bubble up cantrip, Spectral Donkey bug fix, Dialogue system | Documentation (Project backlog) |
 
 ## Screenshots:
 
