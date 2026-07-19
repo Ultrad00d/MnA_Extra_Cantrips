@@ -104,15 +104,15 @@ public class AncientScrollItem extends Item {
              if (nbtData.contains("cantripID")) {
 
                  switch (nbtData.getString("cantripID")) {
-                     case "uc_reset_villager":
+                     case "reset_villager":
                          pTooltipComponents.add(Component.translatable("item.forgotten_cantrips.ancient_scroll.hint.reset_villager").withStyle(ChatFormatting.GREEN));
                          break;
 
-                     case "uc_devour":
+                     case "devour":
                          pTooltipComponents.add(Component.translatable("item.forgotten_cantrips.ancient_scroll.hint.devour").withStyle(ChatFormatting.GRAY));
                          break;
 
-                     case "uc_colossus_oak":
+                     case "colossus_oak":
                          pTooltipComponents.add(Component.translatable("item.forgotten_cantrips.ancient_scroll.hint.colossus_oak").withStyle(ChatFormatting.DARK_GREEN));
                          break;
                  }
@@ -123,9 +123,9 @@ public class AncientScrollItem extends Item {
 
     void initNBT(CompoundTag nbtData) {
         switch (new Random().nextInt(3)) {
-            case 0: { nbtData.putString("cantripID","uc_reset_villager"); return; }
-            case 1: { nbtData.putString("cantripID","uc_devour"); return; }
-            case 2: default: { nbtData.putString("cantripID","uc_colossus_oak"); return; }
+            case 0: { nbtData.putString("cantripID","reset_villager"); return; }
+            case 1: { nbtData.putString("cantripID","devour"); return; }
+            case 2: default: { nbtData.putString("cantripID","colossus_oak"); return; }
         }
 
     }
@@ -145,9 +145,9 @@ public class AncientScrollItem extends Item {
         CompoundTag tag = stack.getOrCreateTag();
 
         switch (new Random().nextInt(3)) {
-            case 0: { tag.putString("cantripID","uc_reset_villager"); break; }
-            case 1: { tag.putString("cantripID","uc_devour"); break; }
-            case 2: default: { tag.putString("cantripID","uc_colossus_oak"); break; }
+            case 0: { tag.putString("cantripID","reset_villager"); break; }
+            case 1: { tag.putString("cantripID","devour"); break; }
+            case 2: default: { tag.putString("cantripID","colossus_oak"); break; }
         }
 
         return stack;
