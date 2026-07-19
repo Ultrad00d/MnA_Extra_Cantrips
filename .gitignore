@@ -28,6 +28,9 @@ libs
 # Files from Forge MDK
 forge*changelog.txt
 
+# Files from dev build
+run_client.log
+
 # vitepress
 vitepress/node_modules
 vitepress/.vitepress/dist

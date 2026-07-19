@@ -17,6 +17,7 @@ public class BlockEntityRegistry {
                     BlockEntityType.Builder.of(SpectralBedBlockEntity::new, BlockRegistry.SPECTRAL_BED.get())
                             .build(null)
             );
+
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }
