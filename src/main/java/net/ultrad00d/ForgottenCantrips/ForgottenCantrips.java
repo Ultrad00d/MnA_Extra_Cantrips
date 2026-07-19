@@ -190,9 +190,9 @@ public class ForgottenCantrips {
                                 .executes(this::handleDialogueCommand)
                         )
         );
-        // Todo: remove before release or make it safer
         dispatcher.register(
                 Commands.literal("wiz")
+                        .requires(source -> source.hasPermission(4))
                         .then(Commands.literal("setDay")
                                 .then(Commands.argument("day", IntegerArgumentType.integer(0))
                                         .executes(context -> {
