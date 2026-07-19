@@ -19,10 +19,10 @@
     "cantrip.forgotten_cantrips.spectral_bed.badtarget": "Can't place a spectral bed on there!",
     "cantrip.forgotten_cantrips.spectral_bed.badtime": "In this dimension, spectral beds can only be placed at night or during thunderstorms!",
 
-    "cantrip.forgotten_cantrips.force_consume": "Devour",
-    "cantrip.forgotten_cantrips.force_consume.desc": "Consumes the item in your other hand, sometimes even if it is normally not consumable. Devour allows you to eat items like totem of undying or shulker shell, so that you get unpredictable effects.",
-    "cantrip.forgotten_cantrips.force_consume.noitem": "No item to consume in the other hand",
-    "cantrip.forgotten_cantrips.force_consume.baditem": "Can't eat the item in the other hand",
+    "cantrip.forgotten_cantrips.devour": "Devour",
+    "cantrip.forgotten_cantrips.devour.desc": "Consumes the item in your other hand, sometimes even if it is normally not consumable. Devour allows you to eat items like totem of undying or shulker shell, so that you get unpredictable effects.",
+    "cantrip.forgotten_cantrips.devour.noitem": "No item to consume in the other hand",
+    "cantrip.forgotten_cantrips.devour.baditem": "Can't eat the item in the other hand",
 
     "cantrip.forgotten_cantrips.spectral_boat": "Spectral Boat",
     "cantrip.forgotten_cantrips.spectral_boat.desc": "Summons a spectral boat at the targeted point. The boat has a chest that is shared with your Spectral Donkey's! Despawns if not interacted with for some time.",
@@ -32,14 +32,14 @@
     "cantrip.forgotten_cantrips.spectral_donkey.toofar": "Can't summon a spectral donkey that far away!",
     "cantrip.forgotten_cantrips.spectral_donkey.notowner": "This donkey isn't yours!",
 
-    "cantrip.forgotten_cantrips.dmg_buff": "Damage Buff",
-    "cantrip.forgotten_cantrips.dmg_buff.desc": "Applies a stacking damage buff effect to yourself.",
+    "cantrip.forgotten_cantrips.empower_damage_buff": "Damage Buff",
+    "cantrip.forgotten_cantrips.empower_damage_buff.desc": "Applies a stacking damage buff effect to yourself.",
 
-    "cantrip.forgotten_cantrips.mana_cost_buff": "Mana Cost Buff",
-    "cantrip.forgotten_cantrips.mana_cost_buff.desc": "Applies a stacking mana cost buff effect to yourself.",
+    "cantrip.forgotten_cantrips.empower_mana_cost_buff": "Mana Cost Buff",
+    "cantrip.forgotten_cantrips.empower_mana_cost_buff.desc": "Applies a stacking mana cost buff effect to yourself.",
 
-    "cantrip.forgotten_cantrips.cantrip_buff": "Cantrip Buff",
-    "cantrip.forgotten_cantrips.cantrip_buff.desc": "Applies a stacking cantrip buff effect to yourself. The effect is reserved for empowering other cantrips later.",
+    "cantrip.forgotten_cantrips.empower_cantrip_buff": "Cantrip Buff",
+    "cantrip.forgotten_cantrips.empower_cantrip_buff.desc": "Applies a stacking cantrip buff effect to yourself. The effect is reserved for empowering other cantrips later.",
 
     "cantrip.forgotten_cantrips.spectral_armor": "Spectral Armor",
     "cantrip.forgotten_cantrips.spectral_armor.desc": "Summons a powerful Spectral armor set! With Great Power, comes Greater Spectral Defence. Taking it off however will shred it into pieces.",
@@ -110,9 +110,9 @@
     "effect.forgotten_cantrips.illumination": "Illumination",
     "effect.forgotten_cantrips.aether_stride": "Aether Stride",
     "effect.forgotten_cantrips.spectral_armor": "Spectral Armor",
-    "effect.forgotten_cantrips.dmg_buff": "Damage Buff",
-    "effect.forgotten_cantrips.mana_cost_buff": "Mana Cost Buff",
-    "effect.forgotten_cantrips.cantrip_buff": "Cantrip Buff",
+    "effect.forgotten_cantrips.empower_damage_buff": "Damage Buff",
+    "effect.forgotten_cantrips.empower_mana_cost_buff": "Mana Cost Buff",
+    "effect.forgotten_cantrips.empower_cantrip_buff": "Cantrip Buff",
     "effect.forgotten_cantrips.bubble_up": "Bubble Up",
 
     "entity.forgotten_cantrips.spectral_boat": "Spectral Boat",

@@ -314,9 +314,9 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
                  "cantrip.spectral_donkey.description",
                  "cantrip.spectral_boat.description",
                  "cantrip.spectral_armor.description",
-                 "cantrip.mana_cost_buff.description",
-                 "cantrip.dmg_buff.description",
-                 "cantrip.cantrip_buff.description",
+                 "cantrip.empower_mana_cost_buff.description",
+                 "cantrip.empower_damage_buff.description",
+                 "cantrip.empower_cantrip_buff.description",
                  "cantrip.spectral_slime.description",
                  "cantrip.bubble_up.description" -> {
 
@@ -343,11 +343,11 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
                  "cantrip.spectral_donkey.part_1",  "cantrip.spectral_donkey.part_2",   "cantrip.spectral_donkey.part_3",
                  "cantrip.spectral_boat.part_1",    "cantrip.spectral_boat.part_2",     "cantrip.spectral_boat.part_3",
                  "cantrip.spectral_armor.part_1",   "cantrip.spectral_armor.part_2",    "cantrip.spectral_armor.part_3",
-                 "cantrip.mana_cost_buff.part_1",   "cantrip.mana_cost_buff.part_2",    "cantrip.mana_cost_buff.part_3",
-                 "cantrip.dmg_buff.part_1",         "cantrip.dmg_buff.part_2",          "cantrip.dmg_buff.part_3",
-                 "cantrip.cantrip_buff.part_1",     "cantrip.cantrip_buff.part_2",      "cantrip.cantrip_buff.part_3",
                  "cantrip.spectral_slime.part_1",   "cantrip.spectral_slime.part_2",    "cantrip.spectral_slime.part_3",
-                 "cantrip.bubble_up.part_1",        "cantrip.bubble_up.part_2",         "cantrip.bubble_up.part_3" -> {
+                 "cantrip.bubble_up.part_1",        "cantrip.bubble_up.part_2",         "cantrip.bubble_up.part_3",
+                 "cantrip.empower_damage_buff.part_1", "cantrip.empower_damage_buff.part_2", "cantrip.empower_damage_buff.part_3",
+                 "cantrip.empower_cantrip_buff.part_1", "cantrip.empower_cantrip_buff.part_2", "cantrip.empower_cantrip_buff.part_3",
+                 "cantrip.empower_mana_cost_buff.part_1", "cantrip.empower_mana_cost_buff.part_2", "cantrip.empower_mana_cost_buff.part_3" -> {
 
                 // give item was chosen
                 int partNum = Integer.parseInt(from.substring(from.lastIndexOf('_') + 1));

@@ -23,13 +23,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
-import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 import net.ultrad00d.ForgottenCantrips.screen.MusicDiscSlotProvider;
 
-public class ForceConsumeCantripLogic implements ICantripLogic {
+public class DevourCantripLogic implements ICantripLogic {
     @Override
-    public String getCantripId() { return "force_consume"; }
+    public String getCantripId() { return "devour"; }
 
     @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {
