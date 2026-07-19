@@ -87,5 +87,5 @@ The product has reached its final course version, and every requirement was pass
 | **Dima280807**          | #228 | #236 | Reviewed #235, #238 | Final build verification, mod startup time testing | Demo video recording and editing |
 | **dtamindarov5839**     | #227 | #237 | Reviewed #235, #236 | Transition readiness verification | Updated `customer-handover.md`, `README.md` |
 | **l1n0n**               | #229 (Docs) | #238 | Reviewed #237 | UAT scenario updates | Week 7 Reflection, Retrospective, LLM report |
-| **notwindstone**        | #230 (CI) | #239 | CI testing, UAT support | Gradle build optimization, branch protection setup | Hosted documentation site updates, Rehearsal coordination |
+| **notwindstone**        | #230 (CI) | #239 | CI testing, UAT support | Gradle build optimization, Colossus Oak Cantrip | Hosted documentation site updates, Rehearsal coordination |
 | **Ultrad00d**           | #226, #228 (Balance) | #235, #236, #237, #238, #239 | Final approval on all PRs | Colossus Oak balancing, final release tagging | Sprint Review summary, Demo Day presentation lead |
