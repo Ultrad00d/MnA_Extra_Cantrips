@@ -361,6 +361,12 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
                     String cantripId = from.split("\\.")[1];
                     cap.setBranchState(cantripId, nextState);
 
+                    ResourceLocation partAdvancementId = ResourceLocation.fromNamespaceAndPath(
+                            ForgottenCantrips.MOD_ID,
+                            cantripId + "/part_" + partNum
+                    );
+                    ProgressionUtil.awardAdvancement(player, partAdvancementId);
+
                     long currentTicks = player.level().getDayTime();
                     long nextMorningTicks = ((currentTicks / 24000L) + 1) * 24000L;
                     cap.setUnlockTime(cantripId, nextMorningTicks);

@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.Tuple;
@@ -41,6 +42,7 @@ import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogue;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogueProvider;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardGlobalState;
 import net.ultrad00d.ForgottenCantrips.structure.OldWizardsFishingSavedData;
+import net.ultrad00d.ForgottenCantrips.util.ProgressionUtil;
 import net.ultrad00d.ForgottenCantrips.util.TimeUtil;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -465,7 +467,13 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
             }
 
             player.getCapability(WizardDialogueProvider.WIZARD_DIALOGUE_CAP).ifPresent(cap -> {
+                if (!ProgressionUtil.hasAdvancement(player, ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "root"))) {
+                    WizardDialogue.sendWizardReply(player, "not_ready", cap, DialogueChoice.BYE.getKey());
+                    return;
+                }
+
                 if (cap.getGlobalState() == WizardGlobalState.NOT_MET) {
+                    ProgressionUtil.awardAdvancement(player, ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "wizard"));
                     WizardDialogue.sendWizardReply(player,
                             "intro.1",
                             cap,

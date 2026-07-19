@@ -21,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.cantrip.*;
 import net.minecraft.world.entity.player.Player;
+import net.ultrad00d.ForgottenCantrips.util.ProgressionUtil;
 
 public class CantripRegistry {
     private static final int ICON_SHOW_TIME = 50;
@@ -44,22 +45,8 @@ public class CantripRegistry {
         }
     }
 
-    public static boolean advancementCheck(Player player, ICantrip cantrip) {
-        if (player instanceof ServerPlayer serverPlayer) {
-            MinecraftServer server = serverPlayer.getServer();
-            if (server == null) return false;
-
-            Advancement advancement = server.getAdvancements().getAdvancement(cantrip.getRequiredAdvancement());
-            if (advancement == null) return true;
-
-            AdvancementProgress progress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
-            return progress.isDone();
-        }
-        return false;
-    }
-
     public static boolean allowedToCast(Player player, ICantrip cantrip) {
-        if (!advancementCheck(player, cantrip)) {
+        if (!ProgressionUtil.hasAdvancement(player, cantrip.getRequiredAdvancement())) {
             player.sendSystemMessage(
                     Component.translatable("cantrip."+ ForgottenCantrips.MOD_ID + ".locked.pre")
                             .append(Component.translatable("cantrip." + ForgottenCantrips.MOD_ID + "." + cantrip.getId().getPath()))
