@@ -36,10 +36,10 @@ public class SpectralSlimeCantripLogic implements ICantripLogic {
     }
 
     private int getEmpoweredSlimeSize(Player player) {
-        if (!player.hasEffect(EffectRegistry.CANTRIP_BUFF.get())) {
+        if (!player.hasEffect(EffectRegistry.EMPOWER_CANTRIP_BUFF.get())) {
             return 1;
         }
 
-        return Math.min(8, 2 + player.getEffect(EffectRegistry.CANTRIP_BUFF.get()).getAmplifier());
+        return Math.min(8, 2 + player.getEffect(EffectRegistry.EMPOWER_CANTRIP_BUFF.get()).getAmplifier());
     }
 }

@@ -2,7 +2,6 @@ package net.ultrad00d.ForgottenCantrips.cantrip;
 
 import com.mna.api.tools.RLoc;
 import net.minecraft.resources.ResourceLocation;
-import net.ultrad00d.ForgottenCantrips.dialogue.DialogueChoice;
 import org.jetbrains.annotations.Nullable;
 
 public enum CantripType {
@@ -21,92 +20,92 @@ public enum CantripType {
             3,
             new LightningCantripLogic(),
             false,
-            "uc1/part_3",
+            "lightning/part_3",
             RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
     ),
     SPECTRAL_BED(
-            3,
+            2,
             new SpectralBedCantripLogic(),
             false,
-            "uc1/part_3",
-            RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
+            "spectral_bed/part_3",
+            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/knot3"), RLoc.create("manaweave_patterns/diamond")
     ),
     SPECTRAL_BOAT(
-            3,
+            2,
             new SpectralBoatCantripLogic(),
             false,
-            "uc1/part_3",
-            RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
+            "spectral_boat/part_3",
+            RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/diamond"), RLoc.create("manaweave_patterns/circle")
     ),
     SPECTRAL_DONKEY(
             3,
             new SpectralDonkeyCantripLogic(),
             false,
-            "uc1/part_3",
-            RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
+            "spectral_donkey/part3",
+            RLoc.create("manaweave_patterns/inverted_triangle"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/circle")
     ),
-    FORCE_CONSUME(
+    DEVOUR(
             3,
-            new ForceConsumeCantripLogic(),
+            new DevourCantripLogic(),
             false,
-            "uc1/part_3",
-            RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
+            "devour/part_3",
+            RLoc.create("manaweave_patterns/diamond"), RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/diamond")
     ),
     SPECTRAL_ARMOR(
             1,
             new SpectralArmorCantripLogic(),
             true,
-            null,
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+            "spectral_armor/part3",
+            RLoc.create("manaweave_patterns/slash"), RLoc.create("manaweave_patterns/triangle"), RLoc.create("manaweave_patterns/backslash")
     ),
     RESET_VILLAGER(
-            1,
+            3,
             new ResetVillagerTradingProgressCantripLogic(),
             false,
-            null,
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+            "reset_villager/part3",
+            RLoc.create("manaweave_patterns/bolt"), RLoc.create("manaweave_patterns/diamond"), RLoc.create("manaweave_patterns/square")
     ),
     EMPOWER_DAMAGE_BUFF(
             2,
             new EmpowerDamageBuffCantripLogic(),
             true,
-            null,
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+            "empower_damage_buff/part3",
+            RLoc.create("manaweave_patterns/knot4"), RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/slash")
     ),
     EMPOWER_MANA_BUFF(
             2,
             new EmpowerManaCostBuffCantripLogic(),
             true,
-            null,
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+            "empower_mana_buff/part3",
+            RLoc.create("manaweave_patterns/knot4"), RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/square")
     ),
     EMPOWER_CANTRIP_BUFF(
             2,
             new EmpowerCantripBuffCantripLogic(),
             true,
-            null,
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+            "empower_cantrip_buff/part3",
+            RLoc.create("manaweave_patterns/knot4"), RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/triangle")
     ),
     SPECTRAL_SLIME(
-            1,
+            2,
             new SpectralSlimeCantripLogic(),
             false,
-            null,
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+            "spectral_slime/part3",
+            RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/triangle"), RLoc.create("manaweave_patterns/square")
     ),
     COLOSSUS_OAK(
             1,
             new ColossusOakCantripLogic(),
             false,
-            null,
+            "colossus_oak/part3",
             RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
     ),
     BUBBLE_UP(
-            1,
+            2,
             new BubbleUpCantripLogic(),
             true,
-            null,
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+            "bubble_up/part3",
+            RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/diamond"), RLoc.create("manaweave_patterns/circle")
     );
 
     private final String id;
@@ -132,9 +131,12 @@ public enum CantripType {
     public @Nullable String getAdvancementPath() { return advancementPath; }
     public ResourceLocation[] getShapes() { return shapes; }
 
-    public static CantripType fromDialogueChoice(DialogueChoice choice) {
-        // Maps "cantrip.lightning" -> LIGHTNING, "cantrip.spectral_slime" -> SPECTRAL_SLIME, etc.
-        String lookupName = choice.name().replace("_CANTRIP", "");
-        return CantripType.valueOf(lookupName);
+    public static @Nullable CantripType fromId(String id) {
+        for (CantripType type : values()) {
+            if (type.getId().equals(id)) {
+                return type;
+            }
+        }
+        return null;
     }
 }

@@ -1,0 +1,23 @@
+{
+    "display": {
+        "title": {
+            "text": "Old Wizard"
+        },
+    "description": {
+        "translate": "advancement.forgotten_cantrips.meet_old_wizard"
+    },
+    "icon": {
+        "item": "minecraft:stone"
+    },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "criterion": {
+            "trigger": "minecraft:impossible"
+        }
+    },
+    "parent": "forgotten_cantrips:root"
+}

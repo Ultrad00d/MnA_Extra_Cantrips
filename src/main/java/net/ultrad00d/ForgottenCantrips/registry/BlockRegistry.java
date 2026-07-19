@@ -6,6 +6,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
+import net.ultrad00d.ForgottenCantrips.block.OldWizardSpawnerBlock;
 import net.ultrad00d.ForgottenCantrips.block.SpectralBedBlock;
 
 import java.util.function.Supplier;
@@ -16,6 +17,9 @@ public class BlockRegistry {
 
     public static final RegistryObject<Block> SPECTRAL_BED = registerBlock("spectral_bed",
             SpectralBedBlock::new);
+
+    public static final RegistryObject<Block> OLD_WIZARD_SPAWNER = registerBlock("old_wizard_spawner",
+            OldWizardSpawnerBlock::new);
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         return BLOCKS.register(name, block);

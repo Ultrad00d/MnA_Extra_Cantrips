@@ -32,17 +32,17 @@ public class SpellBuffAdjusters
 
     private static boolean hasDmgBuff(SpellAdjustingContext context)
     {
-        return context.stage == SpellCastStage.CASTING && hasEffect(context.caster, EffectRegistry.DMG_BUFF.get());
+        return context.stage == SpellCastStage.CASTING && hasEffect(context.caster, EffectRegistry.EMPOWER_DAMAGE_BUFF.get());
     }
 
     private static boolean hasManaCostBuff(SpellAdjustingContext context)
     {
-        return context.stage == SpellCastStage.CASTING && hasEffect(context.caster, EffectRegistry.MANA_COST_BUFF.get());
+        return context.stage == SpellCastStage.CASTING && hasEffect(context.caster, EffectRegistry.EMPOWER_MANA_COST_BUFF.get());
     }
 
     private static void applyDmgBuff(SpellAdjustingContext context)
     {
-        int level = getEffectLevel(context.caster, EffectRegistry.DMG_BUFF.get());
+        int level = getEffectLevel(context.caster, EffectRegistry.EMPOWER_DAMAGE_BUFF.get());
         float damageMultiplier = 1.0F + DAMAGE_BONUS_PER_LEVEL * level;
 
         for (IModifiedSpellPart<SpellEffect> component : context.spell.getComponents())
@@ -57,7 +57,7 @@ public class SpellBuffAdjusters
 
     private static void applyManaCostBuff(SpellAdjustingContext context)
     {
-        int level = getEffectLevel(context.caster, EffectRegistry.MANA_COST_BUFF.get());
+        int level = getEffectLevel(context.caster, EffectRegistry.EMPOWER_MANA_COST_BUFF.get());
         float multiplier = Math.max(0.0F, 1.0F - MANA_COST_REDUCTION_PER_LEVEL * level);
         float manaCost = context.spell.getManaCost();
 

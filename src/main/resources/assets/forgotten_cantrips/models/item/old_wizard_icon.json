@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "forgotten_cantrips:item/old_wizard_icon"
+    }
+}

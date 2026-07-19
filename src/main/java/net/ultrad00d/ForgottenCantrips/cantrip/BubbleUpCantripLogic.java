@@ -8,8 +8,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
-import net.ultrad00d.ForgottenCantrips.integration.Helper;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
+import net.ultrad00d.ForgottenCantrips.util.HelperUtil;
 
 public class BubbleUpCantripLogic implements ICantripLogic {
     @Override
@@ -22,7 +22,7 @@ public class BubbleUpCantripLogic implements ICantripLogic {
             return;
         }
 
-        if (Helper.isInBubbleColumn(player)) {
+        if (HelperUtil.isInBubbleColumn(player)) {
             player.sendSystemMessage(Component.translatable(getLangKey("bubble_column")));
             return;
         }

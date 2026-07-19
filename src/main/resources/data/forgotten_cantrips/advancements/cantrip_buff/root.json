@@ -1,0 +1,65 @@
+{
+  "display": {
+    "title": {
+      "text": "Unknown Cantrip"
+    },
+    "description": {
+      "translate": "advancement.forgotten_cantrips.cantrip_buff.where_to_find"
+    },
+    "icon": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "frame": "goal",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "advancement_1": {
+      "trigger": "minecraft:tick",
+      "conditions": {
+        "player": {
+          "type_specific": {
+            "type": "player",
+            "advancements": {
+              "forgotten_cantrips:cantrip_buff/part_1": true
+            }
+          }
+        }
+      }
+    },
+    "advancement_2": {
+      "trigger": "minecraft:tick",
+      "conditions": {
+        "player": {
+          "type_specific": {
+            "type": "player",
+            "advancements": {
+              "forgotten_cantrips:cantrip_buff/part_2": true
+            }
+          }
+        }
+      }
+    },
+    "advancement_3": {
+      "trigger": "minecraft:tick",
+      "conditions": {
+        "player": {
+          "type_specific": {
+            "type": "player",
+            "advancements": {
+              "forgotten_cantrips:cantrip_buff/part_3": true
+            }
+          }
+        }
+      }
+    },
+    "cantrip_cast": {
+      "trigger": "mna:cast_cantrip",
+      "conditions": {
+        "cantripID": "forgotten_cantrips:cantrip_buff"
+      }
+    }
+  },
+  "parent": "forgotten_cantrips:wizard"
+}
