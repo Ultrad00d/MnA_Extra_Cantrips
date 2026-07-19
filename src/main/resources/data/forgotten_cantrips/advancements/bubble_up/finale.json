@@ -1,0 +1,65 @@
+{
+  "display": {
+    "title": {
+      "translate": "advancement.forgotten_cantrips.bubble_up.name"
+    },
+    "description": {
+      "translate": "advancement.forgotten_cantrips.bubble_up.description"
+    },
+    "icon": {
+      "item": "minecraft:turtle_helmet"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "advancement_1": {
+      "trigger": "minecraft:tick",
+      "conditions": {
+        "player": {
+          "type_specific": {
+            "type": "player",
+            "advancements": {
+              "forgotten_cantrips:bubble_up/part_1": true
+            }
+          }
+        }
+      }
+    },
+    "advancement_2": {
+      "trigger": "minecraft:tick",
+      "conditions": {
+        "player": {
+          "type_specific": {
+            "type": "player",
+            "advancements": {
+              "forgotten_cantrips:bubble_up/part_2": true
+            }
+          }
+        }
+      }
+    },
+    "advancement_3": {
+      "trigger": "minecraft:tick",
+      "conditions": {
+        "player": {
+          "type_specific": {
+            "type": "player",
+            "advancements": {
+              "forgotten_cantrips:bubble_up/part_3": true
+            }
+          }
+        }
+      }
+    },
+    "cantrip_cast": {
+      "trigger": "mna:cast_cantrip",
+      "conditions": {
+        "cantripID": "forgotten_cantrips:bubble_up"
+      }
+    }
+  },
+  "parent": "forgotten_cantrips:bubble_up/part_3"
+}

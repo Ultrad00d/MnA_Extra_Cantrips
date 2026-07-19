@@ -1,0 +1,23 @@
+{
+  "display": {
+    "title": {
+      "text": "Unknown Cantrip: Third symbol"
+    },
+    "description": {
+      "translate": "advancement.forgotten_cantrips.bubble_up.part_3"
+    },
+    "icon": {
+      "item": "minecraft:turtle_helmet"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "criterion": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "forgotten_cantrips:bubble_up/part_2"
+}

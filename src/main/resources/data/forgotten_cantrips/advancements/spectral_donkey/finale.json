@@ -1,0 +1,65 @@
+{
+  "display": {
+    "title": {
+      "translate": "advancement.forgotten_cantrips.spectral_donkey.name"
+    },
+    "description": {
+      "translate": "advancement.forgotten_cantrips.spectral_donkey.description"
+    },
+    "icon": {
+      "item": "minecraft:saddle"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "advancement_1": {
+      "trigger": "minecraft:tick",
+      "conditions": {
+        "player": {
+          "type_specific": {
+            "type": "player",
+            "advancements": {
+              "forgotten_cantrips:spectral_donkey/part_1": true
+            }
+          }
+        }
+      }
+    },
+    "advancement_2": {
+      "trigger": "minecraft:tick",
+      "conditions": {
+        "player": {
+          "type_specific": {
+            "type": "player",
+            "advancements": {
+              "forgotten_cantrips:spectral_donkey/part_2": true
+            }
+          }
+        }
+      }
+    },
+    "advancement_3": {
+      "trigger": "minecraft:tick",
+      "conditions": {
+        "player": {
+          "type_specific": {
+            "type": "player",
+            "advancements": {
+              "forgotten_cantrips:spectral_donkey/part_3": true
+            }
+          }
+        }
+      }
+    },
+    "cantrip_cast": {
+      "trigger": "mna:cast_cantrip",
+      "conditions": {
+        "cantripID": "forgotten_cantrips:spectral_donkey"
+      }
+    }
+  },
+  "parent": "forgotten_cantrips:spectral_donkey/part_3"
+}
