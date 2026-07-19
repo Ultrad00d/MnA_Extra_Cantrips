@@ -14,7 +14,6 @@ import net.ultrad00d.ForgottenCantrips.cantrip.CantripType;
 import net.ultrad00d.ForgottenCantrips.util.ProgressionUtil;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 public class WizardDialogue { // todo: make dialogue text color slightly purple
@@ -165,9 +164,11 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
                         CantripType.SPECTRAL_DONKEY.getId(),
                         CantripType.SPECTRAL_BOAT.getId(),
                         CantripType.SPECTRAL_ARMOR.getId(),
-//                        CantripType.EMPOWER.getId(),
+                        CantripType.EMPOWER_MANA_BUFF.getId(),
+                        CantripType.EMPOWER_DAMAGE_BUFF.getId(),
+                        CantripType.EMPOWER_CANTRIP_BUFF.getId(),
                         CantripType.SPECTRAL_SLIME.getId(),
-//                        CantripType.BUBBLE_UP.getId(),
+                        CantripType.BUBBLE_UP.getId(),
                         DialogueChoice.BYE.getKey()
                 );
             }
