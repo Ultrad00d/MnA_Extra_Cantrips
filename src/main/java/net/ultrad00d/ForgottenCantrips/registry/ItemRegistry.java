@@ -36,6 +36,9 @@ public class ItemRegistry {
     public static final RegistryObject<Item> ANCIENT_SCROLL = registerItem("ancient_scroll",
             () -> new AncientScrollItem(new Item.Properties()));
 
+    public static final RegistryObject<Item> OLD_WIZARD_ICON = registerItem("old_wizard_icon",
+            () -> new Item(new Item.Properties()));
+
 
     private static <T extends Item> RegistryObject<T> registerItem(String name, Supplier<T> item) {
         return ITEMS.register(name, item);

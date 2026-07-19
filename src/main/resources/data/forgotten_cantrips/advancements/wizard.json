@@ -7,7 +7,7 @@
         "translate": "advancement.forgotten_cantrips.meet_old_wizard"
     },
     "icon": {
-        "item": "minecraft:stone"
+        "item": "forgotten_cantrips:old_wizard_icon"
     },
         "frame": "task",
         "show_toast": true,
