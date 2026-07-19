@@ -1,13 +1,13 @@
 {
   "display": {
     "title": {
-      "translate": "advancement.forgotten_cantrips.empower.name"
+      "translate": "advancement.forgotten_cantrips.mana_cost_buff.name"
     },
     "description": {
-      "translate": "advancement.forgotten_cantrips.empower.description"
+      "translate": "advancement.forgotten_cantrips.mana_cost_buff.description"
     },
     "icon": {
-      "item": "minecraft:potion"
+      "item": "minecraft:enchanted_book"
     },
     "frame": "challenge",
     "show_toast": true,
@@ -22,7 +22,7 @@
           "type_specific": {
             "type": "player",
             "advancements": {
-              "forgotten_cantrips:empower/part_1": true
+              "forgotten_cantrips:mana_cost_buff/part_1": true
             }
           }
         }
@@ -35,7 +35,7 @@
           "type_specific": {
             "type": "player",
             "advancements": {
-              "forgotten_cantrips:empower/part_2": true
+              "forgotten_cantrips:mana_cost_buff/part_2": true
             }
           }
         }
@@ -48,7 +48,7 @@
           "type_specific": {
             "type": "player",
             "advancements": {
-              "forgotten_cantrips:empower/part_3": true
+              "forgotten_cantrips:mana_cost_buff/part_3": true
             }
           }
         }
@@ -57,9 +57,9 @@
     "cantrip_cast": {
       "trigger": "mna:cast_cantrip",
       "conditions": {
-        "cantripID": "forgotten_cantrips:empower"
+        "cantripID": "forgotten_cantrips:mana_cost_buff"
       }
     }
   },
-  "parent": "forgotten_cantrips:empower/part_3"
+  "parent": "forgotten_cantrips:mana_cost_buff/part_3"
 }

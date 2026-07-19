@@ -1,13 +1,13 @@
 {
   "display": {
     "title": {
-      "text": "Unknown Cantrip: Second symbol"
+      "text": "Unknown Cantrip: Third symbol"
     },
     "description": {
-      "translate": "advancement.forgotten_cantrips.empower.part_2"
+      "translate": "advancement.forgotten_cantrips.dmg_buff.part_3"
     },
     "icon": {
-      "item": "minecraft:potion"
+      "item": "minecraft:diamond_sword"
     },
     "frame": "task",
     "show_toast": true,
@@ -19,5 +19,5 @@
       "trigger": "minecraft:impossible"
     }
   },
-  "parent": "forgotten_cantrips:empower/part_1"
+  "parent": "forgotten_cantrips:dmg_buff/part_2"
 }

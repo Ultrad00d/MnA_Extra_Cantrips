@@ -4,10 +4,10 @@
       "text": "Unknown Cantrip"
     },
     "description": {
-      "translate": "advancement.forgotten_cantrips.empower.where_to_find"
+      "translate": "advancement.forgotten_cantrips.cantrip_buff.where_to_find"
     },
     "icon": {
-      "item": "minecraft:potion"
+      "item": "minecraft:amethyst_shard"
     },
     "frame": "goal",
     "show_toast": false,
@@ -22,7 +22,7 @@
           "type_specific": {
             "type": "player",
             "advancements": {
-              "forgotten_cantrips:empower/part_1": true
+              "forgotten_cantrips:cantrip_buff/part_1": true
             }
           }
         }
@@ -35,7 +35,7 @@
           "type_specific": {
             "type": "player",
             "advancements": {
-              "forgotten_cantrips:empower/part_2": true
+              "forgotten_cantrips:cantrip_buff/part_2": true
             }
           }
         }
@@ -48,7 +48,7 @@
           "type_specific": {
             "type": "player",
             "advancements": {
-              "forgotten_cantrips:empower/part_3": true
+              "forgotten_cantrips:cantrip_buff/part_3": true
             }
           }
         }
@@ -57,7 +57,7 @@
     "cantrip_cast": {
       "trigger": "mna:cast_cantrip",
       "conditions": {
-        "cantripID": "forgotten_cantrips:empower"
+        "cantripID": "forgotten_cantrips:cantrip_buff"
       }
     }
   },
