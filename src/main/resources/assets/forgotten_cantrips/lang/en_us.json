@@ -1,19 +1,19 @@
 {
   "cantrip.forgotten_cantrips.lightning": "Lightning",
-  "cantrip.forgotten_cantrips.lightning.desc": "Summons a simple lightning bolt where you're looking.",
+  "cantrip.forgotten_cantrips.lightning.desc": "Calls the Zeus to summon the Lightning nearby because you two are buddies, of course.",
   "cantrip.forgotten_cantrips.lightning.obstructed": "Can't summon lightning here!",
 
-  "cantrip.forgotten_cantrips.reset_villager_trading_progress": "Villager Mind-Wiper",
-  "cantrip.forgotten_cantrips.reset_villager_trading_progress.desc": "Use with an emerald in other hand while looking at a villager to erase its memory (job, level, offers) and save it onto the emerald, which can then be restored onto any villager (but a nitwit) with a right click.",
-  "cantrip.forgotten_cantrips.reset_villager_trading_progress.no_emerald": "You must hold a regular emerald in your other hand!",
-  "cantrip.forgotten_cantrips.reset_villager_trading_progress.nothing_to_copy": "There doesn't seem much to wipe from this villager's head...",
-  "cantrip.forgotten_cantrips.reset_villager_trading_progress.nothing_in_reach": "There are no entities in your reach!",
-  "cantrip.forgotten_cantrips.reset_villager_trading_progress.not_a_villager": "Try using this on a villager!",
-  "cantrip.forgotten_cantrips.reset_villager_trading_progress.nitwit": "This villager seems like too much of a NITWIT to even have a job...",
-  "cantrip.forgotten_cantrips.reset_villager_trading_progress.empty_warning": "It seems this Memory Emerald is... empty? Where did you even get it?",
+  "cantrip.forgotten_cantrips.reset_villager": "Villager Mind-Wiper",
+  "cantrip.forgotten_cantrips.reset_villager.desc": "Use with an emerald in other hand while looking at a villager to erase its memory (job, level, offers) and save it onto the emerald, which can then be restored onto any villager (but a nitwit) with a right click.",
+  "cantrip.forgotten_cantrips.reset_villager.no_emerald": "You must hold a regular emerald in your other hand!",
+  "cantrip.forgotten_cantrips.reset_villager.nothing_to_copy": "There doesn't seem much to wipe from this villager's head...",
+  "cantrip.forgotten_cantrips.reset_villager.nothing_in_reach": "There are no entities in your reach!",
+  "cantrip.forgotten_cantrips.reset_villager.not_a_villager": "Try using this on a villager!",
+  "cantrip.forgotten_cantrips.reset_villager.nitwit": "This villager seems like too much of a NITWIT to even have a job...",
+  "cantrip.forgotten_cantrips.reset_villager.empty_warning": "It seems this Memory Emerald is... empty? Where did you even get it?",
 
   "cantrip.forgotten_cantrips.spectral_bed": "Spectral Bed",
-  "cantrip.forgotten_cantrips.spectral_bed.desc": "Summons a single-use bed where you're looking. The bed doesn't change your respawn point. In dimensions where beds are usable, the bed disappears in the morning and can only be placed at night or during thunderstorms.",
+  "cantrip.forgotten_cantrips.spectral_bed.desc": "Summons a single-use bed that doesn't change your respawn point.",
   "cantrip.forgotten_cantrips.spectral_bed.toofar": "Can't place a spectral bed that far away!",
   "cantrip.forgotten_cantrips.spectral_bed.nospace": "Can't fit a spectral bed there!",
   "cantrip.forgotten_cantrips.spectral_bed.badtarget": "Can't place a spectral bed on there!",
@@ -47,10 +47,63 @@
   "cantrip.forgotten_cantrips.spectral_slime": "Spectral Slime",
   "cantrip.forgotten_cantrips.spectral_slime.desc": "Summons a small friendly spectral slime. It follows you from a distance and fights hostile creatures.",
 
+  "cantrip.forgotten_cantrips.bubble_up.shallow_water": "You should be at least two blocks under the water",
+  "cantrip.forgotten_cantrips.bubble_up.bubble_column": "The cantrip does not work in the bubble columns",
+  "cantrip.forgotten_cantrips.bubble_up": "Bubble Up",
+  "cantrip.forgotten_cantrips.bubble_up.desc": "Rapidly floats you up out of the water like a dolphin. Can only be cast while submerged deeper than two blocks under water",
+  "cantrip.forgotten_cantrips.bubble_up.not_submerged": "You should be in water to cast Bubble Up!",
+
   "command.forgotten_cantrips.music_disc.drop.empty": "No music disc stored",
   "command.forgotten_cantrips.music_disc.drop.success": "Music disc dropped",
 
   "container.forgotten_cantrips.spectral_chest": "Spectral Chest",
+
+  "cantrip.forgotten_cantrips.locked.pre": "This may be the symbols needed for the ",
+  "cantrip.forgotten_cantrips.locked.post": " cantrip, however I still have to learn it first...",
+
+  "advancement.forgotten_cantrips.uc_lightning.where_to_find": "Find pieces of forgotten knowledge in ___.",
+  "advancement.forgotten_cantrips.uc_lightning.part_1": "The Ancient scroll I've found says that this cantrip might start with this...\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
+  "advancement.forgotten_cantrips.uc_lightning.part_2": "This Ancient scroll suggests that this cantrip's middle symbol is something like...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
+  "advancement.forgotten_cantrips.uc_lightning.part_3": "And there I found the last symbol! It definitely was this:\n\n   ▉\n    ▉\n▉▉▉▉▉▉▉\n  ▉\n   ▉",
+  "advancement.forgotten_cantrips.uc_lightning.name": "Lightning Cantrip",
+  "advancement.forgotten_cantrips.uc_lightning.description": "A shocking discovery.",
+
+  "advancement.forgotten_cantrips.uc_spectral_bed.where_to_find": "Find pieces of forgotten knowledge in ___.",
+  "advancement.forgotten_cantrips.uc_spectral_bed.part_1": "The Ancient scroll I've found says that this cantrip might start with this...\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
+  "advancement.forgotten_cantrips.uc_spectral_bed.part_2": "This Ancient scroll suggests that this cantrip's middle symbol is something like...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
+  "advancement.forgotten_cantrips.uc_spectral_bed.part_3": "And there I found the last symbol! It definitely was this:\n\n  ▉\n   ▉\n▉▉▉▉▉▉▉\n ▉\n  ▉",
+  "advancement.forgotten_cantrips.uc_spectral_bed.name": "Spectral Bed Cantrip",
+  "advancement.forgotten_cantrips.uc_spectral_bed.description": "Lights out.",
+
+  "advancement.forgotten_cantrips.uc_spectral_boat.where_to_find": "Find pieces of forgotten knowledge in ___.",
+  "advancement.forgotten_cantrips.uc_spectral_boat.part_1": "The Ancient scroll I've found says that this cantrip might start with this...\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
+  "advancement.forgotten_cantrips.uc_spectral_boat.part_2": "This Ancient scroll suggests that this cantrip's middle symbol is something like...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
+  "advancement.forgotten_cantrips.uc_spectral_boat.part_3": "And there I found the last symbol! It definitely was this:\n\n  ▉\n   ▉\n▉▉▉▉▉▉▉\n ▉\n  ▉",
+  "advancement.forgotten_cantrips.uc_spectral_boat.name": "Spectral Boat Cantrip",
+  "advancement.forgotten_cantrips.uc_spectral_boat.description": "How do oceans say hi? They wave.",
+
+  "advancement.forgotten_cantrips.uc_reset_villager.where_to_find": "Find pieces of forgotten knowledge in trail ruins and magical structures.",
+  "advancement.forgotten_cantrips.uc_reset_villager.part_1": "The Ancient scroll I've found says that this cantrip might start with this...\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
+  "advancement.forgotten_cantrips.uc_reset_villager.part_2": "This Ancient scroll suggests that this cantrip's middle symbol is something like...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
+  "advancement.forgotten_cantrips.uc_reset_villager.part_3": "And there I found the last symbol! It definitely was this:\n\n  ▉\n   ▉\n▉▉▉▉▉▉▉\n ▉\n  ▉",
+  "advancement.forgotten_cantrips.uc_reset_villager.name": "Villager Mind-Wiper Cantrip",
+  "advancement.forgotten_cantrips.uc_reset_villager.description": "Don't look at the flash.",
+
+  "advancement.forgotten_cantrips.uc_devour.where_to_find": "Find pieces of forgotten knowledge in trail ruins and magical structures.",
+  "advancement.forgotten_cantrips.uc_devour.part_1": "The Ancient scroll I've found says that this cantrip might start with this...\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
+  "advancement.forgotten_cantrips.uc_devour.part_2": "This Ancient scroll suggests that this cantrip's middle symbol is something like...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
+  "advancement.forgotten_cantrips.uc_devour.part_3": "And there I found the last symbol! It definitely was this:\n\n  ▉\n   ▉\n▉▉▉▉▉▉▉\n ▉\n  ▉",
+  "advancement.forgotten_cantrips.uc_devour.name": "Devour Cantrip",
+  "advancement.forgotten_cantrips.uc_devour.description": "You're Not You When You're Hungry (TM)",
+
+  "advancement.forgotten_cantrips.uc_colossus_oak.where_to_find": "Find pieces of forgotten knowledge in trail ruins and magical structures.",
+  "advancement.forgotten_cantrips.uc_colossus_oak.part_1": "The Ancient scroll I've found says that this cantrip might start with this...\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
+  "advancement.forgotten_cantrips.uc_colossus_oak.part_2": "This Ancient scroll suggests that this cantrip's middle symbol is something like...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
+  "advancement.forgotten_cantrips.uc_colossus_oak.part_3": "And there I found the last symbol! It definitely was this:\n\n  ▉\n   ▉\n▉▉▉▉▉▉▉\n ▉\n  ▉",
+  "advancement.forgotten_cantrips.uc_colossus_oak.name": "Colossus Oak Cantrip",
+  "advancement.forgotten_cantrips.uc_colossus_oak.description": "Bone meal mixed with steroids",
+
+
 
   "effect.forgotten_cantrips.undying": "Undying",
   "effect.forgotten_cantrips.illumination": "Illumination",
@@ -59,16 +112,29 @@
   "effect.forgotten_cantrips.dmg_buff": "Damage Buff",
   "effect.forgotten_cantrips.mana_cost_buff": "Mana Cost Buff",
   "effect.forgotten_cantrips.cantrip_buff": "Cantrip Buff",
+  "effect.forgotten_cantrips.bubble_up": "Bubble Up",
 
   "entity.forgotten_cantrips.spectral_boat": "Spectral Boat",
   "entity.forgotten_cantrips.spectral_donkey": "Spectral Donkey",
   "entity.forgotten_cantrips.spectral_slime": "Spectral Slime",
+  "entity.forgotten_cantrips.old_wizard": "Old Wizard",
+
+  "item.forgotten_cantrips.ancient_scroll": "Ancient Scroll",
+  "item.forgotten_cantrips.ancient_scroll.hint.reset_villager": "Seems to say something about villagers, emeralds... and brainwashing?",
+  "item.forgotten_cantrips.ancient_scroll.hint.devour": "Seems to say something about hunger... and music discs?",
+  "item.forgotten_cantrips.ancient_scroll.hint.colossus_oak": "Seems to say something about saplings... and steroids?",
+  "item.forgotten_cantrips.ancient_scroll.hint.usage": "Use this to get one step closer to mastering one of the Forgotten Cantrips (TM)!",
+  "item.forgotten_cantrips.ancient_scroll.already_known": "It doesn't seem like you'll learn anything new from this scroll... Why not try trading it?",
 
   "item.forgotten_cantrips.memory_emerald": "Memory Emerald",
   "item.forgotten_cantrips.memory_emerald.empty": "Empty",
   "item.forgotten_cantrips.memory_emerald.instructions": "Hold in other hand while casting Villager Mind-Wiper to apply these memories onto a villager!",
   "item.forgotten_cantrips.memory_emerald.jobless": "Jobless",
   "item.forgotten_cantrips.spectral_slime_ball": "Spectral Slime Ball",
+  "item.forgotten_cantrips.spectral_helmet": "Spectral Helmet",
+  "item.forgotten_cantrips.spectral_chestplate": "Spectral Chestplate",
+  "item.forgotten_cantrips.spectral_leggings": "Spectral Leggings",
+  "item.forgotten_cantrips.spectral_boots": "Spectral Boots",
 
   "item.minecraft.potion.effect.undying": "Potion of Undying",
   "item.minecraft.splash_potion.effect.undying": "Splash Potion of Undying",
@@ -83,8 +149,23 @@
   "item.minecraft.lingering_potion.effect.aether_stride": "Lingering Potion of Aether Stride",
   "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride",
 
-  "item.forgotten_cantrips.spectral_helmet": "Spectral Helmet",
-  "item.forgotten_cantrips.spectral_chestplate": "Spectral Chestplate",
-  "item.forgotten_cantrips.spectral_leggings": "Spectral Leggings",
-  "item.forgotten_cantrips.spectral_boots": "Spectral Boots"
+  "dialogue.forgotten_cantrips.choice.continue": "Continue",
+  "dialogue.forgotten_cantrips.choice.back": "Back",
+  "dialogue.forgotten_cantrips.choice.bye": "Bye",
+  "dialogue.forgotten_cantrips.choice.cantrips_menu": "Cantrips Menu",
+
+  "dialogue.forgotten_cantrips.wizard.intro.1": "Oh! A traveler! *Cough, cough* Halt there, traveler. It has been decades since anyone stumbled into this forgotten sanctum. The dust settles heavily on those who lack a purpose.",
+  "dialogue.forgotten_cantrips.wizard.intro.2": "I am a very Old Wizard. I manipulate the raw, volatile syntax of the cosmos - what your kind calls 'magic'.",
+  "dialogue.forgotten_cantrips.wizard.intro.3": "I sense a faint spark of attunement within you, though it is currently buried under immense ignorance.",
+  "dialogue.forgotten_cantrips.wizard.intro.4": "Tell me, stranger... do you seek to bend the elements to your will, or will you scurry back to the safety of the mundane world?",
+  "dialogue.forgotten_cantrips.wizard.goodbye": "Wish ya luck, traveler!",
+  "dialogue.forgotten_cantrips.wizard.fallback": "Ya travelers, never know what they sayin'",
+  "dialogue.forgotten_cantrips.wizard.back_again.1": "Ah... it's you again. Or is it? Forgive me, the centuries tend to blur faces together like rain on parchment.",
+  "dialogue.forgotten_cantrips.wizard.back_again.2": "Yes, yes, the spark from before. Let us skip the pleasantries and get back to business.",
+  "dialogue.forgotten_cantrips.wizard.cantrips": "Speak up then. Which thread of the arcane do you wish to unravel today?",
+  "dialogue.forgotten_cantrips.wizard.cantrip_already_rote": "Spells list - empty :D",
+  "dialogue.forgotten_cantrips.wizard.cantrip.lightning.1": "Placeholder dialogue for lightning cantrip learning path",
+
+  "chat.forgotten_cantrips.click_to_select": "Click to select this option",
+  "chat.forgotten_cantrips.locked": "Your Tier to learn this is too low"
 }

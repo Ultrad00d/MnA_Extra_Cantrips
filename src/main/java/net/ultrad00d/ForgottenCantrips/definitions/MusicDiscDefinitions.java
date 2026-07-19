@@ -3,9 +3,10 @@ package net.ultrad00d.ForgottenCantrips.definitions;
 import java.util.Map;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 
 public class MusicDiscDefinitions {
-    public static final String DISC_ROOT = "forgotten_cantrips_disc";
+    public static final String DISC_ROOT = ForgottenCantrips.MOD_ID + "_disc";
     public static final String DISC_ITEM = DISC_ROOT + "_item";
     public static final String DISC_START = DISC_ROOT + "_start";
     public static final String DISC_DURATION = DISC_ROOT + "_duration";

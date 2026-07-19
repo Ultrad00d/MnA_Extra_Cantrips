@@ -13,16 +13,20 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.blockentity.SpectralBedBlockEntity;
 import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
 
-public class SpectralBedCantripLogic  extends CantripLogic {
+public class SpectralBedCantripLogic implements ICantripLogic {
+    @Override
+    public String getCantripId() { return "spectral_bed"; }
+
     @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand) {     
         HitResult rayHit = player.pick(player.getBlockReach(), 0.0F, false);
 
         if (rayHit.getType() != BlockHitResult.Type.BLOCK) {
-            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_bed.toofar"));
+            player.sendSystemMessage(Component.translatable(getLangKey("toofar")));
             return;
         }
 
@@ -32,7 +36,7 @@ public class SpectralBedCantripLogic  extends CantripLogic {
         if (player.level().dimensionType().bedWorks()) {
 
             if (isDaytime && !(player.level().isThundering())) {
-                player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_bed.badtime"));
+                player.sendSystemMessage(Component.translatable(getLangKey("badtime")));
                 return;
             }
         }
@@ -56,12 +60,12 @@ public class SpectralBedCantripLogic  extends CantripLogic {
         headBlockPos = footBlockPos.relative(player.getDirection(), 1);
 
         if (!(player.level().getBlockState(footBlockPos.below()).isSolid())) {
-            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_bed.badtarget"));
+            player.sendSystemMessage(Component.translatable(getLangKey("badtarget")));
             return;
         }
 
         if (!((player.level().getBlockState(footBlockPos).isAir()) && (player.level().getBlockState(headBlockPos).isAir()))) {
-            player.sendSystemMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_bed.nospace"));
+            player.sendSystemMessage(Component.translatable(getLangKey("nospace")));
             return;
         }
 

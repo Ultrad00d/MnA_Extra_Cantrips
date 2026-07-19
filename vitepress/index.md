@@ -15,6 +15,9 @@ hero:
     - theme: alt
       text: Changelog
       link: /product/changelog
+    - theme: alt
+      text: Week Reports
+      link: /reports/week2
 
 features:
   - title: New Cantrips

@@ -1,0 +1,90 @@
+{
+  "type": "forgotten_cantrips:add_item",
+    "conditions": [
+    {
+      "condition": "minecraft:any_of",
+      "terms": [
+        {
+          "condition": "minecraft:all_of",
+		  "terms": [
+		  {
+			"condition": "minecraft:any_of",
+			"terms": [
+					{
+					  "condition": "forge:loot_table_id",
+					  "loot_table_id": "minecraft:chests/ruined_portal"
+					},
+					{
+					  "condition": "forge:loot_table_id",
+					  "loot_table_id": "mna:structure/ma_structure_loot"
+					},
+					{
+					  "condition": "forge:loot_table_id",
+					  "loot_table_id": "mna:structure/ma_faction_structure_loot"
+					},
+					{
+					  "condition": "forge:loot_table_id",
+					  "loot_table_id": "mna:structure/tier_1_cache"
+					},
+					{
+					  "condition": "forge:loot_table_id",
+					  "loot_table_id": "mna:structure/tier_2_cache"
+					},
+					{
+					  "condition": "forge:loot_table_id",
+					  "loot_table_id": "mna:structure/tier_3_cache"
+					},
+					{
+					  "condition": "forge:loot_table_id",
+					  "loot_table_id": "mna:structure/tier_4_cache"
+					},
+					{
+					  "condition": "forge:loot_table_id",
+					  "loot_table_id": "mna:structure/tier_5_cache"
+					}
+				]
+		  },
+		  {
+			  "chance": 0.5,
+			  "condition": "minecraft:random_chance"
+		  }
+		  ]
+        },
+
+        {
+          "condition": "minecraft:all_of",
+		  "terms": [
+		  {
+			"condition": "minecraft:any_of",
+			"terms": [
+					{
+					  "condition": "forge:loot_table_id",
+					  "loot_table_id": "minecraft:archaeology/desert_pyramid"
+					},
+					{
+					  "condition": "forge:loot_table_id",
+					  "loot_table_id": "minecraft:archaeology/desert_well"
+					},
+					{
+					  "condition": "forge:loot_table_id",
+					  "loot_table_id": "minecraft:archaeology/trail_ruins_common"
+					},
+					{
+					  "condition": "forge:loot_table_id",
+					  "loot_table_id": "minecraft:archaeology/trail_ruins_rare"
+					}
+				]
+		  },
+		  {
+			  "chance": 0.25,
+			  "condition": "minecraft:random_chance"
+		  }
+		  ]
+        }
+      ]
+    }
+  ],
+  "item": "forgotten_cantrips:ancient_scroll",
+  "min": 1,
+  "max": 2
+}

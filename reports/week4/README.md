@@ -101,12 +101,12 @@ Contribution traceability table mapping each team member to issues, PRs/MRs, rev
 
 ## Screenshots:
 
-![Sprint milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/SprintMilestone.png)
+![Sprint milestone](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week4/images/SprintMilestone.png)
 
-![Latest protected-default-branch CI run and test report](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/LatestCIRunAndTestResult.png)
+![Latest protected-default-branch CI run and test report](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week4/images/LatestCIRunAndTestResult.png)
 
-![Branch protection or rules evidence](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/mainBranchProtection.png)
+![Branch protection or rules evidence](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week4/images/mainBranchProtection.png)
 
-![SemVer release](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/semverRelease.png)
+![SemVer release](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week4/images/semverRelease.png)
 
-![Example reviewed issue-linked PR/MR](https://github.com/Ultrad00d/MnA_Extra_Cantrips/blob/screenshot-fix/reports/week4/images/ExampleReviewedPR.png)
+![Example reviewed issue-linked PR/MR](https://github.com/Ultrad00d/MnA_Extra_Cantrips/tree/main/reports/week4/images/ExampleReviewedPR.png)

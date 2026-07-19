@@ -14,6 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.level.Level;
+import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.definitions.MusicDiscDefinitions;
 
 public class MusicDiscSlotProvider {
@@ -82,13 +83,13 @@ public class MusicDiscSlotProvider {
     public static int dropMusicDisc(Player player) {
         ItemStack disc = getStoredDisc(player);
         if (disc.isEmpty()) {
-            player.sendSystemMessage(Component.translatable("command.forgotten_cantrips.music_disc.drop.empty"));
+            player.sendSystemMessage(Component.translatable("command." + ForgottenCantrips.MOD_ID + ".music_disc.drop.empty"));
             return 0;
         }
         stopDiscSound(player);
         clearStoredDisc(player);
         player.drop(disc, false);
-        player.sendSystemMessage(Component.translatable("command.forgotten_cantrips.music_disc.drop.success"));
+        player.sendSystemMessage(Component.translatable("command." + ForgottenCantrips.MOD_ID + ".music_disc.drop.success"));
         return 1;
     }
 }

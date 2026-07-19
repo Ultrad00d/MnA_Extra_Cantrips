@@ -20,6 +20,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
+import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryMenu;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryProvider;
 import org.jetbrains.annotations.NotNull;
@@ -48,10 +49,15 @@ public class SpectralDonkey extends AbstractChestedHorse {
         if (++noRiderTicks >= LIFETIME_TICKS) { discard(); }
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return AbstractChestedHorse.createLivingAttributes().add(Attributes.FOLLOW_RANGE, 16.0F).add(Attributes.ATTACK_KNOCKBACK).add(Attributes.JUMP_STRENGTH, 1.45F);
+    public static AttributeSupplier createAttributes() {
+        return AbstractChestedHorse.createLivingAttributes()
+                .add(Attributes.FOLLOW_RANGE, 16.0F)
+                .add(Attributes.ATTACK_KNOCKBACK)
+                .add(Attributes.JUMP_STRENGTH, 1.45F)
+                .build();
     }
 
+    @Override
     protected void randomizeAttributes(@NotNull RandomSource randomSource) {
         this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0F);
         this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.3F);
@@ -59,34 +65,43 @@ public class SpectralDonkey extends AbstractChestedHorse {
         this.getAttribute(ForgeMod.ENTITY_GRAVITY.get()).setBaseValue(0.05F);
     }
 
+    @Override
     public float getStepHeight() {
         return 1.75F;
     }
 
+    @Override
     protected boolean canParent() {
         return false;
     }
 
+    @Override
     public boolean shouldDropExperience() {
         return false;
     }
 
+    @Override
     public boolean canBreatheUnderwater() {
         return true;
     }
 
+    @Override
     public boolean canStandOnFluid(FluidState state) {
-        return state.is(Fluids.WATER) && this.getForward().y > (double)-0.2F && !this.isUnderWater();
+//        return state.is(Fluids.WATER) && this.getForward().y > (double)-0.2F && !this.isUnderWater();
+        return false;
     }
 
+    @Override
     protected float getWaterSlowDown() {
-        return 1.0F;
+        return 0.9F;
     }
 
+    @Override
     public boolean canHoldItem(ItemStack stack) {
         return false;
     }
 
+    @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (player == getOwner()) {
             if (!player.isSecondaryUseActive()) {
@@ -101,7 +116,7 @@ public class SpectralDonkey extends AbstractChestedHorse {
             return InteractionResult.SUCCESS;
         } else {
             if (!this.level().isClientSide()) {
-                player.displayClientMessage(Component.translatable("cantrip.forgotten_cantrips.spectral_donkey.notowner"), true);
+                player.displayClientMessage(Component.translatable("cantrip." + ForgottenCantrips.MOD_ID + ".spectral_donkey.notowner"), true);
             }
             return InteractionResult.FAIL;
         }
@@ -111,16 +126,14 @@ public class SpectralDonkey extends AbstractChestedHorse {
         player.getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(cap -> {
             NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
                     (id, playerInv, p) -> new SharedInventoryMenu(id, playerInv, cap.getInventory()),
-                    Component.translatable("container.forgotten_cantrips.spectral_chest")
+                    Component.translatable("container." + ForgottenCantrips.MOD_ID + ".spectral_chest")
             ));
         });
     }
 
-    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
-        return false;
-    }
-    protected void playStepSound(BlockPos pos, BlockState state) {}
-    protected void playJumpSound() {}
+    @Override public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) { return false; }
+    @Override protected void playStepSound(BlockPos pos, BlockState state) {}
+    @Override protected void playJumpSound() {}
 
     public boolean isPersistent() { return isPersistent; }
     public void setPersistent(boolean persistent) { isPersistent = persistent; }
