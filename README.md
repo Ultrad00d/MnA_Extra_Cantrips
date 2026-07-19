@@ -16,6 +16,8 @@
 
 [Week 6 Project Delivery Index](reports/week6/README.md)
 
+[Week 7 Project Delivery Index](reports/week7/README.md)
+
 ---
 
 **To run this mod locally:**
