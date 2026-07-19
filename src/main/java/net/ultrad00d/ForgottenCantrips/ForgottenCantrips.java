@@ -21,6 +21,7 @@ import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraftforge.common.MinecraftForge;
@@ -129,6 +130,10 @@ public class ForgottenCantrips {
             EntityRenderers.register(
                     EntityRegistry.SPECTRAL_SLIME.get(),
                     SpectralSlimeRenderer::new
+            );
+            EntityRenderers.register(
+                    EntityRegistry.SPECTRAL_SLIME_SPIT.get(),
+                    ThrownItemRenderer::new
             );
             EntityRenderers.register(
                     EntityRegistry.OLD_WIZARD.get(),
