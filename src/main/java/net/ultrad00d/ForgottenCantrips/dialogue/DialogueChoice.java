@@ -2,7 +2,7 @@ package net.ultrad00d.ForgottenCantrips.dialogue;
 
 public enum DialogueChoice {
     CONTINUE("continue"),
-    BACK("back"),
+    GIVE_ITEM("give_item"),
     BYE("bye"),
     CANTRIPS_MENU("cantrips_menu");
 

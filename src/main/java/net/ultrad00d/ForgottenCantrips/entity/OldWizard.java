@@ -66,7 +66,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     private Rotation houseRotation = Rotation.NONE;
     private BlockPos gardenPos = null;
     private Rotation gardenRotation = null;
-    private OldWizardPOI lastIdleLocation = null;
+    private OldWizardPOI lastIdleLocation = OldWizardPOI.COUCH;
 
     // --- SYNCHRONIZED ENTITY DATA ACCESSORS ---
     private static final EntityDataAccessor<Boolean> HEAD_LOCKED = SynchedEntityData.defineId(OldWizard.class, EntityDataSerializers.BOOLEAN);

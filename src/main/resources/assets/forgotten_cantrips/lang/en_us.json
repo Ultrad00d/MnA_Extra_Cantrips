@@ -149,7 +149,7 @@
     "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride",
 
     "dialogue.forgotten_cantrips.choice.continue": "Continue",
-    "dialogue.forgotten_cantrips.choice.back": "Back",
+    "dialogue.forgotten_cantrips.choice.give_item": "Give Item",
     "dialogue.forgotten_cantrips.choice.bye": "Bye",
     "dialogue.forgotten_cantrips.choice.cantrips_menu": "Cantrips Menu",
 
@@ -162,11 +162,11 @@
     "dialogue.forgotten_cantrips.wizard.back_again.1": "Ah... it's you again. Or is it? Forgive me, the centuries tend to blur faces together like rain on parchment.",
     "dialogue.forgotten_cantrips.wizard.back_again.2": "Yes, yes, the spark from before. Let us skip the pleasantries and get back to business.",
     "dialogue.forgotten_cantrips.wizard.cantrips": "Speak up then. Which thread of the arcane do you wish to unravel today?",
-    "dialogue.forgotten_cantrips.wizard.cantrip_already_rote": "Spells list - empty :D",
     "dialogue.forgotten_cantrips.wizard.cantrip_symbols_already_known": "Ye already know all th' patterns to do this spell... Why not try it? Don't get cold feet now, young'un!",
     "dialogue.forgotten_cantrips.wizard.cantrip_spell_already_known": "Ye already know this spell well enough... What, just wanted to show off? Haha.",
+    "dialogue.forgotten_cantrips.wizard.cantrip_item_already_given_today": "Ah, hold on there, young'un. *Squints* Yer hands are still dusty from the last offering ye brought me today. Patience! Even an old wizard's memory needs a day to digest a gift. Come back tomorrow, when the sun's climbed a bit higher, and we'll try again.",
     "dialogue.forgotten_cantrips.wizard.cantrip_item_1_quest": "Alrighty then, I'll try teaching ya. But y'see, my memory isn't what it used to be, I forget how to even shape mana for this spell, haha... Maybe I'd be able to cast it again if ye brought me some %ITEM%.",
-    "dialogue.forgotten_cantrips.wizard.cantrip_item_1_got": "Good job, young'un! This will surely help... Think I got th' first pattern down now. Come back later if ya want to continue this.".
+    "dialogue.forgotten_cantrips.wizard.cantrip_item_1_got": "Good job, young'un! This will surely help... Think I got th' first pattern down now. Come back later if ya want to continue this.",
     "dialogue.forgotten_cantrips.wizard.cantrip_item_2_quest": "Ah, right. Hmm, let's see here... Think I'd remember more of the spell with some %ITEM%. Up for th' task, young'un?",
     "dialogue.forgotten_cantrips.wizard.cantrip_item_2_got": "Ah, great, great... Think I remember the second pattern now. Come back soon, we've almost figured this out...",
     "dialogue.forgotten_cantrips.wizard.cantrip_item_3_quest": "Right, right... We're almost to the finish line. Now I just need a single %ITEM%, and I think I'll finally be able to teach ya!",
