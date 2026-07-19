@@ -11,6 +11,7 @@ import net.ultrad00d.ForgottenCantrips.entity.OldWizard;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralBoat;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralDonkey;
 import net.ultrad00d.ForgottenCantrips.entity.SpectralSlime;
+import net.ultrad00d.ForgottenCantrips.entity.SpectralSlimeSpit;
 
 public final class EntityRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
@@ -42,8 +43,17 @@ public final class EntityRegistry {
             ENTITY_TYPES.register("spectral_slime", () ->
                     EntityType.Builder.of(SpectralSlime::new, MobCategory.CREATURE)
                             .sized(0.52F, 0.52F)
-                            .clientTrackingRange(10)
+                            .clientTrackingRange(64)
                             .build("forgotten_cantrips:spectral_slime")
+            );
+
+    public static final RegistryObject<EntityType<SpectralSlimeSpit>> SPECTRAL_SLIME_SPIT =
+            ENTITY_TYPES.register("spectral_slime_spit", () ->
+                    EntityType.Builder.<SpectralSlimeSpit>of(SpectralSlimeSpit::new, MobCategory.MISC)
+                            .sized(0.25F, 0.25F)
+                            .clientTrackingRange(64)
+                            .updateInterval(10)
+                            .build("forgotten_cantrips:spectral_slime_spit")
             );
 
     public static void register(IEventBus eventBus) {

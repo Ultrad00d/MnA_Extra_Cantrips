@@ -21,11 +21,12 @@ import net.ultrad00d.ForgottenCantrips.entity.SpectralSlime;
 import org.jetbrains.annotations.NotNull;
 
 public class SpectralSlimeRenderer extends MobRenderer<SpectralSlime, SlimeModel<SpectralSlime>> {
-    private static final ResourceLocation SPECTRAL_SLIME_TEXTURE = ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/entity/spectral_slime.png");
+    private static final ResourceLocation SPECTRAL_SLIME_TEXTURE =
+            ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/entity/spectral_slime.png");
 
     public SpectralSlimeRenderer(EntityRendererProvider.Context context) {
         super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.SLIME)), 0.25F);
-        this.addLayer(new SpectralSlimeOuterLayer(this, context.getModelSet()));
+        this.addLayer(new OuterLayer(this, context.getModelSet()));
     }
 
     @Override
@@ -49,11 +50,11 @@ public class SpectralSlimeRenderer extends MobRenderer<SpectralSlime, SlimeModel
         return SPECTRAL_SLIME_TEXTURE;
     }
 
-    private static class SpectralSlimeOuterLayer extends RenderLayer<SpectralSlime, SlimeModel<SpectralSlime>> {
-        private static final float OUTER_LAYER_ALPHA = 0.65F;
+    private static class OuterLayer extends RenderLayer<SpectralSlime, SlimeModel<SpectralSlime>> {
+        private static final float ALPHA = 0.55F;
         private final EntityModel<SpectralSlime> model;
 
-        public SpectralSlimeOuterLayer(RenderLayerParent<SpectralSlime, SlimeModel<SpectralSlime>> renderer, EntityModelSet modelSet) {
+        public OuterLayer(RenderLayerParent<SpectralSlime, SlimeModel<SpectralSlime>> renderer, EntityModelSet modelSet) {
             super(renderer);
             this.model = new SlimeModel<>(modelSet.bakeLayer(ModelLayers.SLIME_OUTER));
         }
@@ -61,18 +62,20 @@ public class SpectralSlimeRenderer extends MobRenderer<SpectralSlime, SlimeModel
         @Override
         public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight, @NotNull SpectralSlime slime, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
             Minecraft minecraft = Minecraft.getInstance();
-            boolean visibleToPlayer = minecraft.shouldEntityAppearGlowing(slime) && slime.isInvisible();
-            if (!slime.isInvisible() || visibleToPlayer) {
-                RenderType renderType = visibleToPlayer
-                        ? RenderType.outline(this.getTextureLocation(slime))
-                        : RenderType.entityTranslucent(this.getTextureLocation(slime));
-                VertexConsumer vertexConsumer = buffer.getBuffer(renderType);
-
-                this.getParentModel().copyPropertiesTo(this.model);
-                this.model.prepareMobModel(slime, limbSwing, limbSwingAmount, partialTicks);
-                this.model.setupAnim(slime, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-                this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, LivingEntityRenderer.getOverlayCoords(slime, 0.0F), 1.0F, 1.0F, 1.0F, OUTER_LAYER_ALPHA);
+            boolean glowingInvisible = minecraft.shouldEntityAppearGlowing(slime) && slime.isInvisible();
+            if (slime.isInvisible() && !glowingInvisible) {
+                return;
             }
+
+            RenderType renderType = glowingInvisible
+                    ? RenderType.outline(this.getTextureLocation(slime))
+                    : RenderType.entityTranslucent(this.getTextureLocation(slime));
+            VertexConsumer vertexConsumer = buffer.getBuffer(renderType);
+
+            this.getParentModel().copyPropertiesTo(this.model);
+            this.model.prepareMobModel(slime, limbSwing, limbSwingAmount, partialTicks);
+            this.model.setupAnim(slime, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, LivingEntityRenderer.getOverlayCoords(slime, 0.0F), 1.0F, 1.0F, 1.0F, ALPHA);
         }
     }
 }

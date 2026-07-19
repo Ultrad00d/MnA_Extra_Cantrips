@@ -11,7 +11,6 @@ import net.ultrad00d.ForgottenCantrips.client.renderer.OldWizardRenderer;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogue;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogueProvider;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardSessionManager;
-import net.ultrad00d.ForgottenCantrips.registry.*;
 import net.ultrad00d.ForgottenCantrips.spells.SpellBuffAdjusters;
 import org.slf4j.Logger;
 
@@ -21,6 +20,7 @@ import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraftforge.common.MinecraftForge;
@@ -41,19 +41,8 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.ultrad00d.ForgottenCantrips.client.renderer.EmpowerRuneRenderer;
-import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralBoatRenderer;
-import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralDonkeyRenderer;
-import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralSlimeRenderer;
+import net.ultrad00d.ForgottenCantrips.client.renderer.*;
 import net.ultrad00d.ForgottenCantrips.config.IlluminationConfig;
-import net.ultrad00d.ForgottenCantrips.registry.BlockEntityRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.CantripRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.ItemRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.MenuRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.PotionRegistry;
 import net.ultrad00d.ForgottenCantrips.screen.MusicDiscSlotProvider;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryScreen;
 import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
@@ -124,6 +113,10 @@ public class ForgottenCantrips {
             EntityRenderers.register(
                     EntityRegistry.SPECTRAL_SLIME.get(),
                     SpectralSlimeRenderer::new
+            );
+            EntityRenderers.register(
+                    EntityRegistry.SPECTRAL_SLIME_SPIT.get(),
+                    ThrownItemRenderer::new
             );
             EntityRenderers.register(
                     EntityRegistry.OLD_WIZARD.get(),
