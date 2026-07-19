@@ -97,7 +97,7 @@ public enum CantripType {
             1,
             new ColossusOakCantripLogic(),
             false,
-            null,
+            "colossus_oak/part3",
             RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
     ),
     BUBBLE_UP(
