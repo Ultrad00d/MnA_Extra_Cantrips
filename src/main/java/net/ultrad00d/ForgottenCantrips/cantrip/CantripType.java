@@ -28,7 +28,7 @@ public enum CantripType {
             new SpectralBedCantripLogic(),
             false,
             "spectral_bed/part_3",
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/knot4"), RLoc.create("manaweave_patterns/diamond")
+            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/knot3"), RLoc.create("manaweave_patterns/diamond")
     ),
     SPECTRAL_BOAT(
             2,
@@ -70,21 +70,21 @@ public enum CantripType {
             new EmpowerDamageBuffCantripLogic(),
             true,
             null,
-            RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/knot_3"), RLoc.create("manaweave_patterns/slash")
+            RLoc.create("manaweave_patterns/knot4"), RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/slash")
     ),
     EMPOWER_MANA_BUFF(
             2,
             new EmpowerManaCostBuffCantripLogic(),
             true,
             null,
-            RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/knot_3"), RLoc.create("manaweave_patterns/square")
+            RLoc.create("manaweave_patterns/knot4"), RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/square")
     ),
     EMPOWER_CANTRIP_BUFF(
             2,
             new EmpowerCantripBuffCantripLogic(),
             true,
             null,
-            RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/knot_3"), RLoc.create("manaweave_patterns/triangle")
+            RLoc.create("manaweave_patterns/knot4"), RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/triangle")
     ),
     SPECTRAL_SLIME(
             2,
