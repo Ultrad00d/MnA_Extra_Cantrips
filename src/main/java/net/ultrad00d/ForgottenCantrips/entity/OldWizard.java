@@ -23,6 +23,7 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
@@ -32,6 +33,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.HangingSignBlockEntity;
 import net.minecraft.world.level.block.entity.SignText;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.dialogue.DialogueChoice;
@@ -57,12 +59,14 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     public static final double RUN_SPEED = 1.5;
     public static final double POI_REACH_THRESHOLD = 1.5;
     public static final double WALK_ANIMATION_THRESHOLD = 0.3 / 20;
+    public static final int IDLE_WANDER_INVERTED_CHANCE = 60;
 
     // House Structure info
     private BlockPos homePos = null;
     private Rotation houseRotation = Rotation.NONE;
     private BlockPos gardenPos = null;
     private Rotation gardenRotation = null;
+    private OldWizardPOI lastIdleLocation = null;
 
     // --- SYNCHRONIZED ENTITY DATA ACCESSORS ---
     private static final EntityDataAccessor<Boolean> HEAD_LOCKED = SynchedEntityData.defineId(OldWizard.class, EntityDataSerializers.BOOLEAN);
@@ -116,16 +120,23 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
 
     // these are relative to the spawner block
     public enum OldWizardPOI {
+        // Action POI
         HALLWAY(6, 0, 4),
         FISHING_POINT       (11, -1, 4),
         BOOKSHELF_1         (-2, 0, 0),
         BOOKSHELF_2         (-3, 0, 1),
         BED                 (4, 4, 0),
-        TOWER               (3, 13, 8),
         BREWERY             (-1, 4, 2),
-        KITCHEN             (0, 0, 9),
 
-        // Block POI
+        // Idle POI
+        TOWER               (3, 13, 8),
+        KITCHEN             (0, 0, 9),
+        FIREPLACE           (-3, 0, 6),
+        STAIRS              (3, 1, 7),
+        BALCONY             (4, 4, -2),
+        COUCH               (0, 1, 6),
+
+        // Action Blocks
         FRONT_DOOR_SIGN     (9, 2, 4),
         FIRE_1              (-5, 0, 5),
         FIRE_2              (-5, 0, 6),
@@ -149,13 +160,16 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     // ENTITY CREATION BLOCK
     public OldWizard(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        if (this.getNavigation() instanceof GroundPathNavigation nav) {
+            nav.setCanOpenDoors(true);
+            nav.setCanPassDoors(true);
+        }
     }
-    public static AttributeSupplier createAttributes() {
+    public static AttributeSupplier createAttributes()  {
         return PathfinderMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, WALK_SPEED / 6)
                 .add(Attributes.JUMP_STRENGTH, 0.5D)
-//                .add(ForgeMod.STEP_HEIGHT_ADDITION.get(), -0.5D)
                 .build();
     }
     @Override public boolean canChangeDimensions() { return false; }
@@ -166,7 +180,6 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
 
     @Override
     protected void registerGoals() {
-        // TODO: add common behavior: float, open doors, look at player, random look around, etc.
         this.goalSelector.addGoal(0, new FloatGoal(this));
 
         this.goalSelector.addGoal(1, new OpenDoorGoal(this, true));
@@ -191,11 +204,9 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
             }
 
             Action currentAction = this.getCurrentAction();
-            if (currentAction == Action.IDLE || currentAction == Action.STILL) handleDailyRoutine();
+            if (currentAction == Action.WANDER_AROUND || currentAction == Action.IDLE) handleDailyRoutine();
 
             handleActionState(this.getCurrentAction());
-
-            ForgottenCantrips.LOGGER.info("My action is: {}", getCurrentAction());
         } else {
             if (this.idleTickCooldown > 0) {
                 this.idleTickCooldown--;
@@ -204,8 +215,8 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     }
 
     public enum Action {
-        STILL, // does idle animations in this state
-        IDLE,  // walks around the house in this state
+        IDLE, // does idle animations in this state
+        WANDER_AROUND,  // walks around the house in this state
         WALKING_TO_FISH,
         RETURNING_HOME,
         SLEEPING,
@@ -236,7 +247,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         long dayTime = this.level().getDayTime() % 24000L;
         // Morning (0 - 4000)
         if (dayTime >= 0 && dayTime < 1000) {
-            if (!this.hasGardenedToday) this.setCurrentAction(Action.WALKING_TO_GARDEN);
+            if (!this.hasGardenedToday && this.gardenPos != null) this.setCurrentAction(Action.WALKING_TO_GARDEN);
         }
         // Noon (4000 - 8000)
         else if (dayTime >= 4000 && dayTime < 8000) {
@@ -275,10 +286,11 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                 if (this.distanceToPOISqr(OldWizardPOI.HALLWAY) < POI_REACH_THRESHOLD) {
                     this.removeMissingSign();
                     this.getNavigation().stop();
-                    this.setCurrentAction(Action.IDLE);
+                    this.setCurrentAction(Action.WANDER_AROUND);
                 }
             }
             case WALKING_TO_GARDEN -> {
+                // TODO: make it go outside, then place the sign, then walk to garden
                 this.goTo(gardenPos, WALK_SPEED);
                 this.hasGardenedToday = true;
 
@@ -289,9 +301,11 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                 }
             }
             case SPELL_GROWING_CROPS -> {
+                // decrement server side timer
                 if (this.spellTick > 0) {
                     this.spellTick--;
                 } else {
+                    // and when it reaches 0 - the spell has been cast, start collecting crops
                     this.setCurrentAction(Action.COLLECTING_CROPS);
                 }
             }
@@ -300,9 +314,36 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                 ForgottenCantrips.LOGGER.info("Finished collecting crops, going home");
                 this.setCurrentAction(Action.RETURNING_HOME);
             }
+            case WANDER_AROUND -> {
+                // either reached random idle location or error -> stand still and cast idle animations
+                if (distanceToPOISqr(this.lastIdleLocation) < POI_REACH_THRESHOLD || this.lastIdleLocation == null) {
+                    this.setCurrentAction(Action.IDLE);
+                } else {
+                    // else we're still going to idle location
+                    this.goTo(this.lastIdleLocation.pos(), WALK_SPEED);
+                }
+            }
+            case IDLE -> {
+                // doing nothing, idle animations -> find a place to go to
+                if (this.getRandom().nextInt(IDLE_WANDER_INVERTED_CHANCE) == 0) {
+                    OldWizardPOI[] idleLocations = {
+                            OldWizardPOI.TOWER,
+                            OldWizardPOI.KITCHEN,
+                            OldWizardPOI.FIREPLACE,
+                            OldWizardPOI.STAIRS,
+                            OldWizardPOI.BALCONY,
+                            OldWizardPOI.COUCH
+                    };
+
+                    // Pick a random POI
+                    this.lastIdleLocation = idleLocations[this.getRandom().nextInt(idleLocations.length)];
+                    this.goTo(this.lastIdleLocation, WALK_SPEED);
+                    this.setCurrentAction(Action.WANDER_AROUND);
+                }
+            }
             default -> {
                 // TODO: to be implemented
-                this.setCurrentAction(Action.IDLE);
+                this.setCurrentAction(Action.WANDER_AROUND);
             }
         }
     }
@@ -315,11 +356,6 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     }
     /** Sends Old Wizard to the given world pos */
     public void goTo(BlockPos worldPos, double speed) {
-//        if (this.getNavigation().getPath() != null &&
-//                this.getNavigation().getTargetPos() != null &&
-//                this.getNavigation().getTargetPos().equals(worldPos)) {
-//            return;
-//        }
         this.getNavigation().moveTo(worldPos.getX() + 0.5d, worldPos.getY(), worldPos.getZ() + 0.5d, speed);
     }
     /** Returns distance between Old Wizard and given POI */
@@ -350,9 +386,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         RawAnimation builder = RawAnimation.begin();
         Vec3 deltaMovement = this.getDeltaMovement();
         deltaMovement = deltaMovement.add(0, -deltaMovement.y(), 0);
-        System.out.println(deltaMovement);
         if (deltaMovement.length() > WALK_ANIMATION_THRESHOLD) {
-            System.out.println("Walking");
             return animationState.setAndContinue(builder.thenPlay(WALK_ANIMATION));
         }
 
@@ -417,8 +451,16 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         if (!player.level().isClientSide() && hand == InteractionHand.MAIN_HAND) {
             // TODO: insert friendship mechanic here
             if (player.isSecondaryUseActive()) {
-                player.sendSystemMessage(Component.literal("My garden is at " + this.gardenPos));
-                player.sendSystemMessage(Component.literal("Distance to my garden is " + this.distanceToSqr(gardenPos.getX(), gardenPos.getY(), gardenPos.getZ())));
+                if (gardenPos != null) {
+                    player.sendSystemMessage(Component.literal("My garden is at " + this.gardenPos));
+                    player.sendSystemMessage(Component.literal("Distance to my garden is " + this.distanceToSqr(gardenPos.getX(), gardenPos.getY(), gardenPos.getZ())));
+                } else player.sendSystemMessage(Component.literal("I have no garden!"));
+                player.sendSystemMessage(Component.literal("My action is " + this.getCurrentAction()));
+                Path path = this.getNavigation().getPath();
+                if (path != null) {
+                    player.sendSystemMessage(Component.literal("Distance to my destination is " + path.getDistToTarget()));
+                    player.sendSystemMessage(Component.literal("I am going to " + this.lastIdleLocation));
+                }
                 return InteractionResult.SUCCESS;
             }
 
@@ -472,14 +514,6 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     public int getFriendshipStateTimer() { return this.friendshipStateTimer; }
     public void setFriendshipStateTimer(int tick) { this.friendshipStateTimer = tick; }
 
-    public Vec3 getClientMovement() {
-        Vec3 delta = this.position().subtract(oldX, oldY, oldZ);
-        this.oldX = this.getX();
-        this.oldY = this.getY();
-        this.oldZ = this.getZ();
-        return delta;
-    }
-
     // --- HOUSE STRUCTURE ---
     @Override
     public void addAdditionalSaveData(CompoundTag nbt) {
@@ -517,7 +551,8 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         }
 
         this.friendshipStateTimer = nbt.getInt("FriendshipTimer");
-        this.setCurrentAction(Action.values()[nbt.getInt("Action")]); // TODO: insert safe reading here
+        Action[] actions = Action.values();
+        this.setCurrentAction(actions[nbt.getInt("Action") % actions.length]);
     }
 
     public void setHomePos(BlockPos pos) { this.homePos = pos; this.oldX = pos.getX(); this.oldY = pos.getY(); this.oldZ = pos.getZ(); }
