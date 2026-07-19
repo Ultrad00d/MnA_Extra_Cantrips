@@ -114,7 +114,6 @@
   "advancement.forgotten_cantrips.uc_colossus_oak.description": "Bone meal mixed with steroids",
 
 
-
   "effect.forgotten_cantrips.undying": "Undying",
   "effect.forgotten_cantrips.illumination": "Illumination",
   "effect.forgotten_cantrips.aether_stride": "Aether Stride",
@@ -158,10 +157,6 @@
   "item.minecraft.splash_potion.effect.aether_stride": "Splash Potion of Aether Stride",
   "item.minecraft.lingering_potion.effect.aether_stride": "Lingering Potion of Aether Stride",
   "item.minecraft.tipped_arrow.effect.aether_stride": "Arrow of Aether Stride",
-
-  "block.forgotten_cantrips.colossus_oak_roots": "Colossus Oak Roots",
-  "block.forgotten_cantrips.colossus_birch_roots": "Colossus Birch Roots",
-  "block.forgotten_cantrips.colossus_jungle_roots": "Colossus Jungle Roots",
 
   "dialogue.forgotten_cantrips.choice.continue": "Continue",
   "dialogue.forgotten_cantrips.choice.back": "Back",

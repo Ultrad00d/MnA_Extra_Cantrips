@@ -6,7 +6,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
-import net.ultrad00d.ForgottenCantrips.block.ColossusTreeRootsBlock;
 import net.ultrad00d.ForgottenCantrips.block.SpectralBedBlock;
 
 import java.util.function.Supplier;
@@ -17,16 +16,6 @@ public class BlockRegistry {
 
     public static final RegistryObject<Block> SPECTRAL_BED = registerBlock("spectral_bed",
             SpectralBedBlock::new);
-
-    public static final RegistryObject<Block> COLOSSUS_OAK_ROOTS = registerBlock("colossus_oak_roots",
-            ColossusTreeRootsBlock::new);
-
-    public static final RegistryObject<Block> COLOSSUS_BIRCH_ROOTS = registerBlock("colossus_birch_roots",
-            ColossusTreeRootsBlock::new);
-
-    public static final RegistryObject<Block> COLOSSUS_JUNGLE_ROOTS = registerBlock("colossus_jungle_roots",
-            ColossusTreeRootsBlock::new);
-
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         return BLOCKS.register(name, block);
