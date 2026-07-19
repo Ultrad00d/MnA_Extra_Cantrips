@@ -1,4 +1,3 @@
-# Week 2 Project Delivery Index
 | Artifact Component        | Document Link                                                    |
 |:--------------------------|:-----------------------------------------------------------------|
 | **User Stories**          | [user-stories.md](user-stories.md)                               |
