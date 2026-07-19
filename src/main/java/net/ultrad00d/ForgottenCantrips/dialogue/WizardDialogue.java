@@ -2,11 +2,7 @@ package net.ultrad00d.ForgottenCantrips.dialogue;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.HoverEvent;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.*;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,6 +28,7 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
     public static final int darkColorHEX = 0x504457;
     public static final int midColorHEX = 0x9682a1;
     public static final int lightColorHEX = 0xf5e3ff;
+    public static final int highlightColorHex = 0xffffff;
 
     /**
      * @param player player whom to send dialogue message to
@@ -162,13 +159,29 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
     private static Component convertSequenceToComponent(List<FormattedCharSequence> lines, int index) {
         if (index >= lines.size()) return Component.empty();
 
-        StringBuilder builder = new StringBuilder();
+        MutableComponent lineComponent = Component.empty();
+        StringBuilder currentChunkText = new StringBuilder();
+        final Style[] lastStyle = {null};
+
+        // Iterate through characters while preserving their exact layout/formatting styles
         lines.get(index).accept((charIndex, style, codePoint) -> {
-            builder.appendCodePoint(codePoint);
+            if (lastStyle[0] != null && !style.equals(lastStyle[0])) {
+                // If the text chunk has no explicit color, apply the wizard's default light purple
+                Style finalStyle = lastStyle[0].getColor() == null ? lastStyle[0].withColor(lightColorHEX) : lastStyle[0];
+                lineComponent.append(Component.literal(currentChunkText.toString()).withStyle(finalStyle));
+                currentChunkText.setLength(0);
+            }
+            currentChunkText.appendCodePoint(codePoint);
+            lastStyle[0] = style;
             return true;
         });
 
-        return Component.literal(builder.toString()).withStyle(s -> s.withColor(lightColorHEX));
+        if (!currentChunkText.isEmpty() && lastStyle[0] != null) {
+            Style finalStyle = lastStyle[0].getColor() == null ? lastStyle[0].withColor(lightColorHEX) : lastStyle[0];
+            lineComponent.append(Component.literal(currentChunkText.toString()).withStyle(finalStyle));
+        }
+
+        return lineComponent;
     }
 
     private static boolean isChoiceLocked(Player player, String key, WizardDialogueData cap) {
@@ -265,7 +278,8 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
                         CantripQuestItem questItem = CantripQuestItem.fromId(choice);
                         Item requiredItem = questItem != null ? questItem.getItem(partNum - 1) : Items.BEDROCK;
 
-                        Component message = Component.translatable("dialogue." + ForgottenCantrips.MOD_ID + ".wizard.cantrip_item_" + partNum + "_quest", requiredItem.getDescription());
+                        Component itemHighlight = requiredItem.getDescription().copy().withStyle(s -> s.withColor(highlightColorHex).withItalic(true));
+                        Component message = Component.translatable("dialogue." + ForgottenCantrips.MOD_ID + ".wizard.cantrip_item_" + partNum + "_quest", itemHighlight);
 
                         sendWizardReply(player,
                                 "cantrip." + choice + ".part_" + partNum,
@@ -312,7 +326,9 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
 
                 CantripQuestItem questItem = CantripQuestItem.fromId(cantripId);
                 Item requiredItem = questItem != null ? questItem.getItem(0) : Items.BEDROCK;
-                Component message = Component.translatable("dialogue." + ForgottenCantrips.MOD_ID + ".wizard.cantrip_item_1_quest", requiredItem.getDescription());
+
+                Component itemHighlight = requiredItem.getDescription().copy().withStyle(s -> s.withColor(highlightColorHex).withItalic(true));
+                Component message = Component.translatable("dialogue." + ForgottenCantrips.MOD_ID + ".wizard.cantrip_item_1_quest", itemHighlight);
 
                 sendWizardReply(player,
                         from.substring(0, from.lastIndexOf('.')) + ".part_1",
