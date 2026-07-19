@@ -208,7 +208,6 @@ public class WizardDialogue { // todo: make dialogue text color slightly purple
      */
     public static void advanceDialogueFrom(String choice, String from, Player player, WizardDialogueData cap) {
         if (DialogueChoice.BYE.getKey().equals(choice)) {
-            cap.setGlobalState(WizardGlobalState.NOT_MET);
             sendWizardReply(player, "goodbye", cap);
             return;
         }
