@@ -19,6 +19,7 @@ public class BlockEntityRegistry {
                             .build(null)
             );
 
+
     public static final RegistryObject<BlockEntityType<OldWizardSpawnerBlockEntity>> OLD_WIZARD_SPAWNER_BLOCK_ENTITY =
             BLOCK_ENTITIES.register("old_wizard_spawner_block_entity", () ->
                     BlockEntityType.Builder.of(OldWizardSpawnerBlockEntity::new, BlockRegistry.OLD_WIZARD_SPAWNER.get())

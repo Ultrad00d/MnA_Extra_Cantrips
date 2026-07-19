@@ -47,7 +47,16 @@
     "cantrip.forgotten_cantrips.spectral_slime": "Spectral Slime",
     "cantrip.forgotten_cantrips.spectral_slime.desc": "Summons a small friendly spectral slime. It follows you from a distance and fights hostile creatures.",
 
-    "cantrip.forgotten_cantrips.bubble_up.shallow_water": "You should be at least two blocks under the water",
+    "cantrip.forgotten_cantrips.colossus_oak": "Colossus Oak",
+  "cantrip.forgotten_cantrips.colossus_oak.desc": "Coaxes a sapling into a full tree, or urges an existing tree to grow taller and branch out into an old-growth giant.",
+  "cantrip.forgotten_cantrips.colossus_oak.toofar": "Can't find a tree to grow!",
+  "cantrip.forgotten_cantrips.colossus_oak.not_growable": "Can't grow that!",
+  "cantrip.forgotten_cantrips.colossus_oak.too_damaged": "This poor tree is too damaged to be grown!",
+  "cantrip.forgotten_cantrips.colossus_oak.root_destroyed": "This tree's roots are destroyed, it can't grow taller",
+  "cantrip.forgotten_cantrips.colossus_oak.grew": "The tree stretches a little taller.",
+  "cantrip.forgotten_cantrips.colossus_oak.branched": "A new branch bursts from the trunk!",
+
+  "cantrip.forgotten_cantrips.bubble_up.shallow_water": "You should be at least two blocks under the water",
     "cantrip.forgotten_cantrips.bubble_up.bubble_column": "The cantrip does not work in the bubble columns",
     "cantrip.forgotten_cantrips.bubble_up": "Bubble Up",
     "cantrip.forgotten_cantrips.bubble_up.desc": "Rapidly floats you up out of the water like a dolphin. Can only be cast while submerged deeper than two blocks under water",
@@ -62,7 +71,7 @@
     "cantrip.forgotten_cantrips.locked.post": " cantrip, however I still have to learn it first...",
 
     "advancement.forgotten_cantrips.meet_old_wizard": "Ancient, dusty, forgetful wizard who teaches forgotten magic.",
-	
+
 	"advancement.forgotten_cantrips.find_ancient_scroll": "Forgotten Knowledge",
     "advancement.forgotten_cantrips.find_ancient_scroll.description": "Find an Ancient Scroll in trail ruins, magical structres, or ruined portal chests.",
 
@@ -72,50 +81,50 @@
     "advancement.forgotten_cantrips.lightning.part_3": "Finally the wizard remembered the third symbol! It was...\n\n   ▉\n    ▉\n▉▉▉▉▉▉▉\n  ▉\n   ▉",
     "advancement.forgotten_cantrips.lightning.name": "Lightning Cantrip",
     "advancement.forgotten_cantrips.lightning.description": "A shocking discovery.",
-	
+
     "advancement.forgotten_cantrips.spectral_bed.where_to_find": "Maybe the old wizard knows something about this...",
     "advancement.forgotten_cantrips.spectral_bed.part_1": "According to the old man, the first symbol looks like this:\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
     "advancement.forgotten_cantrips.spectral_bed.part_2": "The second symbol appeared to be...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
     "advancement.forgotten_cantrips.spectral_bed.part_3": "Finally the wizard remembered the third symbol! It was...\n\n   ▉\n    ▉\n▉▉▉▉▉▉▉\n  ▉\n   ▉",
     "advancement.forgotten_cantrips.spectral_bed.name": "Spectral Bed Cantrip",
     "advancement.forgotten_cantrips.spectral_bed.description": "Lights out.",
-	
+
     "advancement.forgotten_cantrips.spectral_donkey.where_to_find": "Maybe the old wizard knows something about this...",
     "advancement.forgotten_cantrips.spectral_donkey.part_1": "According to the old man, the first symbol looks like this:\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
     "advancement.forgotten_cantrips.spectral_donkey.part_2": "The second symbol appeared to be...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
     "advancement.forgotten_cantrips.spectral_donkey.part_3": "Finally the wizard remembered the third symbol! It was...\n\n   ▉\n    ▉\n▉▉▉▉▉▉▉\n  ▉\n   ▉",
     "advancement.forgotten_cantrips.spectral_donkey.name": "Spectral Donkey Cantrip",
     "advancement.forgotten_cantrips.spectral_donkey.description": "You can whip your Porsche",
-	
+
     "advancement.forgotten_cantrips.bubble_up.where_to_find": "Maybe the old wizard knows something about this...",
     "advancement.forgotten_cantrips.bubble_up.part_1": "According to the old man, the first symbol looks like this:\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
     "advancement.forgotten_cantrips.bubble_up.part_2": "The second symbol appeared to be...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
     "advancement.forgotten_cantrips.bubble_up.part_3": "Finally the wizard remembered the third symbol! It was...\n\n   ▉\n    ▉\n▉▉▉▉▉▉▉\n  ▉\n   ▉",
     "advancement.forgotten_cantrips.bubble_up.name": "Bubble up Cantrip",
     "advancement.forgotten_cantrips.bubble_up.description": "Who needs soul sand?",
-	
+
     "advancement.forgotten_cantrips.empower.where_to_find": "Maybe the old wizard knows something about this...",
     "advancement.forgotten_cantrips.empower.part_1": "According to the old man, the first symbol looks like this:\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
     "advancement.forgotten_cantrips.empower.part_2": "The second symbol appeared to be...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
     "advancement.forgotten_cantrips.empower.part_3": "Finally the wizard remembered the third symbol! It was...\n\n   ▉\n    ▉\n▉▉▉▉▉▉▉\n  ▉\n   ▉",
     "advancement.forgotten_cantrips.empower.name": "Empower Cantrip",
     "advancement.forgotten_cantrips.empower.description": "Better hope your enemies don't regenerate based on time since last hit",
-	
-	
+
+
     "advancement.forgotten_cantrips.spectral_armor.where_to_find": "Maybe the old wizard knows something about this...",
     "advancement.forgotten_cantrips.spectral_armor.part_1": "According to the old man, the first symbol looks like this:\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
     "advancement.forgotten_cantrips.spectral_armor.part_2": "The second symbol appeared to be...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
     "advancement.forgotten_cantrips.spectral_armor.part_3": "Finally the wizard remembered the third symbol! It was...\n\n   ▉\n    ▉\n▉▉▉▉▉▉▉\n  ▉\n   ▉",
     "advancement.forgotten_cantrips.spectral_armor.name": "Spectral Armor Cantrip",
     "advancement.forgotten_cantrips.spectral_armor.description": "Sorry, got no pun for this one",
-	
+
     "advancement.forgotten_cantrips.spectral_slime.where_to_find": "Maybe the old wizard knows something about this...",
     "advancement.forgotten_cantrips.spectral_slime.part_1": "According to the old man, the first symbol looks like this:\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
     "advancement.forgotten_cantrips.spectral_slime.part_2": "The second symbol appeared to be...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
     "advancement.forgotten_cantrips.spectral_slime.part_3": "Finally the wizard remembered the third symbol! It was...\n\n   ▉\n    ▉\n▉▉▉▉▉▉▉\n  ▉\n   ▉",
     "advancement.forgotten_cantrips.spectral_slime.name": "Spectral Slime Cantrip",
     "advancement.forgotten_cantrips.spectral_slime.description": "Did you know you can Empower this spell?",
-	
+
     "advancement.forgotten_cantrips.spectral_boat.where_to_find": "Maybe the old wizard knows something about this...",
     "advancement.forgotten_cantrips.spectral_boat.part_1": "According to the old man, the first symbol looks like this:\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
     "advancement.forgotten_cantrips.spectral_boat.part_2": "The second symbol appeared to be...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
@@ -222,7 +231,7 @@
     "dialogue.forgotten_cantrips.wizard.cantrip.empower.description": "A bunch'a weak strikes, however many times you repeat 'em, may never be able to make strong enemies budge. But if ya put your all into one massive blow, oh ho ho... Sounds interesting to ya?",
     "dialogue.forgotten_cantrips.wizard.cantrip.spectral_slime.description": "Gonna be honest here, this one isn't so useful. But, if ya ever wanted to keep one of those jumpy green blobs as a pet, I think ya'd like this.",
     "dialogue.forgotten_cantrips.wizard.cantrip.bubble_up.description": "Ever get so carried away plundering treasure on the sea floor that you forget to breathe? I might just know how t' help. Just be careful not to get the bends, haha.",
-    
+
 
     "chat.forgotten_cantrips.click_to_select": "Click to select this option",
     "chat.forgotten_cantrips.locked": "Your Tier to learn this is too low",
