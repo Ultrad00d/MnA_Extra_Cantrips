@@ -304,6 +304,39 @@
 					]
 				},
 				{
+					"name": "eyelids",
+					"parent": "face",
+					"pivot": [0, 12, -2.05]
+				},
+				{
+					"name": "eyelid_right",
+					"parent": "eyelids",
+					"pivot": [-2, 12, -2.05],
+					"cubes": [
+						{
+							"origin": [-3.1, 10.9, -3.05],
+							"size": [2.2, 2.2, 2],
+							"uv": {
+								"south": {"uv": [3, 24], "uv_size": [2, -2]}
+							}
+						}
+					]
+				},
+				{
+					"name": "eyelid_left",
+					"parent": "eyelids",
+					"pivot": [2, 12, -2.05],
+					"cubes": [
+						{
+							"origin": [0.9, 10.9, -3.05],
+							"size": [2.2, 2.2, 2],
+							"uv": {
+								"south": {"uv": [3, 24], "uv_size": [2, -2]}
+							}
+						}
+					]
+				},
+				{
 					"name": "head_base",
 					"parent": "head",
 					"pivot": [0, -1, 0],

@@ -19,20 +19,24 @@ import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 
 public class StructureUtil {
+    public static final ResourceKey<Structure> HOUSE =
+            ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "old_wizard/house"));
+
+    public static final ResourceKey<Structure> GARDEN =
+            ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "old_wizard/garden"));
+
     public static boolean isInsideProtectedStructure(LevelAccessor level, BlockPos pos) {
         if (level instanceof ServerLevel serverLevel) {
-            Structure structure = getStructure(serverLevel, "old_wizard/house"); // TODO: also make "old_wizard/garden" protected
-            if (structure != null) {
-                // Get the top-level structure start at this position
-                StructureStart start = serverLevel.structureManager()
-                        .getStructureAt(pos, structure);
+            var registry = serverLevel.registryAccess().registryOrThrow(Registries.STRUCTURE);
 
-                if (start.isValid()) {
-                    for (StructurePiece piece : start.getPieces()) {
-                        // Check if the coordinate is inside the precise piece bounding box
-                        if (piece.getBoundingBox().isInside(pos)) return true;
-                    }
-                }
+            Structure struct1 = registry.get(HOUSE);
+            if (struct1 != null && serverLevel.structureManager().getStructureWithPieceAt(pos, struct1).isValid()) {
+                return true;
+            }
+
+            Structure struct2 = registry.get(GARDEN);
+            if (struct2 != null && serverLevel.structureManager().getStructureWithPieceAt(pos, struct2).isValid()) {
+                return true;
             }
         }
         return false;
@@ -77,7 +81,7 @@ public class StructureUtil {
                 BlockPos finalSpawnPos = validSurfacePos
                         .offset(houseCenter.rotate(gardenRotation))
                         .below(4);
-                ForgottenCantrips.LOGGER.info("Final garden position was set to {}", finalSpawnPos);
+                ForgottenCantrips.LOGGER.debug("Final garden position was set to {}", finalSpawnPos);
                 Tuple<BlockPos, Rotation> result = StructureUtil.generateGardenStructure(level, structure, finalSpawnPos, gardenRotation);
 
                 if (result != null) return result;

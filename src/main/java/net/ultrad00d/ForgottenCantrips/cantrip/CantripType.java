@@ -55,49 +55,49 @@ public enum CantripType {
             1,
             new SpectralArmorCantripLogic(),
             true,
-            null,
+            "spectral_armor/part3",
             RLoc.create("manaweave_patterns/slash"), RLoc.create("manaweave_patterns/triangle"), RLoc.create("manaweave_patterns/backslash")
     ),
     RESET_VILLAGER(
             3,
             new ResetVillagerTradingProgressCantripLogic(),
             false,
-            null,
+            "reset_villager/part3",
             RLoc.create("manaweave_patterns/bolt"), RLoc.create("manaweave_patterns/diamond"), RLoc.create("manaweave_patterns/square")
     ),
     EMPOWER_DAMAGE_BUFF(
             2,
             new EmpowerDamageBuffCantripLogic(),
             true,
-            null,
+            "empower_damage_buff/part3",
             RLoc.create("manaweave_patterns/knot4"), RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/slash")
     ),
     EMPOWER_MANA_BUFF(
             2,
             new EmpowerManaCostBuffCantripLogic(),
             true,
-            null,
+            "empower_mana_buff/part3",
             RLoc.create("manaweave_patterns/knot4"), RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/square")
     ),
     EMPOWER_CANTRIP_BUFF(
             2,
             new EmpowerCantripBuffCantripLogic(),
             true,
-            null,
+            "empower_cantrip_buff/part3",
             RLoc.create("manaweave_patterns/knot4"), RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/triangle")
     ),
     SPECTRAL_SLIME(
             2,
             new SpectralSlimeCantripLogic(),
             false,
-            null,
+            "spectral_slime/part3",
             RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/triangle"), RLoc.create("manaweave_patterns/square")
     ),
     BUBBLE_UP(
             2,
             new BubbleUpCantripLogic(),
             true,
-            null,
+            "bubble_up/part3",
             RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/diamond"), RLoc.create("manaweave_patterns/circle")
     );
 

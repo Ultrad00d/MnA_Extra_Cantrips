@@ -61,6 +61,7 @@ public class AncientScrollItem extends Item {
             int stageToActivate = 1;
 
             for (int i = 3; i > 0; i--) {
+                // todo: utilize ProgressionUtils.hasAdvancement()
                 currentAdvancementLocation = nbtData.getString("cantripID") + "/part_" + i;
                 currentAdvancement = serverPlayer.getServer().getAdvancements().getAdvancement(ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, currentAdvancementLocation));
                 if (serverPlayer.getAdvancements().getOrStartProgress(currentAdvancement).isDone()) {

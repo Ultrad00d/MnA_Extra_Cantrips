@@ -85,7 +85,8 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     // server side tickers
     private int friendshipStateTimer = 0;
     private int spellTick = 0;
-    private boolean hasGardenedToday = false; // todo: reset during sleep
+    private int bedStep = 0;
+    private boolean hasGardenedToday = false;
     private boolean hasLitLightsToday = false;
     private boolean hasExtinguishedLightsToday = false;
     // client side tickers
@@ -113,6 +114,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     private static final String GROW2_ANIMATION     = "animation.old_wizard.grow_2";
     private static final String SHOW_BOOK_ANIMATION = "animation.old_wizard.book";
     private static final String READ_BOOK_ANIMATION = "animation.old_wizard.read";
+    private static final String SLEEP_ANIMATION     = "animation.old_wizard.sleep";
     private static final int SPELL_ANIMATION_TICK_DURATION = 80; // ticks
 
     private String currentIdleAnimation = STILL_ANIMATION;
@@ -126,6 +128,9 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         BOOKSHELF_1         (-2, 0, 0),
         BOOKSHELF_2         (-3, 0, 1),
         BED                 (5, 4, 0),
+        OFFICE_STAIRS1      (1, 0, 2),
+        OFFICE_STAIRS2      (3, 1, 2),
+        OFFICE_STAIRS3      (3, 4, 2),
         BREWERY             (-1, 4, 2),
 
         // Idle POI
@@ -243,26 +248,27 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         if (dayTime >= 0 && dayTime < 1000) {
             if (!this.hasGardenedToday && this.gardenPos != null) this.setCurrentAction(Action.WALKING_TO_GARDEN);
         }
-        // Noon (4000 - 8000)
+        // Noon (4000 - 11500)
         else if (dayTime >= 4000 && dayTime < 11500) {
             // TODO: come up with a reading routine
-            RandomSource random = this.getRandom();
+//            RandomSource random = this.getRandom();
 
-            switch (random.nextInt(3)) {
-                case 0 -> this.setCurrentAction(Action.WALKING_TO_BOOKSHELF);
-                case 1 -> this.setCurrentAction(Action.WALKING_TO_CAULDRON);
-                case 2 -> this.setCurrentAction(Action.WALKING_TO_MANA);
-            }
+//            switch (random.nextInt(3)) {
+//                case 0 -> this.setCurrentAction(Action.WALKING_TO_BOOKSHELF);
+//                case 1 -> this.setCurrentAction(Action.WALKING_TO_CAULDRON);
+//                case 2 -> this.setCurrentAction(Action.WALKING_TO_MANA);
+//            }
         }
         // Evening (11500 - 12500)
         else if (dayTime >= 11500 && dayTime < 12500) {
-            if (!this.hasLitLightsToday) {
+            if (!this.hasLitLightsToday && !this.getNavigation().isInProgress()) {
                 this.setCurrentAction(Action.SPELL_LIGHTS_ON);
                 this.spellTick = SPELL_ANIMATION_TICK_DURATION;
             }
         }
         // Night (12500 - 24000)
         else if (dayTime >= 12500) {
+            this.bedStep = 0;
             this.setCurrentAction(Action.WALKING_TO_BED);
         }
     }
@@ -283,7 +289,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                 if (this.distanceToPOISqr(OldWizardPOI.HALLWAY) < POI_REACH_THRESHOLD) {
                     this.removeMissingSign();
                     this.getNavigation().stop();
-                    this.setCurrentAction(Action.WANDER_AROUND);
+                    this.setCurrentAction(Action.IDLE);
                 }
             }
             case WALKING_TO_GARDEN -> {
@@ -321,12 +327,40 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                 }
             }
             case WALKING_TO_BED -> {
-                this.goTo(OldWizardPOI.BED, WALK_SPEED);
+                double distToBedSqr = this.distanceToPOISqr(OldWizardPOI.BED);
 
-                if (this.distanceToPOISqr(OldWizardPOI.BED) < POI_REACH_THRESHOLD) {
-                    this.getNavigation().stop();
-                    this.setCurrentAction(Action.SPELL_LIGHTS_OFF);
-                    this.spellTick = SPELL_ANIMATION_TICK_DURATION;
+                if (distToBedSqr < POI_REACH_THRESHOLD) {
+                    if (!this.getNavigation().isDone()) this.getNavigation().stop();
+
+                    BlockPos bedPos = this.getWorldPos(OldWizardPOI.BED.pos());
+                    this.getMoveControl().setWantedPosition(
+                            bedPos.getX() + 0.5D,
+                            bedPos.getY(),
+                            bedPos.getZ() + 0.5D,
+                            WALK_SPEED
+                    );
+
+                    if (distToBedSqr < POI_REACH_THRESHOLD / 3) {
+                        this.setCurrentAction(Action.SPELL_LIGHTS_OFF);
+                        this.spellTick = SPELL_ANIMATION_TICK_DURATION;
+                    }
+                }
+                else {
+                    OldWizardPOI targetPOI = switch (this.bedStep) {
+                        case 0 -> OldWizardPOI.OFFICE_STAIRS1;
+                        case 1 -> OldWizardPOI.OFFICE_STAIRS2;
+                        case 2 -> OldWizardPOI.OFFICE_STAIRS3;
+                        default -> OldWizardPOI.BED;
+                    };
+
+                    this.goTo(targetPOI, WALK_SPEED);
+
+                    // Advance to the next waypoint once close enough
+                    double distToWaypointSqr = this.distanceToPOISqr(targetPOI);
+                    if (distToWaypointSqr < POI_REACH_THRESHOLD) {
+                        this.getNavigation().stop();
+                        this.bedStep++;
+                    }
                 }
             }
             case SPELL_LIGHTS_OFF -> {
@@ -339,15 +373,30 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                 }
             }
             case SLEEPING -> {
-                // todo: implement
+                BlockPos bedWorldPos = this.getWorldPos(OldWizardPOI.BED.pos().offset(0, 0, 1));
+                if (!this.isSleeping()) {
+                    this.moveTo(bedWorldPos.getX() + 0.5D, bedWorldPos.getY() + 0.125D, bedWorldPos.getZ() + 0.5D, this.getYRot(), this.getXRot());
+                    this.startSleeping(bedWorldPos);
+                }
+                long dayTime = this.level().getDayTime() % 24000L;
+
+                if (dayTime < 12500) {
+                    this.stopSleeping();
+
+                    this.hasGardenedToday = false;
+                    this.hasLitLightsToday = false;
+                    this.hasExtinguishedLightsToday = false;
+
+                    this.setCurrentAction(Action.IDLE);
+                }
             }
             case WANDER_AROUND -> {
                 // either reached random idle location or error -> stand still and cast idle animations
-                if (distanceToPOISqr(this.lastIdleLocation) < POI_REACH_THRESHOLD || this.lastIdleLocation == null) {
+                if (distanceToPOISqr(this.lastIdleLocation) < POI_REACH_THRESHOLD || this.lastIdleLocation == null || this.getNavigation().getTargetPos() == null) {
                     this.setCurrentAction(Action.IDLE);
                 } else {
                     // else we're still going to idle location
-                    this.goTo(this.lastIdleLocation.pos(), WALK_SPEED);
+                    this.goTo(this.lastIdleLocation, WALK_SPEED);
                 }
             }
             case IDLE -> {
@@ -364,7 +413,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
 
                     // Pick a random POI
                     this.lastIdleLocation = idleLocations[this.getRandom().nextInt(idleLocations.length)];
-                    this.goTo(this.lastIdleLocation, WALK_SPEED);
+                    this.goTo(this.lastIdleLocation.pos(), WALK_SPEED);
                     this.setCurrentAction(Action.WANDER_AROUND);
                 }
             }
@@ -432,6 +481,9 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
             case READING -> {
                 builder.thenPlay(READ_BOOK_ANIMATION);
             }
+            case SLEEPING -> {
+                builder.thenPlay(SLEEP_ANIMATION);
+            }
             case IDLE -> {
                 if (this.idleTickCooldown > 0) {
                     this.currentIdleAnimation = STILL_ANIMATION;
@@ -483,11 +535,25 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                     player.sendSystemMessage(Component.literal("Distance to my garden is " + this.distanceToSqr(gardenPos.getX(), gardenPos.getY(), gardenPos.getZ())));
                 } else player.sendSystemMessage(Component.literal("I have no garden!"));
                 player.sendSystemMessage(Component.literal("My action is " + this.getCurrentAction()));
-                Path path = this.getNavigation().getPath();
-                if (path != null) {
-                    player.sendSystemMessage(Component.literal("Distance to my destination is " + path.getDistToTarget()));
-                    player.sendSystemMessage(Component.literal("Last idle location " + this.lastIdleLocation));
+                player.sendSystemMessage(Component.literal("Last Idle location is " + this.lastIdleLocation + " at " + (this.lastIdleLocation != null ? getWorldPos(this.lastIdleLocation.pos()) : "null")));
+
+                BlockPos targetPos = this.getNavigation().getTargetPos();
+                boolean isNavigating = this.getNavigation().isInProgress();
+
+                if (targetPos != null) {
+                    player.sendSystemMessage(Component.literal("Pathfinder Destination: " + targetPos.toShortString()));
+                    player.sendSystemMessage(Component.literal("Is actively navigating? " + isNavigating));
+
+                    Path path = this.getNavigation().getPath();
+                    if (path != null) {
+                        player.sendSystemMessage(Component.literal("Distance to destination: " + path.getDistToTarget()));
+                    } else {
+                        player.sendSystemMessage(Component.literal("Path Status: Stalled or failed to build path nodes."));
+                    }
+                } else {
+                    player.sendSystemMessage(Component.literal("Pathfinder Destination: None"));
                 }
+                player.sendSystemMessage(Component.literal("My bed stage is " + this.bedStep));
                 return InteractionResult.SUCCESS;
             }
 
@@ -559,6 +625,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         nbt.putBoolean("HasGardenedToday", this.hasGardenedToday);
         nbt.putBoolean("HasLitLightsToday", this.hasLitLightsToday);
         nbt.putBoolean("HasExtinguishedLightsToday", this.hasExtinguishedLightsToday);
+        nbt.putInt("BedStep", this.bedStep);
     }
 
     @Override
@@ -591,6 +658,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         if (nbt.contains("HasGardenedToday")) this.hasGardenedToday = nbt.getBoolean("HasGardenedToday");
         if (nbt.contains("HasLitLightsToday")) this.hasLitLightsToday = nbt.getBoolean("HasLitLightsToday");
         if (nbt.contains("HasExtinguishedLightsToday")) this.hasExtinguishedLightsToday = nbt.getBoolean("HasExtinguishedLightsToday");
+        if (nbt.contains("BedStep")) this.bedStep = nbt.getInt("BedStep");
     }
 
     public void setHomePos(BlockPos pos) { this.homePos = pos; }
