@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Spectral Slime cantrip was added
 - Ancient Scroll route for learning cantrips was added
 - Bubble Up cantrip was added
+- Colossus Oak cantrip was added
 
 ### Changed
 
