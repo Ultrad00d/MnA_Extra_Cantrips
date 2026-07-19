@@ -62,6 +62,9 @@
     "cantrip.forgotten_cantrips.locked.post": " cantrip, however I still have to learn it first...",
 
     "advancement.forgotten_cantrips.meet_old_wizard": "Ancient, dusty, forgetful wizard who teaches forgotten magic.",
+	
+	"advancement.forgotten_cantrips.find_ancient_scroll": "Forgotten Knowledge",
+    "advancement.forgotten_cantrips.find_ancient_scroll.description": "Find an Ancient Scroll in trail ruins, magical structres, or ruined portal chests.",
 
     "advancement.forgotten_cantrips.lightning.where_to_find": "Maybe the old wizard knows something about this...",
     "advancement.forgotten_cantrips.lightning.part_1": "According to the old man, the first symbol looks like this:\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
@@ -120,21 +123,21 @@
     "advancement.forgotten_cantrips.spectral_boat.name": "Spectral Boat Cantrip",
     "advancement.forgotten_cantrips.spectral_boat.description": "How do oceans say hi? They wave.",
 
-    "advancement.forgotten_cantrips.reset_villager.where_to_find": "Find pieces of forgotten knowledge in trail ruins and magical structures.",
+    "advancement.forgotten_cantrips.reset_villager.where_to_find": "Maybe you can learn something about this spell from Ancient Scrolls?",
     "advancement.forgotten_cantrips.reset_villager.part_1": "The Ancient scroll I've found says that this cantrip might start with this...\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
     "advancement.forgotten_cantrips.reset_villager.part_2": "This Ancient scroll suggests that this cantrip's middle symbol is something like...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
     "advancement.forgotten_cantrips.reset_villager.part_3": "And there I found the last symbol! It definitely was this:\n\n  ▉\n   ▉\n▉▉▉▉▉▉▉\n ▉\n  ▉",
     "advancement.forgotten_cantrips.reset_villager.name": "Villager Mind-Wiper Cantrip",
     "advancement.forgotten_cantrips.reset_villager.description": "Don't look at the flash.",
 
-    "advancement.forgotten_cantrips.devour.where_to_find": "Find pieces of forgotten knowledge in trail ruins and magical structures.",
+    "advancement.forgotten_cantrips.devour.where_to_find": "Maybe you can learn something about this spell from Ancient Scrolls?",
     "advancement.forgotten_cantrips.devour.part_1": "The Ancient scroll I've found says that this cantrip might start with this...\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
     "advancement.forgotten_cantrips.devour.part_2": "This Ancient scroll suggests that this cantrip's middle symbol is something like...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
     "advancement.forgotten_cantrips.devour.part_3": "And there I found the last symbol! It definitely was this:\n\n  ▉\n   ▉\n▉▉▉▉▉▉▉\n ▉\n  ▉",
     "advancement.forgotten_cantrips.devour.name": "Devour Cantrip",
     "advancement.forgotten_cantrips.devour.description": "You're Not You When You're Hungry (TM)",
 
-    "advancement.forgotten_cantrips.colossus_oak.where_to_find": "Find pieces of forgotten knowledge in trail ruins and magical structures.",
+    "advancement.forgotten_cantrips.colossus_oak.where_to_find": "Maybe you can learn something about this spell from Ancient Scrolls?",
     "advancement.forgotten_cantrips.colossus_oak.part_1": "The Ancient scroll I've found says that this cantrip might start with this...\n\n▉▉▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n▉▉▉▉▉▉▉",
     "advancement.forgotten_cantrips.colossus_oak.part_2": "This Ancient scroll suggests that this cantrip's middle symbol is something like...\n\n ▉▉▉▉▉\n▉     ▉\n▉     ▉\n▉     ▉\n ▉▉▉▉▉",
     "advancement.forgotten_cantrips.colossus_oak.part_3": "And there I found the last symbol! It definitely was this:\n\n  ▉\n   ▉\n▉▉▉▉▉▉▉\n ▉\n  ▉",
