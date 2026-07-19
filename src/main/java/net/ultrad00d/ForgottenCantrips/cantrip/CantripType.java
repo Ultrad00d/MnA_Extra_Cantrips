@@ -2,7 +2,6 @@ package net.ultrad00d.ForgottenCantrips.cantrip;
 
 import com.mna.api.tools.RLoc;
 import net.minecraft.resources.ResourceLocation;
-import net.ultrad00d.ForgottenCantrips.dialogue.DialogueChoice;
 import org.jetbrains.annotations.Nullable;
 
 public enum CantripType {
@@ -21,85 +20,85 @@ public enum CantripType {
             3,
             new LightningCantripLogic(),
             false,
-            "uc1/part_3",
+            "lightning/part_3",
             RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
     ),
     SPECTRAL_BED(
-            3,
+            2,
             new SpectralBedCantripLogic(),
             false,
-            "uc1/part_3",
-            RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
+            "spectral_bed/part_3",
+            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/knot4"), RLoc.create("manaweave_patterns/diamond")
     ),
     SPECTRAL_BOAT(
-            3,
+            2,
             new SpectralBoatCantripLogic(),
             false,
-            "uc1/part_3",
-            RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
+            "spectral_boat/part_3",
+            RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/diamond"), RLoc.create("manaweave_patterns/circle")
     ),
     SPECTRAL_DONKEY(
             3,
             new SpectralDonkeyCantripLogic(),
             false,
-            "uc1/part_3",
-            RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
+            null,
+            RLoc.create("manaweave_patterns/inverted_triangle"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/circle")
     ),
-    FORCE_CONSUME(
+    DEVOUR(
             3,
-            new ForceConsumeCantripLogic(),
+            new DevourCantripLogic(),
             false,
-            "uc1/part_3",
-            RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/bolt")
+            "devour/part_3",
+            RLoc.create("manaweave_patterns/diamond"), RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/diamond")
     ),
     SPECTRAL_ARMOR(
             1,
             new SpectralArmorCantripLogic(),
             true,
             null,
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+            RLoc.create("manaweave_patterns/slash"), RLoc.create("manaweave_patterns/triangle"), RLoc.create("manaweave_patterns/backslash")
     ),
     RESET_VILLAGER(
-            1,
+            3,
             new ResetVillagerTradingProgressCantripLogic(),
             false,
             null,
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+            RLoc.create("manaweave_patterns/bolt"), RLoc.create("manaweave_patterns/diamond"), RLoc.create("manaweave_patterns/square")
     ),
     EMPOWER_DAMAGE_BUFF(
             2,
             new EmpowerDamageBuffCantripLogic(),
             true,
             null,
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+            RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/knot_3"), RLoc.create("manaweave_patterns/slash")
     ),
     EMPOWER_MANA_BUFF(
             2,
             new EmpowerManaCostBuffCantripLogic(),
             true,
             null,
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+            RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/knot_3"), RLoc.create("manaweave_patterns/square")
     ),
     EMPOWER_CANTRIP_BUFF(
             2,
             new EmpowerCantripBuffCantripLogic(),
             true,
             null,
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+            RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/knot_3"), RLoc.create("manaweave_patterns/triangle")
     ),
     SPECTRAL_SLIME(
-            1,
+            2,
             new SpectralSlimeCantripLogic(),
             false,
             null,
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+            RLoc.create("manaweave_patterns/square"), RLoc.create("manaweave_patterns/triangle"), RLoc.create("manaweave_patterns/square")
     ),
     BUBBLE_UP(
-            1,
+            2,
             new BubbleUpCantripLogic(),
             true,
             null,
-            RLoc.create("manaweave_patterns/knot2"), RLoc.create("manaweave_patterns/diamond")
+            RLoc.create("manaweave_patterns/circle"), RLoc.create("manaweave_patterns/diamond"), RLoc.create("manaweave_patterns/circle")
     );
 
     private final String id;
