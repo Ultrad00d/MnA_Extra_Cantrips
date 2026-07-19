@@ -10,6 +10,6 @@ public class TimeUtil {
                 ? ForgottenCantrips.DEBUG_DAY_OVERRIDE
                 : (gameTime / 24000L);
 
-        return currentDay % 3 == 0;
+        return (currentDay + 1) % 3 == 0;
     }
 }
