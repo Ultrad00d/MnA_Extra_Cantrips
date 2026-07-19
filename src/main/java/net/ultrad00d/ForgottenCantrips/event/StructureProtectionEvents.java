@@ -10,9 +10,11 @@ import net.minecraftforge.event.entity.EntityMobGriefingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.ExplosionEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
+import net.ultrad00d.ForgottenCantrips.entity.OldWizard;
 import net.ultrad00d.ForgottenCantrips.util.StructureUtil;
 
 @Mod.EventBusSubscriber(modid = ForgottenCantrips.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -31,8 +33,12 @@ public class StructureProtectionEvents {
     @SubscribeEvent
     public static void onMobGriefing(EntityMobGriefingEvent event) {
         Entity entity = event.getEntity();
+        if (entity instanceof OldWizard) {
+            event.setResult(Event.Result.ALLOW);
+            return;
+        }
         if (StructureUtil.isInsideProtectedStructure(entity.level(), entity.blockPosition())) {
-            event.setCanceled(true);
+            event.setResult(Event.Result.DENY);
         }
     }
 

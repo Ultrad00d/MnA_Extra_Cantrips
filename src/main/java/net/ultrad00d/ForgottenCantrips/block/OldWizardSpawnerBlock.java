@@ -27,7 +27,7 @@ public class OldWizardSpawnerBlock extends HorizontalDirectionalBlock implements
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pType) {
         if (!(pLevel instanceof ServerLevel serverLevel)) return null;
         return (level, pos, state, blockEntity) -> {
-            if (OldWizardSpawnerBlockEntity.serverTick(level, pos, state, (OldWizardSpawnerBlockEntity) blockEntity)) {
+            if (OldWizardSpawnerBlockEntity.serverTick(level, pos, state)) {
                 serverLevel.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
             }
         };
