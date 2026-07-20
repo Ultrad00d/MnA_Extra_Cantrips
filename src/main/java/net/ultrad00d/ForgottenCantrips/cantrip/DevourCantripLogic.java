@@ -211,7 +211,7 @@ public class DevourCantripLogic implements ICantripLogic {
 
                 for(int i = 0; i < 16; ++i) {
                     double d3 = player.getX() + (player.getRandom().nextDouble() - 0.5D) * 16.0D;
-                    double d4 = Mth.clamp(player.getY() + (double)(player.getRandom().nextInt(16) - 8), (double)player.level().getMinBuildHeight(), (double)(player.level().getMinBuildHeight() + ((ServerLevel)player.level()).getLogicalHeight() - 1));
+                    double d4 = Mth.clamp(player.getY() + (double)(player.getRandom().nextInt(16) - 8), player.level().getMinBuildHeight(), player.level().getMinBuildHeight() + ((ServerLevel)player.level()).getLogicalHeight() - 1);
                     double d5 = player.getZ() + (player.getRandom().nextDouble() - 0.5D) * 16.0D;
                     if (player.isPassenger())
                         player.stopRiding();
@@ -221,7 +221,7 @@ public class DevourCantripLogic implements ICantripLogic {
                     net.minecraftforge.event.entity.EntityTeleportEvent.ChorusFruit event = net.minecraftforge.event.ForgeEventFactory.onChorusFruitTeleport(player, d3, d4, d5);
                     if (event.isCanceled()) return false;
                     if (player.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true)) {
-                        player.level().playSound((Player)null, d0, d1, d2, SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
+                        player.level().playSound(null, d0, d1, d2, SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
                         player.playSound(SoundEvents.CHORUS_FRUIT_TELEPORT, 1.0F, 1.0F);
                         break;
                     }

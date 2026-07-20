@@ -18,6 +18,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryMenu;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryProvider;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -59,26 +60,28 @@ public class SpectralBoat extends ChestBoat implements OwnableEntity {
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag tag)
+    protected void addAdditionalSaveData(@NotNull CompoundTag tag)
     {
         super.addAdditionalSaveData(tag);
         tag.putInt(EMPTY_TICKS_TAG, emptyTicks);
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag tag)
+    protected void readAdditionalSaveData(@NotNull CompoundTag tag)
     {
         super.readAdditionalSaveData(tag);
         emptyTicks = tag.getInt(EMPTY_TICKS_TAG);
     }
 
+    @NotNull
     @Override
     public Item getDropItem()
     {
         return Items.AIR;
     }
 
-    public InteractionResult interact(Player player, InteractionHand pHand) {
+    @NotNull
+    public InteractionResult interact(Player player, @NotNull InteractionHand pHand) {
         if (player.isSecondaryUseActive()) {
             if (!this.level().isClientSide) {
                 this.openSpectralChest(player);
@@ -91,12 +94,10 @@ public class SpectralBoat extends ChestBoat implements OwnableEntity {
     }
 
     public void openSpectralChest(Player player) {
-        player.getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(cap -> {
-            NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
-                    (id, playerInv, p) -> new SharedInventoryMenu(id, playerInv, cap.getInventory()),
-                    Component.translatable("container." + ForgottenCantrips.MOD_ID + ".spectral_chest")
-            ));
-        });
+        player.getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(cap -> NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
+                (id, playerInv, p) -> new SharedInventoryMenu(id, playerInv, cap.getInventory()),
+                Component.translatable("container." + ForgottenCantrips.MOD_ID + ".spectral_chest")
+        )));
     }
 
     @Override

@@ -37,7 +37,7 @@ public class SpellBuffAdjusters
 
     private static boolean hasManaCostBuff(SpellAdjustingContext context)
     {
-        return context.stage == SpellCastStage.CASTING && hasEffect(context.caster, EffectRegistry.EMPOWER_MANA_COST_BUFF.get());
+        return context.stage == SpellCastStage.CASTING && hasEffect(context.caster, EffectRegistry.EMPOWER_MANA_BUFF.get());
     }
 
     private static void applyDmgBuff(SpellAdjustingContext context)
@@ -57,7 +57,7 @@ public class SpellBuffAdjusters
 
     private static void applyManaCostBuff(SpellAdjustingContext context)
     {
-        int level = getEffectLevel(context.caster, EffectRegistry.EMPOWER_MANA_COST_BUFF.get());
+        int level = getEffectLevel(context.caster, EffectRegistry.EMPOWER_MANA_BUFF.get());
         float multiplier = Math.max(0.0F, 1.0F - MANA_COST_REDUCTION_PER_LEVEL * level);
         float manaCost = context.spell.getManaCost();
 

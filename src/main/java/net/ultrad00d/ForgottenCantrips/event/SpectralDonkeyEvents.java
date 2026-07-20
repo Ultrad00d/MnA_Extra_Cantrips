@@ -22,11 +22,9 @@ public class SpectralDonkeyEvents {
         // The dying player's capabilities are already invalidated by this point (Entity#remove
         // runs before PlayerEvent.Clone fires), so they must be revived to read them here.
         event.getOriginal().reviveCaps();
-        event.getOriginal().getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(oldCap -> {
-            event.getEntity().getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(newCap -> {
-                newCap.deserializeNBT(oldCap.serializeNBT());
-            });
-        });
+        event.getOriginal().getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(oldCap ->
+                event.getEntity().getCapability(SharedInventoryProvider.PLAYER_INVENTORY_CAP).ifPresent(newCap ->
+                        newCap.deserializeNBT(oldCap.serializeNBT())));
         event.getOriginal().invalidateCaps();
     }
 

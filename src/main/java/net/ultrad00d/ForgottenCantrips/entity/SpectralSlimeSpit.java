@@ -148,7 +148,7 @@ public class SpectralSlimeSpit extends Projectile implements ItemSupplier
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult hitResult)
+    protected void onHitBlock(@NotNull BlockHitResult hitResult)
     {
         super.onHitBlock(hitResult);
         if (!this.level().isClientSide())

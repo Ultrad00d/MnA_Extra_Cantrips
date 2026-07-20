@@ -313,7 +313,7 @@ public class WizardDialogue {
                  "cantrip.spectral_donkey.description",
                  "cantrip.spectral_boat.description",
                  "cantrip.spectral_armor.description",
-                 "cantrip.empower_mana_cost_buff.description",
+                 "cantrip.empower_mana_buff.description",
                  "cantrip.empower_damage_buff.description",
                  "cantrip.empower_cantrip_buff.description",
                  "cantrip.spectral_slime.description",
@@ -346,7 +346,7 @@ public class WizardDialogue {
                  "cantrip.bubble_up.part_1",        "cantrip.bubble_up.part_2",         "cantrip.bubble_up.part_3",
                  "cantrip.empower_damage_buff.part_1", "cantrip.empower_damage_buff.part_2", "cantrip.empower_damage_buff.part_3",
                  "cantrip.empower_cantrip_buff.part_1", "cantrip.empower_cantrip_buff.part_2", "cantrip.empower_cantrip_buff.part_3",
-                 "cantrip.empower_mana_cost_buff.part_1", "cantrip.empower_mana_cost_buff.part_2", "cantrip.empower_mana_cost_buff.part_3" -> {
+                 "cantrip.empower_mana_buff.part_1", "cantrip.empower_mana_buff.part_2", "cantrip.empower_mana_buff.part_3" -> {
 
                 // give item was chosen
                 int partNum = Integer.parseInt(from.substring(from.lastIndexOf('_') + 1));

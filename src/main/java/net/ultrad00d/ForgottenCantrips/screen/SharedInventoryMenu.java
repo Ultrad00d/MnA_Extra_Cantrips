@@ -1,17 +1,16 @@
 package net.ultrad00d.ForgottenCantrips.screen;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.ultrad00d.ForgottenCantrips.registry.MenuRegistry;
+import org.jetbrains.annotations.NotNull;
 
 public class SharedInventoryMenu extends AbstractContainerMenu {
     private static final int SHOWN_SLOT_COUNT = 27;
@@ -54,14 +53,15 @@ public class SharedInventoryMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player player) { return true; }
+    public boolean stillValid(@NotNull Player player) { return true; }
 
+    @NotNull
     @Override
-    public ItemStack quickMoveStack(Player player, int index) {
+    public ItemStack quickMoveStack(@NotNull Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
 
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
 

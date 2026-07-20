@@ -18,10 +18,4 @@ public class OldWizardRenderer extends GeoEntityRenderer<OldWizard> {
     public ResourceLocation getTextureLocation(OldWizard animatable) {
         return fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/entity/wizard.png");
     }
-
-//    could be used to scale entity (make a baby)
-//    @Override
-//    public void render(OldWizard entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-//        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-//    }
 }

@@ -2,7 +2,6 @@ package net.ultrad00d.ForgottenCantrips;
 
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.ultrad00d.ForgottenCantrips.registry.*;
-import com.mna.api.items.MACreativeTabs;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -27,7 +26,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
@@ -77,7 +75,6 @@ public class ForgottenCantrips {
         modEventBus.addListener(this::loadComplete);
 
         MinecraftForge.EVENT_BUS.register(this);
-        modEventBus.addListener(this::addCreative);
 
     }
 
@@ -87,13 +84,6 @@ public class ForgottenCantrips {
 
     private void loadComplete(final FMLLoadCompleteEvent event) {
         event.enqueueWork(SpellBuffAdjusters::register);
-    }
-
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTab() == MACreativeTabs.GENERAL) {
-//            event.accept(ItemRegistry.ANCIENT_SCROLL);
-        }
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
