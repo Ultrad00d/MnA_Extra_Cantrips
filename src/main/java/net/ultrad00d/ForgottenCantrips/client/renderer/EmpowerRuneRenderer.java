@@ -136,29 +136,7 @@ public class EmpowerRuneRenderer
         return fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/particle/" + name + ".png");
     }
 
-    private static class EmpowerRuneInfo
-    {
-        private final MobEffect effect;
-        private final ResourceLocation texture;
-        private final int red;
-        private final int green;
-        private final int blue;
-        private final float aspectRatio;
-        private final int frameCount;
-        private final int frameTime;
-        private final float orbitSpeed;
-
-        private EmpowerRuneInfo(MobEffect effect, ResourceLocation texture, int red, int green, int blue, float aspectRatio, int frameCount, int frameTime, float orbitSpeed)
-        {
-            this.effect = effect;
-            this.texture = texture;
-            this.red = red;
-            this.green = green;
-            this.blue = blue;
-            this.aspectRatio = aspectRatio;
-            this.frameCount = frameCount;
-            this.frameTime = frameTime;
-            this.orbitSpeed = orbitSpeed;
-        }
+    private record EmpowerRuneInfo(MobEffect effect, ResourceLocation texture, int red, int green, int blue,
+                                   float aspectRatio, int frameCount, int frameTime, float orbitSpeed) {
     }
 }

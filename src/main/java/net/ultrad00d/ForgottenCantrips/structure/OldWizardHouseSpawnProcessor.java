@@ -1,11 +1,8 @@
 package net.ultrad00d.ForgottenCantrips.structure;
 
-import com.mna.ManaAndArtifice;
-import com.mna.api.blocks.WizardLabBlock;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -13,8 +10,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
@@ -32,22 +27,22 @@ public class OldWizardHouseSpawnProcessor extends StructureProcessor {
     @Nullable
     @Override
     public StructureTemplate.StructureBlockInfo process(
-            LevelReader level, BlockPos structureOrigin, BlockPos pieceOrigin,
-            StructureTemplate.StructureBlockInfo originalBlock, StructureTemplate.StructureBlockInfo currentBlock,
-            StructurePlaceSettings settings, @Nullable StructureTemplate template) {
+            @NotNull LevelReader level, @NotNull BlockPos structureOrigin, @NotNull BlockPos pieceOrigin,
+            @NotNull StructureTemplate.StructureBlockInfo originalBlock, StructureTemplate.StructureBlockInfo currentBlock,
+            @NotNull StructurePlaceSettings settings, @Nullable StructureTemplate template) {
 
         BlockState currentState = currentBlock.state();
 
         // Replacing marker block with spawner block
         if (currentState.is(Blocks.JACK_O_LANTERN)) {
-            if (level instanceof ServerLevelAccessor serverLevel) {
+            if (level instanceof ServerLevelAccessor) {
                 BlockPos spawnPos = currentBlock.pos();
 
                 Direction facing = currentState.getValue(HorizontalDirectionalBlock.FACING);
                 BlockState spawnerState = BlockRegistry.OLD_WIZARD_SPAWNER.get().defaultBlockState()
                         .setValue(HorizontalDirectionalBlock.FACING, facing);
 
-                return new StructureTemplate.StructureBlockInfo(currentBlock.pos(), spawnerState, null);
+                return new StructureTemplate.StructureBlockInfo(spawnPos, spawnerState, null);
             }
         }
 

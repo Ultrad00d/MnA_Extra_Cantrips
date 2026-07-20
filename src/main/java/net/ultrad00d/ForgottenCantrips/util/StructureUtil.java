@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 
@@ -35,9 +34,7 @@ public class StructureUtil {
             }
 
             Structure struct2 = registry.get(GARDEN);
-            if (struct2 != null && serverLevel.structureManager().getStructureWithPieceAt(pos, struct2).isValid()) {
-                return true;
-            }
+            return struct2 != null && serverLevel.structureManager().getStructureWithPieceAt(pos, struct2).isValid();
         }
         return false;
     }

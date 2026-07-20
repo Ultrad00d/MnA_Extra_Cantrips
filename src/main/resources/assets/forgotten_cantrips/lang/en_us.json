@@ -188,6 +188,7 @@
     "item.forgotten_cantrips.ancient_scroll.hint.colossus_oak": "Seems to say something about saplings... and steroids?",
     "item.forgotten_cantrips.ancient_scroll.hint.usage": "Use this to get one step closer to mastering one of the Forgotten Cantrips (TM)!",
     "item.forgotten_cantrips.ancient_scroll.already_known": "It doesn't seem like you'll learn anything new from this scroll... Why not try trading it?",
+    "item.forgotten_cantrips.ancient_scroll.tier_too_low": "Your magic powers are yet too weak to understand this...",
 
     "item.forgotten_cantrips.memory_emerald": "Memory Emerald",
     "item.forgotten_cantrips.memory_emerald.empty": "Empty",
@@ -217,6 +218,7 @@
     "dialogue.forgotten_cantrips.choice.bye": "Bye",
     "dialogue.forgotten_cantrips.choice.cantrips_menu": "Cantrips Menu",
 
+    "dialogue.forgotten_cantrips.wizard.hurt_by_player": "*Chuckle* Bold of ye to strike at a man made of stardust and bad memory. Save yer strength, young'un.",
     "dialogue.forgotten_cantrips.wizard.intro.1": "Oh! A traveler! *Cough, cough* Halt there, traveler. It has been decades since anyone stumbled into this forgotten sanctum. The dust settles heavily on those who lack a purpose.",
     "dialogue.forgotten_cantrips.wizard.intro.2": "I am a very Old Wizard. I manipulate the raw, volatile syntax of the cosmos - what your kind calls 'magic'.",
     "dialogue.forgotten_cantrips.wizard.intro.3": "I sense a faint spark of attunement within you, though it is currently buried under immense ignorance.",

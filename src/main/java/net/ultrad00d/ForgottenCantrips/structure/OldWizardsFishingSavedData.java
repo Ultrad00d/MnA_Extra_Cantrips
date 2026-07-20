@@ -51,7 +51,7 @@ public class OldWizardsFishingSavedData extends SavedData {
 
     @NotNull
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public CompoundTag save(@NotNull CompoundTag tag) {
         ListTag list = new ListTag();
         for (Map.Entry<UUID, CompoundTag> entry : fishingWizards.entrySet()) {
             CompoundTag nbtEntry = new CompoundTag();

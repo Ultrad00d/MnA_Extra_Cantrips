@@ -7,14 +7,10 @@ import com.mna.api.timing.DelayedEventQueue;
 import com.mna.api.timing.TimedDelayedEvent;
 
 import com.mna.items.manaweaving.ItemManaweaverWand;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
 
 import net.minecraft.network.chat.Component;
 
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

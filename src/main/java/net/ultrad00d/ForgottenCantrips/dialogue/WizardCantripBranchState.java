@@ -8,5 +8,5 @@ public enum WizardCantripBranchState {
     PART_2_ITEM_GIVEN,
     PART_3,
     PART_3_ITEM_GIVEN,
-    SPELL_LEARNED;
+    SPELL_LEARNED
 }

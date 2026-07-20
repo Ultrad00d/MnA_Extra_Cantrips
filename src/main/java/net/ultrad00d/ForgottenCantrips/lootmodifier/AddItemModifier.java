@@ -1,7 +1,6 @@
 package net.ultrad00d.ForgottenCantrips.lootmodifier;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -24,8 +23,8 @@ public class AddItemModifier extends LootModifier {
                             Codec.INT.fieldOf("max").forGetter(e->e.max)
                             )).apply(inst, AddItemModifier::new));
     private final Item item;
-    private int min;
-    private int max;
+    private final int min;
+    private final int max;
 
     public AddItemModifier(LootItemCondition[] conditionsIn, Item item, int min, int max) {
         super(conditionsIn);

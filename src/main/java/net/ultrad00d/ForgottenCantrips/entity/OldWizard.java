@@ -9,6 +9,8 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
@@ -73,6 +75,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     private static final EntityDataAccessor<Boolean> HEAD_LOCKED = SynchedEntityData.defineId(OldWizard.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> WIZARD_ACTION = SynchedEntityData.defineId(OldWizard.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> WIZARD_FRIENDSHIP_STATE = SynchedEntityData.defineId(OldWizard.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> IS_TRIPPING = SynchedEntityData.defineId(OldWizard.class, EntityDataSerializers.BOOLEAN);
 
     @Override
     protected void defineSynchedData() {
@@ -80,6 +83,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         this.entityData.define(HEAD_LOCKED, true);
         this.entityData.define(WIZARD_ACTION, 0);
         this.entityData.define(WIZARD_FRIENDSHIP_STATE, STATE_FRIENDLY);
+        this.entityData.define(IS_TRIPPING, false);
     }
 
     // server side tickers
@@ -89,6 +93,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     private boolean hasGardenedToday = false;
     private boolean hasLitLightsToday = false;
     private boolean hasExtinguishedLightsToday = false;
+    private int tripTicks = 0;
     // client side tickers
     private int idleTickCooldown = 80;
 
@@ -106,6 +111,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     private static final String IDLE3_ANIMATION     = "animation.old_wizard.idle3";
     private static final String IDLE4_ANIMATION     = "animation.old_wizard.idle4";
     private static final String WALK_ANIMATION      = "animation.old_wizard.walk";
+    private static final String TRIP_FALL_ANIMATION = "animation.old_wizard.trip_fall";
     private static final String RUN_ANIMATION       = "animation.old_wizard.run";
     private static final String SPELL_ANIMATION     = "animation.old_wizard.spell";
     private static final String ANGER_ANIMATION     = "animation.old_wizard.anger";
@@ -185,20 +191,52 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
 
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
-        // TODO: fix head being locked
     }
 
     /** CORE TICKING METHOD */
     @Override
     public void aiStep() {
         super.aiStep();
-        if (!this.level().isClientSide()) {
-            // Manage friendship timers
-            int friendshipStateTimer = this.getFriendshipStateTimer();
-            if (friendshipStateTimer > 0) {
-                this.setFriendshipStateTimer(--friendshipStateTimer);
-                if (friendshipStateTimer == 0) {
-                    handleFriendshipStateTransition();
+        if (this.level() instanceof ServerLevel serverLevel) {
+            if (this.isTripping()) {
+                this.tripTicks--;
+                if (this.tripTicks == 100) {
+                    this.setDeltaMovement(0, this.getDeltaMovement().y, 0);
+                    this.getNavigation().stop();
+                    serverLevel.playSound(
+                            null,
+                            this.getX(),
+                            this.getY(),
+                            this.getZ(),
+                            SoundEvents.VILLAGER_AMBIENT,
+                            SoundSource.NEUTRAL,
+                            1.0f,
+                            1.6f
+                    );
+                }
+
+                if (this.tripTicks <= 0) this.setTripping(false);
+                return; // BYPASS normal routines entirely while falling/getting up
+            }
+
+//            // Manage friendship timers
+//            int friendshipStateTimer = this.getFriendshipStateTimer();
+//            if (friendshipStateTimer > 0) {
+//                this.setFriendshipStateTimer(--friendshipStateTimer);
+//                if (friendshipStateTimer == 0) {
+//                    handleFriendshipStateTransition();
+//                }
+//            }
+
+            // Randomly trigger trip while moving
+            Vec3 deltaMovement = this.getDeltaMovement();
+            if ((Math.abs(deltaMovement.x) > WALK_ANIMATION_THRESHOLD || Math.abs(deltaMovement.z) > WALK_ANIMATION_THRESHOLD)
+                    && this.getNavigation().isInProgress()) {
+
+                if (this.random.nextInt(1500) == 0) {
+                    this.setTripping(true);
+                    this.tripTicks = 120; // 6 seconds * 20 ticks
+                    return;
                 }
             }
 
@@ -418,7 +456,6 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
                 }
             }
             default -> {
-                // TODO: to be implemented
                 this.setCurrentAction(Action.WANDER_AROUND);
             }
         }
@@ -441,15 +478,15 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         return this.distanceToSqr(worldPos.getX() + 0.5d, worldPos.getY(), worldPos.getZ() + 0.5d);
     }
 
-    private void handleFriendshipStateTransition() {
-        int currentState = this.getWizardFriendshipState();
-        if (currentState == STATE_DISAPPOINTED) {
-            this.setWizardFriendshipState(STATE_NOT_FRIENDLY);
-            this.setFriendshipStateTimer(12000);
-        } else if (currentState == STATE_NOT_FRIENDLY) {
-            this.setWizardFriendshipState(STATE_FRIENDLY);
-        }
-    }
+//    private void handleFriendshipStateTransition() {
+//        int currentState = this.getWizardFriendshipState();
+//        if (currentState == STATE_DISAPPOINTED) {
+//            this.setWizardFriendshipState(STATE_NOT_FRIENDLY);
+//            this.setFriendshipStateTimer(12000);
+//        } else if (currentState == STATE_NOT_FRIENDLY) {
+//            this.setWizardFriendshipState(STATE_FRIENDLY);
+//        }
+//    }
 
     // ANIMATION BLOCK START
     @Override
@@ -460,6 +497,8 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     /** Initiates geckolib animation based on current action; changes actions on some animations */
     private PlayState handleAnimationState(AnimationState<OldWizard> animationState) {
         RawAnimation builder = RawAnimation.begin();
+        if (this.isTripping()) return animationState.setAndContinue(builder.thenPlay(TRIP_FALL_ANIMATION));
+
         Vec3 deltaMovement = this.getDeltaMovement();
         deltaMovement = deltaMovement.add(0, -deltaMovement.y(), 0);
         if (deltaMovement.length() > WALK_ANIMATION_THRESHOLD) {
@@ -529,7 +568,7 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
     public InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         if (!player.level().isClientSide() && hand == InteractionHand.MAIN_HAND) {
             // TODO: insert friendship mechanic here
-            if (player.isSecondaryUseActive()) {
+            if (level().isDebug() && player.isSecondaryUseActive()) {
                 if (gardenPos != null) {
                     player.sendSystemMessage(Component.literal("My garden is at " + this.gardenPos));
                     player.sendSystemMessage(Component.literal("Distance to my garden is " + this.distanceToSqr(gardenPos.getX(), gardenPos.getY(), gardenPos.getZ())));
@@ -593,7 +632,13 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
         }
 
         if (source.getEntity() instanceof Player player) {
-            // todo: add angry state
+            player.getCapability(WizardDialogueProvider.WIZARD_DIALOGUE_CAP).ifPresent(cap -> {
+                WizardDialogue.sendWizardReply(
+                        player,
+                        "hurt_by_player",
+                        cap
+                        );
+            });
         }
 
         return false;
@@ -610,6 +655,9 @@ public class OldWizard extends PathfinderMob implements GeoEntity {
 
     public int getFriendshipStateTimer() { return this.friendshipStateTimer; }
     public void setFriendshipStateTimer(int tick) { this.friendshipStateTimer = tick; }
+
+    public boolean isTripping() { return this.entityData.get(IS_TRIPPING); }
+    public void setTripping(boolean tripping) { this.entityData.set(IS_TRIPPING, tripping); }
 
     // --- HOUSE STRUCTURE ---
     @Override

@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.particles.ItemParticleOption;
@@ -63,6 +64,7 @@ public class SpectralSlime extends Slime implements OwnableEntity, RangedAttackM
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Monster.class, true));
     }
 
+    @NotNull
     @Override
     protected ParticleOptions getParticleType()
     {
@@ -102,7 +104,7 @@ public class SpectralSlime extends Slime implements OwnableEntity, RangedAttackM
             double shootRangeSqr = this.getShootRangeSqr();
             if (targetDistance > shootRangeSqr)
             {
-                this.moveToward(target, 1.0D, true);
+                this.moveToward(target, true);
             }
             else
             {
@@ -128,7 +130,7 @@ public class SpectralSlime extends Slime implements OwnableEntity, RangedAttackM
             }
             else if (ownerDistance > FOLLOW_START_DISTANCE_SQR)
             {
-                this.moveToward(owner, 1.0D, false);
+                this.moveToward(owner, false);
             }
             else if (ownerDistance <= FOLLOW_STOP_DISTANCE_SQR)
             {
@@ -138,7 +140,7 @@ public class SpectralSlime extends Slime implements OwnableEntity, RangedAttackM
     }
 
     @Override
-    public void performRangedAttack(LivingEntity target, float velocity)
+    public void performRangedAttack(@NotNull LivingEntity target, float velocity)
     {
         if (!this.canAttack(target) || this.level().isClientSide())
         {
@@ -156,7 +158,7 @@ public class SpectralSlime extends Slime implements OwnableEntity, RangedAttackM
     }
 
     @Override
-    public boolean canAttack(LivingEntity target)
+    public boolean canAttack(@NotNull LivingEntity target)
     {
         if (target instanceof Player || target == this.getOwner())
         {
@@ -166,7 +168,7 @@ public class SpectralSlime extends Slime implements OwnableEntity, RangedAttackM
     }
 
     @Override
-    public boolean doHurtTarget(net.minecraft.world.entity.Entity target)
+    public boolean doHurtTarget(@NotNull Entity target)
     {
         if (target instanceof Player || target == this.getOwner())
         {
@@ -176,7 +178,7 @@ public class SpectralSlime extends Slime implements OwnableEntity, RangedAttackM
     }
 
     @Override
-    protected void dealDamage(LivingEntity target)
+    protected void dealDamage(@NotNull LivingEntity target)
     {
         if (target instanceof Player || target == this.getOwner())
         {
@@ -202,7 +204,7 @@ public class SpectralSlime extends Slime implements OwnableEntity, RangedAttackM
     }
 
     @Override
-    public void remove(Entity.RemovalReason reason)
+    public void remove(Entity.@NotNull RemovalReason reason)
     {
         if (!this.level().isClientSide() && this.isDeadOrDying() && this.getSize() > 1)
         {
@@ -218,20 +220,20 @@ public class SpectralSlime extends Slime implements OwnableEntity, RangedAttackM
         return false;
     }
 
+    @NotNull
     @Override
-    public EntityDimensions getDimensions(Pose pose)
+    public EntityDimensions getDimensions(@NotNull Pose pose)
     {
         return super.getDimensions(pose).scale(HITBOX_SCALE);
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions)
-    {
+    protected float getStandingEyeHeight(@NotNull Pose pose, EntityDimensions dimensions) {
         return 0.625F * dimensions.height;
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag)
+    public void addAdditionalSaveData(@NotNull CompoundTag tag)
     {
         super.addAdditionalSaveData(tag);
         if (this.ownerUUID != null)
@@ -241,7 +243,7 @@ public class SpectralSlime extends Slime implements OwnableEntity, RangedAttackM
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag)
+    public void readAdditionalSaveData(@NotNull CompoundTag tag)
     {
         super.readAdditionalSaveData(tag);
         if (tag.hasUUID(OWNER_TAG))
@@ -341,7 +343,7 @@ public class SpectralSlime extends Slime implements OwnableEntity, RangedAttackM
         this.setHealth(this.getMaxHealth());
     }
 
-    private void moveToward(LivingEntity entity, double speed, boolean aggressive) {
+    private void moveToward(LivingEntity entity, boolean aggressive) {
         double x = entity.getX() - this.getX();
         double z = entity.getZ() - this.getZ();
         float yaw = (float) (Mth.atan2(z, x) * (180F / (float) Math.PI)) - 90.0F;
@@ -351,7 +353,7 @@ public class SpectralSlime extends Slime implements OwnableEntity, RangedAttackM
             slimeMoveControl.setDirection(yaw, aggressive);
         }
 
-        this.getMoveControl().setWantedPosition(entity.getX(), entity.getY(), entity.getZ(), speed);
+        this.getMoveControl().setWantedPosition(entity.getX(), entity.getY(), entity.getZ(), 1.0);
         this.getLookControl().setLookAt(entity, 10.0F, this.getMaxHeadXRot());
     }
 
