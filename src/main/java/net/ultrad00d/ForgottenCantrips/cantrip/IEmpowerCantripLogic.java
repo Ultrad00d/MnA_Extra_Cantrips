@@ -91,7 +91,7 @@ public interface IEmpowerCantripLogic {
     default MobEffect[] getForgottenBuffs() {
         return new MobEffect[] {
                 EffectRegistry.EMPOWER_DAMAGE_BUFF.get(),
-                EffectRegistry.EMPOWER_MANA_COST_BUFF.get(),
+                EffectRegistry.EMPOWER_MANA_BUFF.get(),
                 EffectRegistry.EMPOWER_CANTRIP_BUFF.get()
         };
     }

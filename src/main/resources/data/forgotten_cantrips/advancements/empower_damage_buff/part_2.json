@@ -4,10 +4,10 @@
       "text": "Unknown Cantrip: Second symbol"
     },
     "description": {
-      "translate": "advancement.forgotten_cantrips.mana_cost_buff.part_2"
+      "translate": "advancement.forgotten_cantrips.empower_damage_buff.part_2"
     },
     "icon": {
-      "item": "minecraft:enchanted_book"
+      "item": "minecraft:diamond_sword"
     },
     "frame": "task",
     "show_toast": true,
@@ -19,5 +19,5 @@
       "trigger": "minecraft:impossible"
     }
   },
-  "parent": "forgotten_cantrips:mana_cost_buff/part_1"
+  "parent": "forgotten_cantrips:empower_damage_buff/part_1"
 }

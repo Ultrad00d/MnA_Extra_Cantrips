@@ -74,7 +74,7 @@ public enum CantripType {
     ),
     EMPOWER_MANA_BUFF(
             2,
-            new EmpowerManaCostBuffCantripLogic(),
+            new EmpowerManaBuffCantripLogic(),
             true,
             "empower_mana_buff/part_3",
             RLoc.create("manaweave_patterns/knot4"), RLoc.create("manaweave_patterns/knot"), RLoc.create("manaweave_patterns/square")

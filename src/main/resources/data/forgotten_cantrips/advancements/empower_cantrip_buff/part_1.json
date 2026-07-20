@@ -1,10 +1,10 @@
 {
   "display": {
     "title": {
-      "text": "Unknown Cantrip: Second symbol"
+      "text": "Unknown Cantrip: First symbol"
     },
     "description": {
-      "translate": "advancement.forgotten_cantrips.cantrip_buff.part_2"
+      "translate": "advancement.forgotten_cantrips.empower_cantrip_buff.part_1"
     },
     "icon": {
       "item": "minecraft:amethyst_shard"
@@ -19,5 +19,5 @@
       "trigger": "minecraft:impossible"
     }
   },
-  "parent": "forgotten_cantrips:cantrip_buff/part_1"
+  "parent": "forgotten_cantrips:empower_cantrip_buff/root"
 }

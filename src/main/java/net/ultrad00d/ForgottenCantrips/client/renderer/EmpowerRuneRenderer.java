@@ -31,7 +31,7 @@ public class EmpowerRuneRenderer
 
     private static final EmpowerRuneInfo[] RUNES = new EmpowerRuneInfo[] {
             new EmpowerRuneInfo(EffectRegistry.EMPOWER_DAMAGE_BUFF.get(), texture("empower_damage_buff"), 217, 72, 72, 16.0F / 22.0F, 10, 3, 6.0F),
-            new EmpowerRuneInfo(EffectRegistry.EMPOWER_MANA_COST_BUFF.get(), texture("empower_mana_cost_buff"), 72, 168, 217, 16.0F / 22.0F, 10, 3, 4.0F),
+            new EmpowerRuneInfo(EffectRegistry.EMPOWER_MANA_BUFF.get(), texture("empower_mana_buff"), 72, 168, 217, 16.0F / 22.0F, 10, 3, 4.0F),
             new EmpowerRuneInfo(EffectRegistry.EMPOWER_CANTRIP_BUFF.get(), texture("empower_cantrip_buff"), 143, 111, 217, 16.0F / 22.0F, 10, 3, 4.0F)
     };
 
