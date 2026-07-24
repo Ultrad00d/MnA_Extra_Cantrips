@@ -2,7 +2,6 @@ package net.ultrad00d.ForgottenCantrips;
 
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.ultrad00d.ForgottenCantrips.registry.*;
-import com.mna.api.items.MACreativeTabs;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -11,7 +10,6 @@ import net.ultrad00d.ForgottenCantrips.client.renderer.OldWizardRenderer;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogue;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogueProvider;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardSessionManager;
-import net.ultrad00d.ForgottenCantrips.registry.*;
 import net.ultrad00d.ForgottenCantrips.spells.SpellBuffAdjusters;
 import org.slf4j.Logger;
 
@@ -21,18 +19,17 @@ import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -42,19 +39,8 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.ultrad00d.ForgottenCantrips.client.renderer.EmpowerRuneRenderer;
-import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralBoatRenderer;
-import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralDonkeyRenderer;
-import net.ultrad00d.ForgottenCantrips.client.renderer.SpectralSlimeRenderer;
+import net.ultrad00d.ForgottenCantrips.client.renderer.*;
 import net.ultrad00d.ForgottenCantrips.config.IlluminationConfig;
-import net.ultrad00d.ForgottenCantrips.registry.BlockEntityRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.CantripRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.EntityRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.ItemRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.MenuRegistry;
-import net.ultrad00d.ForgottenCantrips.registry.PotionRegistry;
 import net.ultrad00d.ForgottenCantrips.screen.MusicDiscSlotProvider;
 import net.ultrad00d.ForgottenCantrips.screen.SharedInventoryScreen;
 import net.ultrad00d.ForgottenCantrips.effect.IlluminationEffect;
@@ -67,19 +53,21 @@ public class ForgottenCantrips {
     public static final String MOD_ID = "forgotten_cantrips"; // lowercase, no spaces, numbers, _ and -
     public static final Logger LOGGER = LogUtils.getLogger();
 
+    @SuppressWarnings("removal")
     public ForgottenCantrips() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, IlluminationConfig.SPEC);
 
+        BlockEntityRegistry.register(modEventBus);
+        BlockRegistry.register(modEventBus);
+        EffectRegistry.register(modEventBus);
         EntityRegistry.register(modEventBus);
         ItemRegistry.register(modEventBus);
-        BlockRegistry.register(modEventBus);
-        BlockEntityRegistry.register(modEventBus);
-        EffectRegistry.register(modEventBus);
-        PotionRegistry.register(modEventBus);
         MenuRegistry.register(modEventBus);
         LootModifierRegistry.register(modEventBus);
+        PotionRegistry.register(modEventBus);
+        StructureProcessorRegistry.register(modEventBus);
 
         GeckoLib.initialize();
 
@@ -87,7 +75,6 @@ public class ForgottenCantrips {
         modEventBus.addListener(this::loadComplete);
 
         MinecraftForge.EVENT_BUS.register(this);
-        modEventBus.addListener(this::addCreative);
 
     }
 
@@ -97,19 +84,6 @@ public class ForgottenCantrips {
 
     private void loadComplete(final FMLLoadCompleteEvent event) {
         event.enqueueWork(SpellBuffAdjusters::register);
-    }
-
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTab() == MACreativeTabs.GENERAL) {
-//            event.accept(ItemRegistry.ANCIENT_SCROLL);
-        }
-    }
-
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
-
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -129,6 +103,10 @@ public class ForgottenCantrips {
             EntityRenderers.register(
                     EntityRegistry.SPECTRAL_SLIME.get(),
                     SpectralSlimeRenderer::new
+            );
+            EntityRenderers.register(
+                    EntityRegistry.SPECTRAL_SLIME_SPIT.get(),
+                    ThrownItemRenderer::new
             );
             EntityRenderers.register(
                     EntityRegistry.OLD_WIZARD.get(),
@@ -157,6 +135,7 @@ public class ForgottenCantrips {
         IlluminationEffect.onPlayerLogout(event);
     }
 
+    public static int DEBUG_DAY_OVERRIDE = -1;
     @SubscribeEvent
     public void onRegisterCommands(RegisterCommandsEvent event) {
         var dispatcher = event.getDispatcher();
@@ -194,6 +173,27 @@ public class ForgottenCantrips {
                                 .executes(this::handleDialogueCommand)
                         )
         );
+        dispatcher.register(
+                Commands.literal("wiz")
+                        .requires(source -> source.hasPermission(4))
+                        .then(Commands.literal("setDay")
+                                .then(Commands.argument("day", IntegerArgumentType.integer(0))
+                                        .executes(context -> {
+                                            int day = IntegerArgumentType.getInteger(context, "day");
+                                            DEBUG_DAY_OVERRIDE = day;
+                                            context.getSource().sendSuccess(() -> Component.literal("Forced current day to: " + day), true);
+                                            return 1;
+                                        })
+                                )
+                        )
+                        .then(Commands.literal("resetDay")
+                                .executes(context -> {
+                                    DEBUG_DAY_OVERRIDE = -1;
+                                    context.getSource().sendSuccess(() -> Component.literal("Returned to standard game time tracking."), true);
+                                    return 1;
+                                })
+                        )
+        );
     }
 
     private static int setConfigValue(CommandContext<CommandSourceStack> ctx, String key, int value) {
@@ -227,9 +227,8 @@ public class ForgottenCantrips {
 
         // If valid, apply data and advance state safely
         if (session != null) {
-            player.getCapability(WizardDialogueProvider.WIZARD_DIALOGUE_CAP).ifPresent(cap -> {
-                WizardDialogue.advanceDialogueFrom(session.choice(), session.fromKey(), player, cap);
-            });
+            player.getCapability(WizardDialogueProvider.WIZARD_DIALOGUE_CAP).ifPresent(cap ->
+                    WizardDialogue.advanceDialogueFrom(session.choice(), session.fromKey(), player, cap));
         }
         return 1;
     }

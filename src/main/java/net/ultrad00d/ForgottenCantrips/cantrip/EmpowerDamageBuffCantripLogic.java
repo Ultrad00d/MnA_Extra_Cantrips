@@ -8,11 +8,11 @@ import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 
 public class EmpowerDamageBuffCantripLogic implements IEmpowerCantripLogic, ICantripLogic {
     @Override
-    public String getCantripId() { return "dmg_buff"; }
+    public String getCantripId() { return "empower_damage_buff"; }
 
     @Override
     public void run(Player player, ICantrip cantrip, InteractionHand hand)
     {
-        applyBuff(player, EffectRegistry.DMG_BUFF);
+        applyBuff(player, EffectRegistry.EMPOWER_DAMAGE_BUFF);
     }
 }

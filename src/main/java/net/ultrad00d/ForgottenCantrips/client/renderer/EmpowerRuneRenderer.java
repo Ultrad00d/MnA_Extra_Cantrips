@@ -30,9 +30,9 @@ public class EmpowerRuneRenderer
     private static final float RUNE_ALPHA = 0.80F;
 
     private static final EmpowerRuneInfo[] RUNES = new EmpowerRuneInfo[] {
-            new EmpowerRuneInfo(EffectRegistry.DMG_BUFF.get(), texture("dmg_buff"), 217, 72, 72, 16.0F / 22.0F, 10, 3, 6.0F),
-            new EmpowerRuneInfo(EffectRegistry.MANA_COST_BUFF.get(), texture("mana_cost_buff"), 72, 168, 217, 16.0F / 22.0F, 10, 3, 4.0F),
-            new EmpowerRuneInfo(EffectRegistry.CANTRIP_BUFF.get(), texture("cantrip_buff"), 143, 111, 217, 16.0F / 22.0F, 10, 3, 4.0F)
+            new EmpowerRuneInfo(EffectRegistry.EMPOWER_DAMAGE_BUFF.get(), texture("empower_damage_buff"), 217, 72, 72, 16.0F / 22.0F, 10, 3, 6.0F),
+            new EmpowerRuneInfo(EffectRegistry.EMPOWER_MANA_BUFF.get(), texture("empower_mana_buff"), 72, 168, 217, 16.0F / 22.0F, 10, 3, 4.0F),
+            new EmpowerRuneInfo(EffectRegistry.EMPOWER_CANTRIP_BUFF.get(), texture("empower_cantrip_buff"), 143, 111, 217, 16.0F / 22.0F, 10, 3, 4.0F)
     };
 
     @SubscribeEvent
@@ -136,29 +136,7 @@ public class EmpowerRuneRenderer
         return fromNamespaceAndPath(ForgottenCantrips.MOD_ID, "textures/particle/" + name + ".png");
     }
 
-    private static class EmpowerRuneInfo
-    {
-        private final MobEffect effect;
-        private final ResourceLocation texture;
-        private final int red;
-        private final int green;
-        private final int blue;
-        private final float aspectRatio;
-        private final int frameCount;
-        private final int frameTime;
-        private final float orbitSpeed;
-
-        private EmpowerRuneInfo(MobEffect effect, ResourceLocation texture, int red, int green, int blue, float aspectRatio, int frameCount, int frameTime, float orbitSpeed)
-        {
-            this.effect = effect;
-            this.texture = texture;
-            this.red = red;
-            this.green = green;
-            this.blue = blue;
-            this.aspectRatio = aspectRatio;
-            this.frameCount = frameCount;
-            this.frameTime = frameTime;
-            this.orbitSpeed = orbitSpeed;
-        }
+    private record EmpowerRuneInfo(MobEffect effect, ResourceLocation texture, int red, int green, int blue,
+                                   float aspectRatio, int frameCount, int frameTime, float orbitSpeed) {
     }
 }

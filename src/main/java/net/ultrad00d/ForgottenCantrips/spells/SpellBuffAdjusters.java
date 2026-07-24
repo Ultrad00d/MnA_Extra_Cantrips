@@ -15,8 +15,8 @@ import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 
 public class SpellBuffAdjusters
 {
-    private static final float DAMAGE_BONUS_PER_LEVEL = 3.0F;
-    private static final float MANA_COST_REDUCTION_PER_LEVEL = 3.0F;
+    private static final float DAMAGE_BONUS_PER_LEVEL = 0.10F;
+    private static final float MANA_COST_REDUCTION_PER_LEVEL = 0.10F;
 
     public static void register()
     {
@@ -32,36 +32,36 @@ public class SpellBuffAdjusters
 
     private static boolean hasDmgBuff(SpellAdjustingContext context)
     {
-        return context.stage == SpellCastStage.CASTING && hasEffect(context.caster, EffectRegistry.DMG_BUFF.get());
+        return context.stage == SpellCastStage.CASTING && hasEffect(context.caster, EffectRegistry.EMPOWER_DAMAGE_BUFF.get());
     }
 
     private static boolean hasManaCostBuff(SpellAdjustingContext context)
     {
-        return context.stage == SpellCastStage.CASTING && hasEffect(context.caster, EffectRegistry.MANA_COST_BUFF.get());
+        return context.stage == SpellCastStage.CASTING && hasEffect(context.caster, EffectRegistry.EMPOWER_MANA_BUFF.get());
     }
 
     private static void applyDmgBuff(SpellAdjustingContext context)
     {
-        int level = getEffectLevel(context.caster, EffectRegistry.DMG_BUFF.get());
-        float damageBonus = DAMAGE_BONUS_PER_LEVEL * level;
+        int level = getEffectLevel(context.caster, EffectRegistry.EMPOWER_DAMAGE_BUFF.get());
+        float damageMultiplier = 1.0F + DAMAGE_BONUS_PER_LEVEL * level;
 
         for (IModifiedSpellPart<SpellEffect> component : context.spell.getComponents())
         {
             if (component.getContainedAttributes().contains(Attribute.DAMAGE))
             {
                 float damage = component.getValue(Attribute.DAMAGE);
-                component.setValue(Attribute.DAMAGE, damage + damageBonus);
+                component.setValue(Attribute.DAMAGE, damage * damageMultiplier);
             }
         }
     }
 
     private static void applyManaCostBuff(SpellAdjustingContext context)
     {
-        int level = getEffectLevel(context.caster, EffectRegistry.MANA_COST_BUFF.get());
-        float reduction = MANA_COST_REDUCTION_PER_LEVEL * level;
+        int level = getEffectLevel(context.caster, EffectRegistry.EMPOWER_MANA_BUFF.get());
+        float multiplier = Math.max(0.0F, 1.0F - MANA_COST_REDUCTION_PER_LEVEL * level);
         float manaCost = context.spell.getManaCost();
 
-        context.spell.setManaCost(Math.max(0.0F, manaCost - reduction));
+        context.spell.setManaCost(manaCost * multiplier);
     }
 
     private static boolean hasEffect(LivingEntity entity, MobEffect effect)

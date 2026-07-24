@@ -1,14 +1,13 @@
 package net.ultrad00d.ForgottenCantrips.item;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -18,55 +17,48 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
+import net.ultrad00d.ForgottenCantrips.cantrip.CantripType;
+import net.ultrad00d.ForgottenCantrips.util.ProgressionUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Random;
 
 import java.util.List;
 
-
-
 public class AncientScrollItem extends Item {
-    public AncientScrollItem(Properties pProperties) {
-        super(pProperties);
-    }
+    public AncientScrollItem(Properties pProperties) { super(pProperties.stacksTo(1)); }
 
+    @Override public int getMaxStackSize(ItemStack stack) { return 1; }
+    @Override @NotNull public Rarity getRarity(@NotNull ItemStack pStack) { return Rarity.EPIC; }
+    @Override public boolean isFoil(@NotNull ItemStack pStack) { return true; }
+
+    @NotNull
     @Override
-    public int getMaxStackSize(ItemStack stack) { return 1; }
-
-    @Override
-    public Rarity getRarity(ItemStack pStack) { return Rarity.EPIC; }
-
-    @Override
-    public boolean isFoil(ItemStack pStack) {
-        return true;
-    }
-
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
-
-        ItemStack thisItemStackClient = pPlayer.getItemInHand(pUsedHand);
+    public InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
+        ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
 
         if (pPlayer instanceof ServerPlayer serverPlayer) {
+            CompoundTag nbtData = itemStack.getOrCreateTag();
+            if (!nbtData.contains("cantripID")) initNBT(nbtData);
 
-            ItemStack thisItemStackServer = serverPlayer.getItemInHand(pUsedHand);
+            String cantripId = nbtData.getString("cantripID");
 
-            if (!(thisItemStackServer.hasTag())) {
-                initNBT(thisItemStackServer.getOrCreateTag());
+            CantripType cantrip = CantripType.fromId(cantripId);
+            if (cantrip != null) {
+                int playerTier = ProgressionUtil.getPlayerTier(serverPlayer);
+                if (playerTier < cantrip.getTier()) {
+                    serverPlayer.sendSystemMessage(Component.translatable("item.forgotten_cantrips.ancient_scroll.tier_too_low"));
+                    return InteractionResultHolder.pass(itemStack);
+                }
             }
-            CompoundTag nbtData = thisItemStackServer.getTag();
 
-            String currentAdvancementLocation;
-            Advancement currentAdvancement;
-            PlayerAdvancements playerAdvancements = serverPlayer.getAdvancements();
             int stageToActivate = 1;
-
             for (int i = 3; i > 0; i--) {
-                currentAdvancementLocation = "forgotten_cantrips:" + nbtData.getString("cantripID") + "/part_" + String.valueOf(i);
-                currentAdvancement = serverPlayer.getServer().getAdvancements().getAdvancement(new ResourceLocation(currentAdvancementLocation));
-                if (serverPlayer.getAdvancements().getOrStartProgress(currentAdvancement).isDone()) {
+                ResourceLocation advancementLocation = ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, cantripId + "/part_" + i);
+                if (ProgressionUtil.hasAdvancement(serverPlayer, advancementLocation)) {
                     if (i == 3) {
                         serverPlayer.sendSystemMessage(Component.translatable("item.forgotten_cantrips.ancient_scroll.already_known"));
-                        return InteractionResultHolder.pass(thisItemStackServer);
+                        return InteractionResultHolder.pass(itemStack);
                     } else {
                         stageToActivate = i + 1;
                         break;
@@ -74,84 +66,61 @@ public class AncientScrollItem extends Item {
                 }
             }
 
-            //if the loop completed without changing stageToActivate, it defaults to unlocking the first stage
+            ResourceLocation nextAdvancement = ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID, cantripId + "/part_" + stageToActivate);
+            ProgressionUtil.awardAdvancement(serverPlayer, nextAdvancement);
 
-            currentAdvancementLocation = "forgotten_cantrips:" + nbtData.getString("cantripID") + "/part_" + String.valueOf(stageToActivate);
-            currentAdvancement = serverPlayer.getServer().getAdvancements().getAdvancement(new ResourceLocation(currentAdvancementLocation));
-            serverPlayer.getAdvancements().award(currentAdvancement, "criterion");
-
-            if (!(serverPlayer.isCreative())) {
-                thisItemStackServer.setCount(thisItemStackServer.getCount()-1);
-            }
-
-            pLevel.playSound(null,serverPlayer.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.MASTER, 2F, 1F);
-            pLevel.playSound(null,serverPlayer.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.MASTER, 1F, 1F);
-
-            return InteractionResultHolder.pass(thisItemStackServer);
-        } else {
-            return InteractionResultHolder.pass(thisItemStackClient);
+            if (!serverPlayer.isCreative()) itemStack.shrink(1);
+            pLevel.playSound(null, serverPlayer.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.MASTER, 2.0F, 1.0F);
+            pLevel.playSound(null, serverPlayer.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.MASTER, 1.0F, 1.0F);
         }
+
+        return InteractionResultHolder.pass(itemStack);
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
+        if (pStack.hasTag() && pStack.getTag().contains("cantripID")) {
+            String cantripId = pStack.getTag().getString("cantripID");
 
+            ChatFormatting color = switch (cantripId) {
+                case "reset_villager" -> ChatFormatting.GREEN;
+                case "devour" -> ChatFormatting.GRAY;
+                case "colossus_oak" -> ChatFormatting.DARK_GREEN;
+                default -> ChatFormatting.WHITE;
+            };
 
-        if (pStack.hasTag()) {
-
-            CompoundTag nbtData = pStack.getTag();
-
-             if (nbtData.contains("cantripID")) {
-
-                 switch (nbtData.getString("cantripID")) {
-                     case "uc_reset_villager":
-                         pTooltipComponents.add(Component.translatable("item.forgotten_cantrips.ancient_scroll.hint.reset_villager").withStyle(ChatFormatting.GREEN));
-                         break;
-
-                     case "uc_devour":
-                         pTooltipComponents.add(Component.translatable("item.forgotten_cantrips.ancient_scroll.hint.devour").withStyle(ChatFormatting.GRAY));
-                         break;
-
-                     case "uc_colossus_oak":
-                         pTooltipComponents.add(Component.translatable("item.forgotten_cantrips.ancient_scroll.hint.colossus_oak").withStyle(ChatFormatting.DARK_GREEN));
-                         break;
-                 }
-             }
+            pTooltipComponents.add(Component.translatable("item.forgotten_cantrips.ancient_scroll.hint." + cantripId).withStyle(color));
         }
         pTooltipComponents.add(Component.translatable("item.forgotten_cantrips.ancient_scroll.hint.usage").withStyle(ChatFormatting.WHITE));
     }
 
-    void initNBT(CompoundTag nbtData) {
-        switch (new Random().nextInt(3)) {
-            case 0: { nbtData.putString("cantripID","uc_reset_villager"); return; }
-            case 1: { nbtData.putString("cantripID","uc_devour"); return; }
-            case 2: default: { nbtData.putString("cantripID","uc_colossus_oak"); return; }
-        }
+    private String getRandomCantrip() {
+        RandomSource random = RandomSource.create();
+        return switch (random.nextInt(3)) {
+            case 0 -> "reset_villager";
+            case 1 -> "devour";
+            default -> "colossus_oak";
+        };
+    }
 
+    void initNBT(CompoundTag nbtData) {
+        if (!nbtData.contains("cantripID")) {
+            nbtData.putString("cantripID", getRandomCantrip());
+        }
     }
 
     @Override
-    public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-        if (pLevel.isClientSide()) return;
-        if (!(pStack.hasTag())) {
+    public void inventoryTick(@NotNull ItemStack pStack, Level pLevel, @NotNull Entity pEntity, int pSlotId, boolean pIsSelected) {
+        if (!pLevel.isClientSide()) {
             initNBT(pStack.getOrCreateTag());
         }
     }
 
-
+    @NotNull
     @Override
     public ItemStack getDefaultInstance() {
         ItemStack stack = super.getDefaultInstance();
-        CompoundTag tag = stack.getOrCreateTag();
-
-        switch (new Random().nextInt(3)) {
-            case 0: { tag.putString("cantripID","uc_reset_villager"); break; }
-            case 1: { tag.putString("cantripID","uc_devour"); break; }
-            case 2: default: { tag.putString("cantripID","uc_colossus_oak"); break; }
-        }
-
+        initNBT(stack.getOrCreateTag());
         return stack;
     }
-
-    }
-
+}

@@ -6,6 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
+import org.jetbrains.annotations.NotNull;
 
 public class SharedInventoryScreen extends AbstractContainerScreen<SharedInventoryMenu> {
     private static final ResourceLocation CHEST_GUI_TEXTURE = ResourceLocation.fromNamespaceAndPath(ForgottenCantrips.MOD_ID,"textures/gui/container/spectral_chest.png");
@@ -18,7 +19,7 @@ public class SharedInventoryScreen extends AbstractContainerScreen<SharedInvento
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         this.renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         this.renderTooltip(guiGraphics, mouseX, mouseY);

@@ -5,7 +5,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundStopSoundPacket;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -51,7 +50,7 @@ public class MusicDiscSlotProvider {
 
     public static void stopDiscSound(Player player) {
         if (!(player instanceof ServerPlayer sp)) return;
-        var packet = new ClientboundStopSoundPacket((ResourceLocation) null, SoundSource.RECORDS);
+        var packet = new ClientboundStopSoundPacket(null, SoundSource.RECORDS);
         var level = sp.serverLevel();
         level.getChunkSource().chunkMap.broadcast(sp, packet);
         sp.connection.send(packet);

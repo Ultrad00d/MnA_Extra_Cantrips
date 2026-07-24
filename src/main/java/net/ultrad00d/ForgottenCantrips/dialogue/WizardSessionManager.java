@@ -9,13 +9,13 @@ import java.util.UUID;
 public class WizardSessionManager {
     private static final Map<String, SessionData> ACTIVE_TOKENS = new HashMap<>();
 
-    public record SessionData(UUID playerUUID, DialogueChoice choice, String fromKey) {}
+    public record SessionData(UUID playerUUID, String choice, String fromKey) {}
 
     public static void clearPlayerTokens(Player player) {
         ACTIVE_TOKENS.entrySet().removeIf(entry -> entry.getValue().playerUUID().equals(player.getUUID()));
     }
 
-    public static void registerToken(String token, Player player, DialogueChoice choice, String fromKey) {
+    public static void registerToken(String token, Player player, String choice, String fromKey) {
         ACTIVE_TOKENS.put(token, new SessionData(player.getUUID(), choice, fromKey));
     }
 

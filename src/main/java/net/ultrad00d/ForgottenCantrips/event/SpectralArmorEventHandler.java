@@ -1,11 +1,9 @@
 package net.ultrad00d.ForgottenCantrips.event;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
@@ -16,12 +14,9 @@ import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
-import net.ultrad00d.ForgottenCantrips.integration.Helper;
+import net.ultrad00d.ForgottenCantrips.util.ProgressionUtil;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
 import net.ultrad00d.ForgottenCantrips.registry.ItemRegistry;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = ForgottenCantrips.MOD_ID)
 public class SpectralArmorEventHandler {
@@ -59,7 +54,7 @@ public class SpectralArmorEventHandler {
         if (event.getEffectInstance().getEffect() != EffectRegistry.SPECTRAL_ARMOR.get()) return;
         if (!(event.getEntity() instanceof Player player)) return;
 
-        int tier = Helper.getPlayerTier(player);
+        int tier = ProgressionUtil.getPlayerTier(player);
         for (EquipmentSlot slot : ARMOR_SLOTS) {
             if (player.getItemBySlot(slot).isEmpty()) {
                 player.setItemSlot(slot, createSpectralStack(slot, tier));

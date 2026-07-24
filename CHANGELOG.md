@@ -12,11 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Empower cantrip was added
 - Spectral Slime cantrip was added
 - Ancient Scroll route for learning cantrips was added
+- Wizard route for learning cantrips was added
 - Bubble Up cantrip was added
+- Colossus Oak cantrip was added
 
 ### Changed
 
 - Spectral Bed, Spectral Boat and Lightning cantrip icons were redesigned
+- Empower cantrips were rebalanced
 
 ### Fixed
 

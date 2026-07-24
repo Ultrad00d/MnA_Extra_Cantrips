@@ -1,13 +1,11 @@
 package net.ultrad00d.ForgottenCantrips.cantrip;
 
-import com.mna.api.ManaAndArtificeMod;
-import com.mna.api.capabilities.IPlayerProgression;
-
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.registries.RegistryObject;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
+import net.ultrad00d.ForgottenCantrips.util.ProgressionUtil;
 
 public interface IEmpowerCantripLogic {
     default void applyBuff(Player player, RegistryObject<MobEffect> effect) {
@@ -35,27 +33,14 @@ public interface IEmpowerCantripLogic {
     }
 
     default BuffTierRules getBuffTierRules(Player player) {
-        int tier = getPlayerTier(player);
+        int tier = ProgressionUtil.getPlayerTier(player);
 
-        switch (tier) {
-            case 3:
-                return new BuffTierRules(20 * 20, 2, 0);
-            case 4:
-                return new BuffTierRules(20 * 30, 2, 1);
-            case 5:
-                return new BuffTierRules(20 * 60, 3, 2);
-            case 2:
-            default:
-                return new BuffTierRules(20 * 15, 1, 0);
-        }
-    }
-
-    default int getPlayerTier(Player player) {
-        IPlayerProgression progression = player.getCapability(ManaAndArtificeMod.getProgressionCapability()).orElse(null);
-
-        if (progression == null) { return 0; }
-
-        return progression.getTier();
+        return switch (tier) {
+            case 3 -> new BuffTierRules(20 * 20, 2, 0);
+            case 4 -> new BuffTierRules(20 * 30, 2, 1);
+            case 5 -> new BuffTierRules(20 * 60, 3, 2);
+            default -> new BuffTierRules(20 * 15, 1, 0);
+        };
     }
 
     default void enforceActiveBuffLimit(Player player, MobEffect buffToApply, int maxActiveBuffs) {
@@ -105,9 +90,9 @@ public interface IEmpowerCantripLogic {
 
     default MobEffect[] getForgottenBuffs() {
         return new MobEffect[] {
-                EffectRegistry.DMG_BUFF.get(),
-                EffectRegistry.MANA_COST_BUFF.get(),
-                EffectRegistry.CANTRIP_BUFF.get()
+                EffectRegistry.EMPOWER_DAMAGE_BUFF.get(),
+                EffectRegistry.EMPOWER_MANA_BUFF.get(),
+                EffectRegistry.EMPOWER_CANTRIP_BUFF.get()
         };
     }
 

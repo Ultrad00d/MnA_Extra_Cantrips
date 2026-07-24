@@ -1,3 +1,5 @@
+<img width="1439" height="934" alt="curseforge_out_v04" src="https://github.com/user-attachments/assets/18fc99c0-821a-426d-8cb1-f79f441cd53c" />
+
 # Mana and Artifice Forgotten Cantrips
 
 [Hosted Documentation Site](https://ultrad00d.github.io/MnA_Extra_Cantrips/)
@@ -15,6 +17,8 @@
 [Week 5 Project Delivery Index](reports/week5/README.md)
 
 [Week 6 Project Delivery Index](reports/week6/README.md)
+
+[Week 7 Project Delivery Index](reports/week7/README.md)
 
 ---
 

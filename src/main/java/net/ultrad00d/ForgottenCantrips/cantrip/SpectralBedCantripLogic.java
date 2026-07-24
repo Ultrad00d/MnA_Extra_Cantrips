@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.blockentity.SpectralBedBlockEntity;
 import net.ultrad00d.ForgottenCantrips.registry.BlockRegistry;
 
@@ -59,7 +58,7 @@ public class SpectralBedCantripLogic implements ICantripLogic {
 
         headBlockPos = footBlockPos.relative(player.getDirection(), 1);
 
-        if (!(player.level().getBlockState(footBlockPos.below()).isSolid())) {
+        if (!(player.level().getBlockState(footBlockPos.below()).canOcclude())) {
             player.sendSystemMessage(Component.translatable(getLangKey("badtarget")));
             return;
         }

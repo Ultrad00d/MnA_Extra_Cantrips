@@ -7,20 +7,17 @@ import com.mna.api.timing.DelayedEventQueue;
 import com.mna.api.timing.TimedDelayedEvent;
 
 import com.mna.items.manaweaving.ItemManaweaverWand;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementProgress;
 
 import net.minecraft.network.chat.Component;
 
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.ultrad00d.ForgottenCantrips.ForgottenCantrips;
 import net.ultrad00d.ForgottenCantrips.cantrip.*;
 import net.minecraft.world.entity.player.Player;
+import net.ultrad00d.ForgottenCantrips.util.ProgressionUtil;
 
 public class CantripRegistry {
     private static final int ICON_SHOW_TIME = 50;
@@ -44,22 +41,8 @@ public class CantripRegistry {
         }
     }
 
-    public static boolean advancementCheck(Player player, ICantrip cantrip) {
-        if (player instanceof ServerPlayer serverPlayer) {
-            MinecraftServer server = serverPlayer.getServer();
-            if (server == null) return false;
-
-            Advancement advancement = server.getAdvancements().getAdvancement(cantrip.getRequiredAdvancement());
-            if (advancement == null) return true;
-
-            AdvancementProgress progress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
-            return progress.isDone();
-        }
-        return false;
-    }
-
     public static boolean allowedToCast(Player player, ICantrip cantrip) {
-        if (!advancementCheck(player, cantrip)) {
+        if (!ProgressionUtil.hasAdvancement(player, cantrip.getRequiredAdvancement())) {
             player.sendSystemMessage(
                     Component.translatable("cantrip."+ ForgottenCantrips.MOD_ID + ".locked.pre")
                             .append(Component.translatable("cantrip." + ForgottenCantrips.MOD_ID + "." + cantrip.getId().getPath()))

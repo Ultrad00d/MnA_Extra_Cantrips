@@ -1,5 +1,6 @@
 package net.ultrad00d.ForgottenCantrips.client.renderer;
 
+import org.jetbrains.annotations.NotNull;
 import org.joml.Quaternionf;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -35,7 +36,7 @@ public class SpectralBoatRenderer extends EntityRenderer<SpectralBoat>
     }
 
     @Override
-    public void render(SpectralBoat boat, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight)
+    public void render(SpectralBoat boat, float entityYaw, float partialTicks, PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight)
     {
         poseStack.pushPose();
         poseStack.translate(0.0F, 0.375F, 0.0F);
@@ -80,6 +81,7 @@ public class SpectralBoatRenderer extends EntityRenderer<SpectralBoat>
         super.render(boat, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
 
+    @NotNull
     @Override
     public ResourceLocation getTextureLocation(SpectralBoat boat)
     {
