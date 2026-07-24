@@ -41,7 +41,6 @@ public class OldWizardHouseSpawnProcessor extends StructureProcessor {
                 Direction facing = currentState.getValue(HorizontalDirectionalBlock.FACING);
                 BlockState spawnerState = BlockRegistry.OLD_WIZARD_SPAWNER.get().defaultBlockState()
                         .setValue(HorizontalDirectionalBlock.FACING, facing);
-
                 return new StructureTemplate.StructureBlockInfo(spawnPos, spawnerState, null);
             }
         }

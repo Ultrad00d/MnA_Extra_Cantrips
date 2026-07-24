@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.ultrad00d.ForgottenCantrips.blockentity.OldWizardSpawnerBlockEntity;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class OldWizardSpawnerBlock extends HorizontalDirectionalBlock implements EntityBlock {
@@ -20,14 +21,14 @@ public class OldWizardSpawnerBlock extends HorizontalDirectionalBlock implements
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new OldWizardSpawnerBlockEntity(pos, state); }
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) { return new OldWizardSpawnerBlockEntity(pos, state); }
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pType) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level pLevel, @NotNull BlockState pState, @NotNull BlockEntityType<T> pType) {
         if (!(pLevel instanceof ServerLevel serverLevel)) return null;
         return (level, pos, state, blockEntity) -> {
-            if (OldWizardSpawnerBlockEntity.serverTick(level, pos, state)) {
+            if (OldWizardSpawnerBlockEntity.serverTick(serverLevel, pos, state)) {
                 serverLevel.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
             }
         };
