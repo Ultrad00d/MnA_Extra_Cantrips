@@ -2,6 +2,7 @@ package net.ultrad00d.ForgottenCantrips.cantrip;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
@@ -13,20 +14,13 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import it.unimi.dsi.fastutil.longs.Long2IntOpenHashMap;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 class ColossusOakGrower {
     enum Outcome { GREW, BRANCHED, NOT_GROWABLE, ROOT_DESTROYED }
 
     private static final int MIN_BRANCH_HEIGHT = 3;
-    private static final int MAX_GROWTH_HEIGHT = 32;
+    static final int MAX_GROWTH_HEIGHT = 32;
     private static final int MAX_TRUNK_HEIGHT = 256;
 
     private static final int SAPLING_GROWTH_ATTEMPTS = 8;
@@ -61,8 +55,8 @@ class ColossusOakGrower {
 
         BlockPos lowestLog = findTreeBase(hitPos, level);
 
+        // The tree isn't on grass/any type of dirt
         if (!ColossusOakUtils.isValidGround(level.getBlockState(lowestLog.below()))) {
-            // The tree isn't on grass/any type of dirt
             return Outcome.ROOT_DESTROYED;
         }
 
@@ -72,27 +66,26 @@ class ColossusOakGrower {
             detectTrunkWidth(level, lowestLog, hitState.getBlock())
         );
 
+        List<BlockPos> trunk = trunkPath(level, tree);
+        List<BlockPos> treeBlocks = collectTreeBlocks(level, tree.base());
+        int topY = trunk.get(trunk.size() - 1).getY();
 
-        boolean canGrow = trunkLogCount(level, tree) < MAX_GROWTH_HEIGHT;
-        boolean grow = canGrow && (
-            !canBranch(level, tree) ||
-            level.random.nextInt(BRANCH_CHANCE_DENOMINATOR) != 0
-        );
+        if (!ColossusOakUtils.isValidTreeStructure(level, topY, treeBlocks, trunk.size())) {
+            return Outcome.NOT_GROWABLE;
+        }
+
+
+        boolean grow = !canBranch(level, tree) ||
+            level.random.nextInt(BRANCH_CHANCE_DENOMINATOR) != 0;
 
         if (grow) {
-            growOnce(level, tree);
+            growOnce(level, tree, treeBlocks);
 
             return Outcome.GREW;
         }
 
         if (walkAndBranch(level, tree)) {
             return Outcome.BRANCHED;
-        }
-
-        if (canGrow) {
-            growOnce(level, tree);
-
-            return Outcome.GREW;
         }
 
         return Outcome.NOT_GROWABLE;
@@ -134,6 +127,7 @@ class ColossusOakGrower {
         return true;
     }
 
+    /** Returns **true** if branching positions exist */
     private boolean canBranch(ServerLevel level, Tree tree) {
         return !branchOrigins(level, tree).isEmpty();
     }
@@ -166,6 +160,7 @@ class ColossusOakGrower {
         return dir;
     }
 
+    /** Returns lowest Y value at which the trunk has leaves at the sides, or the first leaf block after the trunk */
     private int lowestCanopyLeafY(ServerLevel level, Tree tree) {
         for (BlockPos at : trunkPath(level, tree)) {
             if (
@@ -186,95 +181,79 @@ class ColossusOakGrower {
         return level.getBlockState(pos).is(BlockTags.LEAVES);
     }
 
-    private void growOnce(ServerLevel level, Tree tree) {
+    private void growOnce(ServerLevel level, Tree tree, List<BlockPos> treeBlocks) {
         Direction lean = (level.random.nextInt(LEAN_CHANCE_DENOMINATOR) == 0)
             ? BRANCH_DIRECTIONS[level.random.nextInt(BRANCH_DIRECTIONS.length)]
             : null;
 
-        growTree(level, tree, lean);
+        growTree(level, tree, lean, treeBlocks);
     }
 
-    private void growTree(ServerLevel level, Tree tree, Direction lean) {
-        List<BlockPos> treeBlocks = collectTreeBlocks(level, tree.base());
+    private void growTree(ServerLevel level, Tree tree, Direction lean, List<BlockPos> treeBlocks) {
+        if (treeBlocks.isEmpty()) return;
 
-        if (treeBlocks.isEmpty()) {
-            return;
-        }
+        int lowestCanopyY = lowestCanopyLeafY(level, tree);
 
+        treeBlocks.removeIf(pos -> pos.getY() < lowestCanopyY);
         treeBlocks.removeIf(pos -> ColossusOakUtils.isHorizontalLog(level.getBlockState(pos)));
 
         int dx = (lean == null) ? 0 : lean.getStepX();
         int dz = (lean == null) ? 0 : lean.getStepZ();
 
-        // Growth always happens at the trunk's tip
-        List<BlockPos> path = trunkPath(level, tree);
-        int pivotY = path.get(path.size() - 1).getY();
-
-        Map<BlockPos, Block> tipLogTypes = new HashMap<>();
-
+        Map<BlockPos, BlockState> snapshot = new HashMap<>();
         for (BlockPos pos : treeBlocks) {
-            if (pos.getY() == pivotY && ColossusOakUtils.isLog(level.getBlockState(pos))) {
-                tipLogTypes.put(pos.immutable(), level.getBlockState(pos).getBlock());
-            }
+            snapshot.put(pos.immutable(), level.getBlockState(pos));
         }
-
-        // The whole top part shifts up and over by the lean
-        List<BlockPos> moving = new ArrayList<>();
-
-        for (BlockPos pos : treeBlocks) {
-            BlockState s = level.getBlockState(pos);
-            boolean tipOrAboveLog = ColossusOakUtils.isLog(s) && pos.getY() >= pivotY;
-            boolean canopyLeaf = s.is(BlockTags.LEAVES);
-
-            if (tipOrAboveLog || canopyLeaf) {
-                moving.add(pos);
-            }
-        }
-
-        Map<BlockPos, BlockState> sources = new HashMap<>();
-
-        for (BlockPos from : moving) {
-            sources.put(from.immutable(), level.getBlockState(from));
-        }
-
-        moving.sort((a, b) -> Integer.compare(b.getY(), a.getY()));
 
         Set<BlockPos> destinations = new HashSet<>();
-
-        for (BlockPos from : moving) {
-            BlockPos to = from.offset(dx, 1, dz);
-
-            level.setBlock(
-                to,
-                sources.get(from.immutable()),
-                ColossusOakUtils.BLOCK_UPDATE_FLAGS
-            );
-            destinations.add(to.immutable());
+        for (BlockPos pos : treeBlocks) {
+            destinations.add(pos.offset(dx, 1, dz));
         }
 
-        for (BlockPos from : moving) {
-            if (!destinations.contains(from.immutable())) {
-                level.setBlock(
-                    from,
-                    Blocks.AIR.defaultBlockState(),
+        // Clear old positions that will NOT be directly overwritten by a new shifted block
+        for (BlockPos pos : treeBlocks) {
+            // Leave the main lower trunk alone, but clear upper trunk logs and leaves
+            if (pos.getY() > lowestCanopyY || !ColossusOakUtils.isLog(snapshot.get(pos))) {
+                if (!destinations.contains(pos)) {
+                    level.setBlock(
+                            pos,
+                            Blocks.AIR.defaultBlockState(),
+                            ColossusOakUtils.BLOCK_UPDATE_FLAGS
+                    );
+                }
+            }
+        }
+
+        // Sort top-to-bottom
+        treeBlocks.sort(Comparator.comparingInt(Vec3i::getY).reversed());
+
+        // setting new blocks and bridging the lean
+        for (BlockPos pos : treeBlocks) {
+            BlockPos destination = pos.offset(dx, 1, dz);
+            BlockState currentState = snapshot.get(pos);
+
+            // Place shifted tree block
+            level.setBlock(
+                    destination,
+                    currentState,
                     ColossusOakUtils.BLOCK_UPDATE_FLAGS
-                );
-            }
-        }
-
-        for (Map.Entry<BlockPos, Block> tip : tipLogTypes.entrySet()) {
-            if (destinations.contains(tip.getKey())) {
-                continue;
-            }
-
-            level.setBlock(
-                tip.getKey(),
-                tip.getValue().defaultBlockState(),
-                ColossusOakUtils.BLOCK_UPDATE_FLAGS
             );
+
+            // bridge trunk when leaning
+            if ((dx != 0 || dz != 0) && pos.getY() == lowestCanopyY && ColossusOakUtils.isLog(currentState)) {
+                BlockPos bridgePos = pos.above();
+                if (level.getBlockState(bridgePos).isAir()) {
+                    level.setBlock(
+                            bridgePos,
+                            currentState,
+                            ColossusOakUtils.BLOCK_UPDATE_FLAGS
+                    );
+                }
+            }
         }
     }
 
+    /** Returns a List of BlockPos of all blocks associated with this tree */
     private List<BlockPos> collectTreeBlocks(ServerLevel level, BlockPos base) {
         List<BlockPos> result = new ArrayList<>();
 
@@ -399,6 +378,7 @@ class ColossusOakGrower {
         };
     }
 
+    /** Returns the BlockPos of Northern-West tree root block */
     private BlockPos findTreeBase(BlockPos start, ServerLevel level) {
         Queue<BlockPos> queue = new ArrayDeque<>();
         Set<BlockPos> visited = new HashSet<>();
@@ -411,13 +391,8 @@ class ColossusOakGrower {
         while (!queue.isEmpty()) {
             BlockPos current = queue.poll();
 
-            if (
-                current.getY() < lowest.getY() ||
-                (
-                    current.getY() == lowest.getY() &&
-                    ColossusOakUtils.isMoreNorthWest(current, lowest)
-                )
-            ) {
+            if (current.getY() < lowest.getY() ||
+                current.getY() == lowest.getY() && ColossusOakUtils.isMoreNorthWest(current, lowest)) {
                 lowest = current;
             }
 
@@ -427,15 +402,13 @@ class ColossusOakGrower {
                 queue.add(below);
             }
 
-            for (int yOff = -1; yOff <= 0; yOff++) {
-                for (int xOff = -1; xOff <= 1; xOff++) {
-                    for (int zOff = -1; zOff <= 1; zOff++) {
-                        if (xOff == 0 && zOff == 0) {
-                            continue;
-                        }
+            for (int y = -1; y <= 0; y++) {
+                for (int x = -1; x <= 1; x++) {
+                    for (int z = -1; z <= 1; z++) {
+                        // if same block or block below (below case was checked above)
+                        if (x == 0 && z == 0) continue;
 
-                        BlockPos neighbor = current.offset(xOff, yOff, zOff);
-
+                        BlockPos neighbor = current.offset(x, y, z);
                         if (visited.add(neighbor) && ColossusOakUtils.isLog(level.getBlockState(neighbor))) {
                             queue.add(neighbor);
                         }
@@ -447,14 +420,17 @@ class ColossusOakGrower {
         return lowest;
     }
 
+    /** Returns trunk width - either 1 or 2 */
     private int detectTrunkWidth(ServerLevel level, BlockPos base, Block log) {
-        boolean twoByTwo = ColossusOakUtils.sameLog(level, base.east(), log) &&
+        boolean twoByTwo =
+            ColossusOakUtils.sameLog(level, base.east(), log) &&
             ColossusOakUtils.sameLog(level, base.south(), log) &&
             ColossusOakUtils.sameLog(level, base.east().south(), log);
 
         return twoByTwo ? 2 : 1;
     }
 
+    /** Returns List (ordered from below) of BlockPos that represent the trunk of the tree (only logs) */
     private List<BlockPos> trunkPath(ServerLevel level, Tree tree) {
         List<BlockPos> path = new ArrayList<>();
         BlockPos current = tree.base();
@@ -479,18 +455,13 @@ class ColossusOakGrower {
                 }
             }
 
-            if (next == null) {
-                break;
-            }
+            if (next == null) break;
+
 
             path.add(next);
             current = next;
         }
 
         return path;
-    }
-
-    private int trunkLogCount(ServerLevel level, Tree tree) {
-        return trunkPath(level, tree).size();
     }
 }

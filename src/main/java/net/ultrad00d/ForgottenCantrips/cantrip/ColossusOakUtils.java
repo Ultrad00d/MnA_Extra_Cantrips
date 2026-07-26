@@ -1,6 +1,6 @@
 package net.ultrad00d.ForgottenCantrips.cantrip;
 
-import net.minecraft.core.BlockPos;
+import  net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
@@ -9,6 +9,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.List;
+
+import static net.ultrad00d.ForgottenCantrips.cantrip.ColossusOakGrower.MAX_GROWTH_HEIGHT;
 
 final class ColossusOakUtils {
     // 'ColossusOakUtils' provides only static methods
@@ -82,5 +86,34 @@ final class ColossusOakUtils {
             .replace("_hyphae", "");
 
         return path.isEmpty() ? "oak" : path;
+    }
+
+    static boolean hasCanopy(ServerLevel level, List<BlockPos> treeBlocks) {
+        int leaves = 0;
+        for (BlockPos pos : treeBlocks) {
+            if (level.getBlockState(pos).is(BlockTags.LEAVES)) ++leaves;
+        }
+        return leaves >= 40;
+    }
+
+    /** Returns true if tree has at least 40 leaf blocks, at least 3 blocks tall and its top layer has no more than 4 logs, false otherwise */
+    static boolean isValidTreeStructure(ServerLevel level, int pivotY, List<BlockPos> treeBlocks, int trunkHeight) {
+        // minimum height check (a <3-block tall flat layer is not a tree)
+        if (trunkHeight < 3 || trunkHeight > MAX_GROWTH_HEIGHT) return false;
+
+        int topLayerLogCount = 0;
+
+        for (BlockPos pos : treeBlocks) {
+            BlockState state = level.getBlockState(pos);
+
+            if (pos.getY() == pivotY && isLog(state)) {
+                topLayerLogCount++;
+            }
+        }
+
+        // A valid tree top layer shouldn't have more than 4 logs on its top layer
+        boolean validTopFootprint = topLayerLogCount <= 4;
+
+        return hasCanopy(level, treeBlocks) && validTopFootprint;
     }
 }
