@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Old Wizards failing to spawn sometimes
 - Spectral Slime size and behavior were tweaked
 - Colossus Oak cantrip generating weird looking trees fixed
+- Doubled the chances to get Ancient Scrolls
 
 ## 1.0.0 - 2026-07-19
 
