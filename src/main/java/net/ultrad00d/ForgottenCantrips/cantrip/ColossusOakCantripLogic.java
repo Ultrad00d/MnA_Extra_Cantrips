@@ -37,6 +37,7 @@ public class ColossusOakCantripLogic implements ICantripLogic {
             case BRANCHED -> "branched";
             case ROOT_DESTROYED -> "root_destroyed";
             case NOT_GROWABLE -> "not_growable";
+            case CAST_ON_LEAF -> "cast_on_leaf";
         };
     }
 }

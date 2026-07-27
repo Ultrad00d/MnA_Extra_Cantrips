@@ -17,7 +17,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import net.ultrad00d.ForgottenCantrips.registry.EffectRegistry;
-import net.ultrad00d.ForgottenCantrips.util.HelperUtil;
+import net.ultrad00d.ForgottenCantrips.util.BlockUtil;
 import org.jetbrains.annotations.NotNull;
 
 public class BubbleUpEffect extends MobEffect {
@@ -46,7 +46,7 @@ public class BubbleUpEffect extends MobEffect {
         // Get player UUID to store it into the map
         UUID id = player.getUUID();
         boolean inWater = player.isInWater();
-        boolean inBubbleColumn = HelperUtil.isInBubbleColumn(player);
+        boolean inBubbleColumn = BlockUtil.isInBubbleColumn(player);
 
         // If at any time in bubble column -> effect wears off
         if (inBubbleColumn) {

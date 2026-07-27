@@ -55,6 +55,7 @@
     "cantrip.forgotten_cantrips.colossus_oak.root_destroyed": "This tree's roots are destroyed, it can't grow taller",
     "cantrip.forgotten_cantrips.colossus_oak.grew": "The tree stretches a little taller.",
     "cantrip.forgotten_cantrips.colossus_oak.branched": "A new branch bursts from the trunk!",
+    "cantrip.forgotten_cantrips.colossus_oak.cast_on_leaf": "Cast this cantrip on the logs of the tree!",
 
     "cantrip.forgotten_cantrips.bubble_up.shallow_water": "You should be at least two blocks under the water",
     "cantrip.forgotten_cantrips.bubble_up.bubble_column": "The cantrip does not work in the bubble columns",
