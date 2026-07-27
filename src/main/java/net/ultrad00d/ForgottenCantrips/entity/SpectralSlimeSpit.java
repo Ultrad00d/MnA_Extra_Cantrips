@@ -1,12 +1,14 @@
 package net.ultrad00d.ForgottenCantrips.entity;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -24,24 +26,27 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class SpectralSlimeSpit extends Projectile implements ItemSupplier
-{
-    private static final int NAUSEA_TICKS = 10 * 20;
+public class SpectralSlimeSpit extends Projectile implements ItemSupplier {
+    private static final EntityDataAccessor<Float> DATA_SCALE =
+            SynchedEntityData.defineId(SpectralSlimeSpit.class, EntityDataSerializers.FLOAT);
+    private static final int SLOWNESS_TICKS = 10 * 20;
     private static final double HOMING_RANGE = 16.0D;
     private static final double HOMING_STRENGTH = 0.18D;
     private static final double MAX_SPEED = 1.5D;
     private UUID targetUUID;
     private LivingEntity cachedTarget;
 
-    public SpectralSlimeSpit(EntityType<? extends SpectralSlimeSpit> entityType, Level level)
-    {
-        super(entityType, level);
+    @Override
+    protected void defineSynchedData() {
+        this.entityData.define(DATA_SCALE, 1.0F);
     }
 
-    public SpectralSlimeSpit(Level level, SpectralSlime slime)
-    {
+    public SpectralSlimeSpit(EntityType<? extends SpectralSlimeSpit> entityType, Level level) { super(entityType, level); }
+
+    public SpectralSlimeSpit(Level level, SpectralSlime slime) {
         this(EntityRegistry.SPECTRAL_SLIME_SPIT.get(), level);
         this.setOwner(slime);
+        this.setSpitScale(slime.getSize());
         this.setPos(
                 slime.getX() - (double) (slime.getBbWidth() + 1.0F) * 0.5D * (double) Mth.sin(slime.yBodyRot * ((float) Math.PI / 180F)),
                 slime.getEyeY() - 0.1D,
@@ -49,43 +54,31 @@ public class SpectralSlimeSpit extends Projectile implements ItemSupplier
         );
     }
 
-    public void setTarget(@Nullable LivingEntity target)
-    {
+    public void setTarget(@Nullable LivingEntity target) {
         this.cachedTarget = target;
         this.targetUUID = target == null ? null : target.getUUID();
     }
 
     @Override
-    public void tick()
-    {
+    public void tick() {
         super.tick();
         this.homeTowardTarget();
 
         Vec3 movement = this.getDeltaMovement();
         HitResult hitResult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
-        if (hitResult.getType() != HitResult.Type.MISS)
-        {
-            this.onHit(hitResult);
-        }
+        if (hitResult.getType() != HitResult.Type.MISS) this.onHit(hitResult);
 
         double x = this.getX() + movement.x;
         double y = this.getY() + movement.y;
         double z = this.getZ() + movement.z;
         this.updateRotation();
 
-        if (this.level().getBlockStates(this.getBoundingBox()).noneMatch(BlockBehaviour.BlockStateBase::isAir))
-        {
+        if (this.level().getBlockStates(this.getBoundingBox()).noneMatch(BlockBehaviour.BlockStateBase::isAir)
+                || this.isInWaterOrBubble()) {
             this.discard();
-        }
-        else if (this.isInWaterOrBubble())
-        {
-            this.discard();
-        } 
-        else 
-        {
+        } else {
             this.setDeltaMovement(movement.scale(0.99F));
-            if (!this.isNoGravity()) 
-            {
+            if (!this.isNoGravity()) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.06D, 0.0D));
             }
 
@@ -93,13 +86,9 @@ public class SpectralSlimeSpit extends Projectile implements ItemSupplier
         }
     }
 
-    private void homeTowardTarget()
-    {
+    private void homeTowardTarget() {
         LivingEntity target = this.getHomingTarget();
-        if (target == null || !target.isAlive() || this.distanceToSqr(target) > HOMING_RANGE * HOMING_RANGE)
-        {
-            return;
-        }
+        if (target == null || !target.isAlive() || this.distanceToSqr(target) > HOMING_RANGE * HOMING_RANGE) return;
 
         Vec3 movement = this.getDeltaMovement();
         double speed = Math.min(MAX_SPEED, Math.max(0.6D, movement.length()));
@@ -107,18 +96,12 @@ public class SpectralSlimeSpit extends Projectile implements ItemSupplier
         this.setDeltaMovement(movement.lerp(desired, HOMING_STRENGTH));
     }
 
-    private @Nullable LivingEntity getHomingTarget()
-    {
-        if (this.cachedTarget != null && !this.cachedTarget.isRemoved())
-        {
-            return this.cachedTarget;
-        }
+    private @Nullable LivingEntity getHomingTarget() {
+        if (this.cachedTarget != null && !this.cachedTarget.isRemoved()) return this.cachedTarget;
 
-        if (this.targetUUID != null && this.level() instanceof ServerLevel serverLevel)
-        {
+        if (this.targetUUID != null && this.level() instanceof ServerLevel serverLevel) {
             Entity entity = serverLevel.getEntity(this.targetUUID);
-            if (entity instanceof LivingEntity livingEntity)
-            {
+            if (entity instanceof LivingEntity livingEntity) {
                 this.cachedTarget = livingEntity;
                 return livingEntity;
             }
@@ -128,43 +111,55 @@ public class SpectralSlimeSpit extends Projectile implements ItemSupplier
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult hitResult)
-    {
+    protected void onHitEntity(EntityHitResult hitResult) {
         Entity owner = this.getOwner();
         Entity target = hitResult.getEntity();
 
-        if (owner instanceof LivingEntity livingOwner && target != owner)
-        {
-            if (target.hurt(this.damageSources().mobProjectile(this, livingOwner), 1.0F) && target instanceof LivingEntity livingTarget)
-            {
-                livingTarget.addEffect(new MobEffectInstance(MobEffects.CONFUSION, NAUSEA_TICKS, 0), livingOwner);
+        if (owner instanceof SpectralSlime slime && target != owner) {
+            float damage = slime.getSize();
+            if (target.hurt(this.damageSources().mobProjectile(this, slime), damage * 2)
+                    && target instanceof LivingEntity livingTarget) {
+                livingTarget.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, SLOWNESS_TICKS, 0), slime);
             }
         }
 
-        if (!this.level().isClientSide())
-        {
-            this.discard();
-        }
+        if (!this.level().isClientSide()) this.discard();
     }
 
     @Override
-    protected void onHitBlock(@NotNull BlockHitResult hitResult)
-    {
+    protected void onHitBlock(@NotNull BlockHitResult hitResult) {
         super.onHitBlock(hitResult);
-        if (!this.level().isClientSide())
-        {
-            this.discard();
+        if (!this.level().isClientSide()) this.discard();
+    }
+
+    @Override @NotNull public EntityDimensions getDimensions(@NotNull Pose pose) { return super.getDimensions(pose).scale(this.getSpitScale()); }
+
+    @Override
+    protected void addAdditionalSaveData(@NotNull CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putFloat("Scale", this.getSpitScale());
+    }
+
+    @Override
+    protected void readAdditionalSaveData(@NotNull CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        if (compound.contains("Scale")) {
+            this.setSpitScale(compound.getFloat("Scale"));
         }
     }
 
     @Override
-    protected void defineSynchedData()
-    {
+    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
+        if (DATA_SCALE.equals(key)) this.refreshDimensions();
+        super.onSyncedDataUpdated(key);
     }
+    @Override @NotNull public ItemStack getItem() { return new ItemStack(ItemRegistry.SPECTRAL_SLIME_BALL.get()); }
 
-    @Override
-    public @NotNull ItemStack getItem()
-    {
-        return new ItemStack(ItemRegistry.SPECTRAL_SLIME_BALL.get());
+    public void setSpitScale(float scale) {
+        this.entityData.set(DATA_SCALE, scale);
+        this.refreshDimensions();
+    }
+    public float getSpitScale() {
+        return this.entityData.get(DATA_SCALE);
     }
 }

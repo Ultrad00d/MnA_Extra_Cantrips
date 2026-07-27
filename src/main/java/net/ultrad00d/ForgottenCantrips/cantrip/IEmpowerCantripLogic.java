@@ -15,21 +15,11 @@ public interface IEmpowerCantripLogic {
         MobEffect mobEffect = effect.get();
         MobEffectInstance current = player.getEffect(mobEffect);
 
+        int newAmplifier = current == null ? 0 : current.getAmplifier() + 1;
+        newAmplifier = Math.min(newAmplifier, rules.maxAmplifier);
+
+        player.addEffect(new MobEffectInstance(mobEffect, rules.durationTicks, newAmplifier, false, false, true));
         enforceActiveBuffLimit(player, mobEffect, rules.maxActiveBuffs);
-
-        int amplifier;
-        if (current == null)
-        {
-            amplifier = 0;
-        }
-        else
-        {
-            amplifier = current.getAmplifier() + 1;
-        }
-
-        amplifier = Math.min(amplifier, rules.maxAmplifier);
-
-        player.addEffect(new MobEffectInstance(mobEffect, rules.durationTicks, amplifier, false, false, true));
     }
 
     default BuffTierRules getBuffTierRules(Player player) {
@@ -44,10 +34,9 @@ public interface IEmpowerCantripLogic {
     }
 
     default void enforceActiveBuffLimit(Player player, MobEffect buffToApply, int maxActiveBuffs) {
+        int activeBuffs = countActiveForgottenBuffs(player);
 
-        int activeBuffs = countActiveForgottenBuffs(player, buffToApply);
-
-        while (activeBuffs >= maxActiveBuffs) {
+        while (activeBuffs > maxActiveBuffs) {
             MobEffect buffToRemove = findOldestOtherForgottenBuff(player, buffToApply);
             if (buffToRemove == null) return;
 
@@ -56,14 +45,10 @@ public interface IEmpowerCantripLogic {
         }
     }
 
-    default int countActiveForgottenBuffs(Player player, MobEffect buffToApply) {
+    default int countActiveForgottenBuffs(Player player) {
         int activeBuffs = 0;
-        if (player.hasEffect(buffToApply)) {
-            activeBuffs = 1;
-        }
-
         for (MobEffect buff : getForgottenBuffs()) {
-            if (buff != buffToApply && player.hasEffect(buff)) {
+            if (player.hasEffect(buff)) {
                 activeBuffs++;
             }
         }

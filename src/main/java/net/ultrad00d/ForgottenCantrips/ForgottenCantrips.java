@@ -10,7 +10,7 @@ import net.ultrad00d.ForgottenCantrips.client.renderer.OldWizardRenderer;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogue;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogueProvider;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardSessionManager;
-import net.ultrad00d.ForgottenCantrips.spells.SpellBuffAdjusters;
+import net.ultrad00d.ForgottenCantrips.spell.SpellBuffAdjusters;
 import org.slf4j.Logger;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -19,7 +19,6 @@ import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraftforge.common.MinecraftForge;
@@ -106,13 +105,12 @@ public class ForgottenCantrips {
             );
             EntityRenderers.register(
                     EntityRegistry.SPECTRAL_SLIME_SPIT.get(),
-                    ThrownItemRenderer::new
+                    SpectralSlimeSpitRenderer::new
             );
             EntityRenderers.register(
                     EntityRegistry.OLD_WIZARD.get(),
                     OldWizardRenderer::new
             );
-
             MenuScreens.register(
                     MenuRegistry.SHARED_INVENTORY_MENU.get(),
                     SharedInventoryScreen::new

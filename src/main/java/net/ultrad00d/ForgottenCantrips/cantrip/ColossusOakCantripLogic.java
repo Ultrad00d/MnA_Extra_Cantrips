@@ -10,8 +10,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 public class ColossusOakCantripLogic implements ICantripLogic {
-    private final ColossusOakGrower grower = new ColossusOakGrower();
-
     @Override
     public String getCantripId() { return "colossus_oak"; }
 
@@ -23,11 +21,11 @@ public class ColossusOakCantripLogic implements ICantripLogic {
 
         if (hitResult.getType() != HitResult.Type.BLOCK) {
             player.sendSystemMessage(Component.translatable(getLangKey("toofar")));
-
             return;
         }
 
         BlockPos hitPos = ((BlockHitResult) hitResult).getBlockPos();
+        ColossusOakGrower grower = new ColossusOakGrower();
         ColossusOakGrower.Outcome outcome = grower.grow(serverLevel, hitPos);
 
         player.sendSystemMessage(Component.translatable(getLangKey(langKeyFor(outcome))));
@@ -39,6 +37,7 @@ public class ColossusOakCantripLogic implements ICantripLogic {
             case BRANCHED -> "branched";
             case ROOT_DESTROYED -> "root_destroyed";
             case NOT_GROWABLE -> "not_growable";
+            case CAST_ON_LEAF -> "cast_on_leaf";
         };
     }
 }

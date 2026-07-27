@@ -1,4 +1,4 @@
-package net.ultrad00d.ForgottenCantrips.spells;
+package net.ultrad00d.ForgottenCantrips.spell;
 
 import com.mna.api.ManaAndArtificeMod;
 import com.mna.api.spells.adjusters.SpellAdjustingContext;
