@@ -10,7 +10,7 @@ import net.ultrad00d.ForgottenCantrips.client.renderer.OldWizardRenderer;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogue;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardDialogueProvider;
 import net.ultrad00d.ForgottenCantrips.dialogue.WizardSessionManager;
-import net.ultrad00d.ForgottenCantrips.spells.SpellBuffAdjusters;
+import net.ultrad00d.ForgottenCantrips.spell.SpellBuffAdjusters;
 import org.slf4j.Logger;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
