@@ -14,12 +14,13 @@ assignees: ''
 2. 
 3. 
 
-## Expected Behavior
-
-
-## Actual Behavior
-
 
 ## Environment
 - Mod Version: v
 <!-- Any other if relevant -->
+
+
+## Logs
+```
+enter here or add link
+```
