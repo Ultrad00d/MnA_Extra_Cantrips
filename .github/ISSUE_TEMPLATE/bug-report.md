@@ -8,6 +8,7 @@ assignees: ''
 
 ## Problem Description
 
+
 ## Reproduction Steps
 1. 
 2. 
@@ -15,18 +16,10 @@ assignees: ''
 
 ## Expected Behavior
 
+
 ## Actual Behavior
 
+
 ## Environment
-- OS:
-- Version:
-
-## Acceptance Criteria for Fix
-1. 
-2. 
-
-## Implementer
-<!-- GitHub username -->
-
-## Reviewer
-<!-- GitHub username, must be different from implementer -->
+- Mod Version: v
+<!-- Any other if relevant -->

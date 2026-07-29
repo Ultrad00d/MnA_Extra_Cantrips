@@ -57,6 +57,7 @@ final class ColossusOakUtils {
     }
 
     static boolean isLeaf(BlockState state) {
+        if (state == null) return false;
         return state.is(BlockTags.LEAVES) || state.is(BlockTags.WART_BLOCKS);
     }
 
