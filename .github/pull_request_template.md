@@ -2,8 +2,7 @@
 
 
 ## Related Issue
-<!-- Closes #<issue-number> -->
-
+Closes
 
 ## Testing Performed
 <!-- How did you test this change? -->
