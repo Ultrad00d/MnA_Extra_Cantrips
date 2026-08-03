@@ -21,7 +21,8 @@ src/test
 
 # other
 eclipse
-run
+run/*
+!run/server.properties
 run-data
 libs
 
